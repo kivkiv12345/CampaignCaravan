@@ -11,3 +11,8 @@ texture = ExtResource("1_ex4be")
 [node name="TextureRect2" parent="." instance=ExtResource("1_sedjj")]
 offset_left = 214.0
 offset_right = 374.0
+
+[node name="TextureRect3" parent="." instance=ExtResource("1_sedjj")]
+offset_left = 444.0
+offset_right = 604.0
+texture = ExtResource("1_ex4be")
