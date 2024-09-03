@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://djm4a6bvd4vb2"]
+
+[ext_resource type="Script" path="res://drag_preview.gd" id="1_kdtky"]
+
+[node name="TextureRect" type="TextureRect"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_kdtky")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

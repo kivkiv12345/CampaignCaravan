@@ -1,6 +1,7 @@
 # Modified from: https://pastebin.com/vymW5TJS (https://www.youtube.com/watch?v=8cV-5ByZLOE)
 extends TextureRect
  
+## Is likely to spawn a card preview when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position):
 
 	# Duplicating nodes apparently has trouble copying scripts,

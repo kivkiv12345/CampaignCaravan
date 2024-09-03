@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dagks0jwijidj"]
 
-[ext_resource type="Script" path="res://dragdropcard.gd" id="1_macyj"]
+[ext_resource type="Script" path="res://handcardslot.gd" id="1_macyj"]
 
 [node name="TextureRect" type="TextureRect"]
 custom_minimum_size = Vector2(160, 220)

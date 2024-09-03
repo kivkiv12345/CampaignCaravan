@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_ex4be"]
-[ext_resource type="PackedScene" uid="uid://dagks0jwijidj" path="res://NormalCardSlot.tscn" id="1_sedjj"]
+[ext_resource type="PackedScene" uid="uid://dagks0jwijidj" path="res://HandCardSlot.tscn" id="1_sedjj"]
 
 [node name="Node2D" type="Node2D"]
 
