@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://ctgss67e70gan"]
+
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_ex4be"]
+[ext_resource type="PackedScene" uid="uid://dagks0jwijidj" path="res://NormalCardSlot.tscn" id="1_sedjj"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" parent="." instance=ExtResource("1_sedjj")]
+texture = ExtResource("1_ex4be")
+
+[node name="TextureRect2" parent="." instance=ExtResource("1_sedjj")]
+offset_left = 214.0
+offset_right = 374.0
