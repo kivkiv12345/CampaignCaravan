@@ -1,13 +1,26 @@
 [gd_scene load_steps=2 format=3 uid="uid://djm4a6bvd4vb2"]
 
-[ext_resource type="Script" path="res://drag_preview.gd" id="1_kdtky"]
+[ext_resource type="Script" path="res://DragPreview.gd" id="1_kdtky"]
 
-[node name="TextureRect" type="TextureRect"]
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(160, 220)
+offset_right = 160.0
+offset_bottom = 220.0
+expand_mode = 1
+stretch_mode = 5
 script = ExtResource("1_kdtky")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="TextureRect"]
+visible = false
+show_behind_parent = true
+custom_minimum_size = Vector2(160, 220)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2

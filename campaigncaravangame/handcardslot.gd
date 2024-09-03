@@ -1,45 +1,32 @@
 # Modified from: https://pastebin.com/vymW5TJS (https://www.youtube.com/watch?v=8cV-5ByZLOE)
 extends TextureRect
  
-## Is likely to spawn a card preview when the player goes to drag this card from thier hand.
+## Is likely to spawn a DragPreview Card when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position):
-
-	# Duplicating nodes apparently has trouble copying scripts,
-	# but perhaps this is what we want for dragdropcard.gd.
-	# Otherwise we may consider creating a new scene with load("res://NormalCardSlot.tscn").
-	var preview_texture: TextureRect = self.duplicate()
-
-	# Got a little help from https://chatgpt.com here with preview.get_node().
-	# I thought .get_node() was a global function indexing from the tree root,
-	# I didn't relize it's a method called on self.
-	# (sometimes I wish typing self. wasn't optional...)
-	var panel: Panel = preview_texture.get_node("Panel")
-	preview_texture.remove_child(panel)
-
-	# Ensure the preview is positioned relative to the mouse cursor.
-	# Set the position of the preview_texture to zero within the Control.
-	preview_texture.position = Vector2.ZERO
-
-	# The original script would create a TextureRect.new() here,
-	# and set the desired properties.
-	# But I think it's more flexible to simple duplicate the one we have.
-	# Unfortunatly this is recursive, which we actually don't care for.
-	#var preview_texture = TextureRect.new()
-	#preview_texture.texture = self.texture
-	#preview_texture.expand_mode = self.expand_mode
-	#preview_texture.size = self.size
-
-	var preview: Control = Control.new()
-	preview.add_child(preview_texture)
+	
+	# Using the texture itself feels pretty dirty, but maybe it's okay for now.
+	var card_vector: Vector2i = TextureManager.get_card_from_texture(self.texture)
+	var card_instance: Card = Card.new(card_vector.x, card_vector.y)
+	
+	const drag_preview_scene = preload("res://DragPreview.tscn")
+	var drag_preview: Control = drag_preview_scene.instantiate()
+	var preview_texture: DragPreview = drag_preview.get_node("TextureRect")
+	
+	preview_texture.card = card_instance
+	preview_texture.texture = self.texture
+	preview_texture.expand_mode = self.expand_mode
+	preview_texture.size = self.size
 
 	# Calculate the mouse offset relative to the original control.
 	var mouse_offset = at_position - self.global_position
 
 	# Set the duplicated node's position to the offset relative to the mouse.
+	var offset: Vector2 = (mouse_offset - at_position) - mouse_offset
+	
 	preview_texture.position = (mouse_offset - at_position) - mouse_offset
 
 	# Actually show the dragged preview
-	self.set_drag_preview(preview)
+	self.set_drag_preview(drag_preview)
 
 	# And remove the texture from the original control,
 	# So it looks like we're moving a card, rather than duplicating it.
