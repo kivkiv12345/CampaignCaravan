@@ -1,29 +1,27 @@
 # Modified from: https://pastebin.com/vymW5TJS (https://www.youtube.com/watch?v=8cV-5ByZLOE)
 extends TextureRect
  
+class_name CardHandSlot
+
 ## Is likely to spawn a DragPreview Card when the player goes to drag this card from thier hand.
-func _get_drag_data(at_position):
+func _get_drag_data(at_position: Vector2):
+	
+	var test: Deck = Deck.new(30, 108, 12345)
+	var test2: Deck = Deck.new(30, 108, 12345)
+	
+	var seed_works: bool = test.cards == test2.cards
 	
 	# Using the texture itself feels pretty dirty, but maybe it's okay for now.
 	var card_vector: Vector2i = TextureManager.get_card_from_texture(self.texture)
-	var card_instance: Card = Card.new(card_vector.x, card_vector.y)
+	var card: Card = Card.new(card_vector.x, card_vector.y)
 	
-	const drag_preview_scene = preload("res://DragPreview.tscn")
-	var drag_preview: Control = drag_preview_scene.instantiate()
-	var preview_texture: DragPreview = drag_preview.get_node("TextureRect")
-	
-	preview_texture.card = card_instance
-	preview_texture.texture = self.texture
-	preview_texture.expand_mode = self.expand_mode
-	preview_texture.size = self.size
-
 	# Calculate the mouse offset relative to the original control.
-	var mouse_offset = at_position - self.global_position
-
-	# Set the duplicated node's position to the offset relative to the mouse.
-	var offset: Vector2 = (mouse_offset - at_position) - mouse_offset
+	var mouse_offset: Vector2 = at_position - self.global_position
+	var render_offset: Vector2 = (mouse_offset - at_position) - mouse_offset
 	
-	preview_texture.position = (mouse_offset - at_position) - mouse_offset
+	var drag_preview: Control = Control.new()
+	var preview_texture: DragPreview = DragPreview.new(self, card, render_offset)
+	drag_preview.add_child(preview_texture)  # A Control node must be root, for offset/positioning to work, for reasons.
 
 	# Actually show the dragged preview
 	self.set_drag_preview(drag_preview)
@@ -35,8 +33,10 @@ func _get_drag_data(at_position):
 	# Then we return the object needed for ._can_drop_data() and ._drop_data()
 	return preview_texture.texture
 
-func _can_drop_data(_pos, data):
-	return data is Texture2D
+func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
+	# Cards can not intentially be dropped back into the hand,
+	# but they will return to their origin when dropped invalidly.
+	return false
 
 func _drop_data(_pos, data):
 	self.texture = data

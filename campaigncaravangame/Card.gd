@@ -14,3 +14,10 @@ func _init(suit: Suit, rank: Rank):
 	self.suit = suit
 	self.rank = rank
 	self.card_texture = TextureManager.get_card_texture(suit, rank)
+
+
+func is_face_card() -> bool:
+	return self.rank in [Rank.JACK, Rank.QUEEN, Rank.KING, Rank.JOKER]
+	
+func is_numeric_card() -> bool:
+	return self.rank in [Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN]
