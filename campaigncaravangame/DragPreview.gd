@@ -39,5 +39,8 @@ func _on_tree_exiting()->void:
 		self.return_to_original_position()
 
 func return_to_original_position():
+	if self.source.card != null:
+		return false  # Someone has taken our slot while we were gone. We cannot override that card.
+	
 	self.source.set_card(self.card)
 	# TODO Kevin: Should we destroy ourselves here?

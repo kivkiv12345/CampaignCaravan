@@ -8,7 +8,7 @@ var card: Card = null
 ## Update the card displayed in this slot
 func set_card(new_card: Card) -> void:
 	self.card = new_card
-	self.texture = card.card_texture
+	self.texture = new_card.card_texture
 
 func remove_card() -> void:
 	self.card = null
@@ -42,12 +42,46 @@ func _get_drag_data(at_position: Vector2):
 	self.remove_card()
  
 	# Then we return the object needed for ._can_drop_data() and ._drop_data()
-	return preview_texture.texture
+	return preview_texture
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
-	# Cards can not intentially be dropped back into the hand,
-	# but they will return to their origin when dropped invalidly.
-	return false
 
+	if not (data is DragPreview):
+		return false
+
+	var card_data = data as DragPreview
+
+	# TODO Kevin: Check that we are not trying to drop the card into the opponent's hand
+
+	# We should probably not allow dropping a card which already has another destination.
+	#	Although I don't know how this is posible.
+	if card_data.destination != null:
+		return false
+
+	# Also swapping with ourselves could maybe cause weirdness,
+	#	so let's also deny that.
+	if card_data.source == self:
+		return false
+
+	# Dropping the card here will swap locations in the hand.
+	return true
+
+## Cards can be dropped back into a player's own hand, for reordering purposes.
 func _drop_data(_pos, data):
-	self.texture = data
+	assert(data is DragPreview)
+
+	var card_data = data as DragPreview
+
+	assert(card_data.source != null)
+	
+	# We would've had to set card_data.destination here.
+	#	But we have DragPreview check whether its source has been overwritten.
+
+	# Keep track of our current card
+	var current_card: Card = self.card
+
+	# Then swap it with the newly dropped card
+	self.set_card(card_data.card)
+
+	# And move our (now) old card to the source of the dragged card
+	card_data.source.set_card(current_card)
