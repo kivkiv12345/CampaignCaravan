@@ -3,8 +3,9 @@ extends Resource
 class_name Card
 
 # Enums for card suits and ranks
-enum Suit { CLOVER, DIAMOND, HEARTS, SPADES, JOKER0, JOKER1 }  # Jokers don't have a suit, and we use this fact to uniquely idenfity either of them.
-enum Rank { ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, JOKER }
+# Start from 1, as to reserve Vector2i.ZERO for errors
+enum Suit { CLOVER = 1, DIAMOND, HEARTS, SPADES, JOKER0, JOKER1 }  # Jokers don't have a suit, and we use this fact to uniquely idenfity either of them.
+enum Rank { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, JOKER }
 
 var suit: Suit
 var rank: Rank

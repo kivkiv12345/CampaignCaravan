@@ -99,5 +99,4 @@ func get_card_from_texture(texture: Texture2D) -> Vector2i:
 	for key in texture_paths:
 		if texture_paths[key] == texture:
 			return key
-	assert(false, "ERROR: Did not find card type for speified texture")
 	return Vector2i.ZERO;

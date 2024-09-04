@@ -39,7 +39,5 @@ func _on_tree_exiting()->void:
 		self.return_to_original_position()
 
 func return_to_original_position():
-	# Logic to return the card to its original position
-	# TODO Kevin: We probably want this to be more robust.
-	#	AKA, a more strongly defined interface
-	self.source.texture = self.card.card_texture
+	self.source.set_card(self.card)
+	# TODO Kevin: Should we destroy ourselves here?
