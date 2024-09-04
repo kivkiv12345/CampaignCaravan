@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnuabmj2eigsk"]
+
+[ext_resource type="Script" path="res://Scenes/Hand/hand.gd" id="1_bqh2o"]
+[ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="3_aayh5"]
+
+[node name="Hand" type="Node2D"]
+script = ExtResource("1_bqh2o")
+
+[node name="Deck" parent="." instance=ExtResource("3_aayh5")]
+offset_left = 284.0
+offset_right = 379.0
+offset_bottom = 130.0
+
+[node name="Cards" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 244.0
+offset_bottom = 130.0
+
+[node name="Base_TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_right = 95.0
+offset_bottom = 130.0
+expand_mode = 1
+stretch_mode = 4

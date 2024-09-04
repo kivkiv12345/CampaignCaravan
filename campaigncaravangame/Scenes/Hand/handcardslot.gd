@@ -25,7 +25,7 @@ func _get_drag_data(at_position: Vector2):
 
 	if self.card == null:  # But 'error' if this doesn't work
 		return null  # This is almost an assertion, but returning null is a good way to handle this error.
-	
+
 	# Calculate the mouse offset relative to the original control.
 	var mouse_offset: Vector2 = at_position - self.global_position
 	var render_offset: Vector2 = (mouse_offset - at_position) - mouse_offset

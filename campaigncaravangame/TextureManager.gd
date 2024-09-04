@@ -92,6 +92,16 @@ var texture_paths := {
 	Vector2i(Suit.JOKER1, Rank.JOKER): preload("res://CardTextures/joker_courier.jpeg"),
 }
 
+var back_textures: Array = [
+	preload("res://CardTextures/back_bison.jpeg"),
+	preload("res://CardTextures/back_gomorrah.jpeg"),
+	preload("res://CardTextures/back_lucky38.jpeg"),
+	preload("res://CardTextures/back_silverrush.jpeg"),
+	preload("res://CardTextures/back_tops.jpeg"),
+	preload("res://CardTextures/back_ultraluxe.jpeg"),
+	preload("res://CardTextures/back_wrangler.jpeg"),
+]
+
 func get_card_texture(suit: Suit, rank: Rank) -> Texture2D:
 	return texture_paths[Vector2i(suit, rank)]
 
