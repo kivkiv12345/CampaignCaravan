@@ -88,8 +88,8 @@ var texture_paths := {
 	Vector2i(Suit.SPADES, Rank.KING): preload("res://CardTextures/k_spades_king.jpeg"),
 
 	# Jokers
-	Vector2i(Suit.CLOVER, Rank.JOKER): preload("res://CardTextures/joker_benny.jpeg"),
-	Vector2i(Suit.DIAMOND, Rank.JOKER): preload("res://CardTextures/joker_courier.jpeg"),
+	Vector2i(Suit.JOKER0, Rank.JOKER): preload("res://CardTextures/joker_benny.jpeg"),
+	Vector2i(Suit.JOKER1, Rank.JOKER): preload("res://CardTextures/joker_courier.jpeg"),
 }
 
 func get_card_texture(suit: Suit, rank: Rank) -> Texture2D:

@@ -89,8 +89,8 @@ var _base_deck: Array[Card] = [
 	Card.new(Suit.SPADES, Rank.KING),
 
 	# Jokers
-	Card.new(Suit.CLOVER, Rank.JOKER),
-	Card.new(Suit.DIAMOND, Rank.JOKER),
+	Card.new(Suit.JOKER0, Rank.JOKER),
+	Card.new(Suit.JOKER1, Rank.JOKER),
 ]
 
 
