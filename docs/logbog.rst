@@ -22,3 +22,13 @@ så jeg kan vinde tid til at få spillet til både at se og føles godt.
 I løbet af dagen bør jeg også kigge på kravspecifikationen,
 da jeg endnu ikke har fastlåst mig afgrænsningen af funktionaliterne til spillet.
 Jeg har ikke bestemt hvor vidt jeg vil fokusere på multiplayer vs AI (machine learning er ikke planlagt) modstandere.
+
+
+4/9-2024 (Onsdag Uge #1)
+------------------
+Fokus i dag var funktionaliterne bag at trække kort fra sit dæk til sin hånd.
+Dækket's constructor metode er lige nu mest ment til test,
+hvor det genererer et tilfældigt dæk fra en given størrelse og seed.
+Jeg ser seeding som vigtigt størstedelen af steder hvor tilfældighed indgår,
+især til senere hvor disse funktioner også skal kunne testes.
+
