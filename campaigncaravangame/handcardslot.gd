@@ -6,11 +6,6 @@ class_name CardHandSlot
 ## Is likely to spawn a DragPreview Card when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position: Vector2):
 	
-	var test: Deck = Deck.new(30, 108, 12345)
-	var test2: Deck = Deck.new(30, 108, 12345)
-	
-	var seed_works: bool = test.cards == test2.cards
-	
 	# Using the texture itself feels pretty dirty, but maybe it's okay for now.
 	var card_vector: Vector2i = TextureManager.get_card_from_texture(self.texture)
 	var card: Card = Card.new(card_vector.x, card_vector.y)

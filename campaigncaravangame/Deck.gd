@@ -98,7 +98,7 @@ var cards: Array[Card] = []
 
 func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: int = 0) -> void:
 	# Ensure valid size bounds
-	assert(min_size >= MIN_SIZE and max_size <= MAX_SIZE and min_size < max_size,
+	assert(min_size >= MIN_SIZE and max_size <= MAX_SIZE and min_size <= max_size,
 		"Error: Invalid deck size range. Must be between %d and %d, with min_size <= max_size." % [MIN_SIZE, MAX_SIZE])
 
 	# Duplicate the base deck to create a potential full deck
