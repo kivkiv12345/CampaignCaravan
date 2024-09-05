@@ -11,6 +11,7 @@ const CARAVAN_COUNT: int = 3
 func fix_card_spacing(_node: Node) -> void:
 
 	var cards = $Cards.get_children()
+	cards.reverse()
 	var num_cards_in_hand = cards.size()
 
 	# If there are no cards, then there's no need for spacing ¯\_(ツ)_/¯
@@ -26,12 +27,6 @@ func fix_card_spacing(_node: Node) -> void:
 	if current_card_spacing < min_spacing:
 		current_card_spacing = min_spacing
 
-	# Calculate the total width occupied by all cards
-	var total_width = current_card_spacing * (num_cards_in_hand - 1)
-	
-	# Center the cards relative to the deck's starting position
-	var base_shift = -80
-
 	# Adjust each card’s position based on index and spacing
 	var i: int = -1
 	for card in cards:
@@ -39,14 +34,11 @@ func fix_card_spacing(_node: Node) -> void:
 		
 		if card is not CardHandSlot:
 			continue
-		
-		print("AA %d" % i)
-		print("BB %f" % (base_shift + (current_card_spacing * i)))
-		
-		card.position = Vector2(base_shift + (current_card_spacing * i), 0)
-	
-	print("END")
-	print("\n")
+
+		# TODO Kevin: I can't really get the spacing right, but this is fine for now... probably
+		#	135.6 is offset of Cards in Hand.tscn (towards deck)
+		card.position = Vector2(135.6-((i-1)*current_card_spacing), 0)
+
 
 
 ## Draws a card from the player's deck, and adds it to their hand.
