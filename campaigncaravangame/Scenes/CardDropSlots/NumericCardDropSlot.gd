@@ -10,6 +10,10 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 	
 	var drag_item: DragPreview = data as DragPreview
 	# TODO Kevin: Check if dropping on other player's side
+	
+	if self.card != null:
+		return false
+	
 	return drag_item.card.is_numeric_card()
 
 

@@ -23,3 +23,6 @@ offset_right = 95.0
 offset_bottom = 130.0
 expand_mode = 1
 stretch_mode = 4
+
+[connection signal="child_entered_tree" from="Cards" to="." method="fix_card_spacing"]
+[connection signal="child_exiting_tree" from="Cards" to="." method="fix_card_spacing"]

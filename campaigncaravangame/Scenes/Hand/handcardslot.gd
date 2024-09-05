@@ -73,7 +73,7 @@ func _drop_data(_pos, data):
 	var card_data = data as DragPreview
 
 	assert(card_data.source != null)
-	
+
 	# We would've had to set card_data.destination here.
 	#	But we have DragPreview check whether its source has been overwritten.
 

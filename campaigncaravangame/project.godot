@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 TextureManager="*res://TextureManager.gd"
 
+[global_group]
+
+FaceCardSlots=""
+NumericCardSlots=""
+CardSlots=""
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

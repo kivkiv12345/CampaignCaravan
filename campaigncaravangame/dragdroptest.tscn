@@ -1,74 +1,29 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctgss67e70gan"]
 
-[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_ex4be"]
-[ext_resource type="PackedScene" uid="uid://dagks0jwijidj" path="res://Scenes/Hand/HandCardSlot.tscn" id="1_sedjj"]
+[ext_resource type="Script" path="res://ConnectHandToCardSlots.gd" id="1_gskn8"]
+[ext_resource type="PackedScene" uid="uid://bylepqm1t8qb6" path="res://Scenes/CardDropSlots/NumericCardSlot.tscn" id="2_8qkwr"]
 [ext_resource type="PackedScene" uid="uid://dnuabmj2eigsk" path="res://Scenes/Hand/Hand.tscn" id="3_bhije"]
 
-[node name="Node2D" type="Node2D"]
+[node name="TableTop" type="Node2D"]
 position = Vector2(718, 447)
-
-[node name="TextureRect" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 732.0
-offset_top = 403.0
-offset_right = 827.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect2" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 754.0
-offset_top = 403.0
-offset_right = 849.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect3" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 776.0
-offset_top = 403.0
-offset_right = 871.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect4" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 798.0
-offset_top = 403.0
-offset_right = 893.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect5" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 818.0
-offset_top = 403.0
-offset_right = 913.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect6" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 839.0
-offset_top = 403.0
-offset_right = 934.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect7" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 859.0
-offset_top = 403.0
-offset_right = 954.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
-
-[node name="TextureRect8" parent="." instance=ExtResource("1_sedjj")]
-visible = false
-offset_left = 881.0
-offset_top = 403.0
-offset_right = 976.0
-offset_bottom = 533.0
-texture = ExtResource("1_ex4be")
+script = ExtResource("1_gskn8")
 
 [node name="Hand" parent="." instance=ExtResource("3_bhije")]
+
+[node name="Caravan1" parent="." instance=ExtResource("2_8qkwr")]
+offset_left = -613.0
+offset_top = -107.0
+offset_right = -518.0
+offset_bottom = 23.0
+
+[node name="Caravan2" parent="." instance=ExtResource("2_8qkwr")]
+offset_left = -453.0
+offset_top = -107.0
+offset_right = -358.0
+offset_bottom = 23.0
+
+[node name="Caravan3" parent="." instance=ExtResource("2_8qkwr")]
+offset_left = -295.0
+offset_top = -107.0
+offset_right = -200.0
+offset_bottom = 23.0
