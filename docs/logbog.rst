@@ -32,3 +32,14 @@ hvor det genererer et tilfældigt dæk fra en given størrelse og seed.
 Jeg ser seeding som vigtigt størstedelen af steder hvor tilfældighed indgår,
 især til senere hvor disse funktioner også skal kunne testes.
 
+
+5/9-2024 (Torsdag Uge #1)
+------------------
+Jeg vil starte dagen med at oprette signaler til når kort spilles.
+I første omgang skal de bruges til at trække nye kort fra spillerens dæk,
+da CardDropSlot noden ligger fjernt fra dæk noden, hvilket gør det svært for dem at snakke direkte.
+Samtidig kunne signalet også bruges til at oprette et nyt CardDropSlot nederst i karavanen.
+Men dette kunne formentlig også gøres enten som en linked list af CardDropSlots.
+Da hvert NumericCardDropSlot altid ligger nederst i karavanen,
+vil nye NumericCardDropSlots altid skulle oprettes under dette.
+FaceCardSlots er lignende, hvor nye slots skal oprettes til højre i stedet.
