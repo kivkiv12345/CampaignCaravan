@@ -3,10 +3,10 @@
 
 extends TextureRect
 
-class_name DragPreview
+class_name DraggedCard
 
 var source: CardHandSlot = null
-var destination: CardDropSlot = null  # Will be set by the CardDropSlot._drop_data()
+var destination: OpenCardSlot = null  # Will be set by the OpenCardSlot._drop_data()
 
 var card: Card = null  # Determines the preview
 
@@ -39,7 +39,7 @@ func _on_tree_exiting()->void:
 		self.return_to_original_position()
 
 func return_to_original_position():
-	if self.source.card != null:
+	if self.source.card != self.card:
 		return false  # Someone has taken our slot while we were gone. We cannot override that card.
 	
 	self.source.set_card(self.card)

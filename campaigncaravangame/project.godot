@@ -24,6 +24,7 @@ TextureManager="*res://TextureManager.gd"
 FaceCardSlots=""
 NumericCardSlots=""
 CardSlots=""
+Caravans=""
 
 [rendering]
 

@@ -1,5 +1,8 @@
 extends Node2D
 
+class_name Hand
+
+
 ## This is the amount of cards that will be kept on hand during the game
 const HAND_SIZE: int = 5
 
@@ -58,9 +61,9 @@ func draw_card_from_deck() -> void:
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
 
 
-func _on_card_played(dropslot: CardDropSlot, card_drag: DragPreview) -> void:
+func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
 	
-	$Cards.remove_child(card_drag.source)
+	$Cards.remove_child(played_from)
 	
 	var round_number = 0  # TODO Kevin: Implement round number
 	

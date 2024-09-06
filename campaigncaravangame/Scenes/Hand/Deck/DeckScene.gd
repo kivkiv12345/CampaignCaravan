@@ -12,6 +12,7 @@ func _ready() -> void:
 	self.rng.seed = self.seed
 	self.fill_deck(Deck.new(30, 108, 1337))
 
+
 func fill_deck(_deck: Deck) -> void:
 	self.deck = _deck
 	
@@ -34,8 +35,3 @@ func get_card() -> Card:
 	var cards: Array[Node] = $Cards.get_children()
 	$Cards.remove_child(cards.back())
 	return self.deck.cards.pop_back()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass

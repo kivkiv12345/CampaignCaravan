@@ -1,29 +1,12 @@
 # Modified from: https://pastebin.com/vymW5TJS (https://www.youtube.com/watch?v=8cV-5ByZLOE)
-extends TextureRect
+extends CardSlot
  
 class_name CardHandSlot
 
-var card: Card = null
-
-## Update the card displayed in this slot
-func set_card(new_card: Card) -> void:
-	self.card = new_card
-	self.texture = new_card.card_texture
-
-func remove_card() -> void:
-	self.card = null
-	self.texture = null
-
-## Is likely to spawn a DragPreview Card when the player goes to drag this card from thier hand.
+## Is likely to spawn a DraggedCard Card when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position: Vector2):
 
-	if self.card == null:  # Try finding the card from the texture.
-		# Using the texture itself feels pretty dirty, but maybe it's okay for now.
-		var card_vector: Vector2i = TextureManager.get_card_from_texture(self.texture)
-		if card_vector != Vector2i.ZERO:
-			self.card = Card.new(card_vector.x, card_vector.y)
-
-	if self.card == null:  # But 'error' if this doesn't work
+	if self.texture == null:  # But 'error' if this doesn't work
 		return null  # This is almost an assertion, but returning null is a good way to handle this error.
 
 	# Calculate the mouse offset relative to the original control.
@@ -31,7 +14,7 @@ func _get_drag_data(at_position: Vector2):
 	var render_offset: Vector2 = (mouse_offset - at_position) - mouse_offset
 	
 	var drag_preview: Control = Control.new()
-	var preview_texture: DragPreview = DragPreview.new(self, card, render_offset)
+	var preview_texture: DraggedCard = DraggedCard.new(self, card, render_offset)
 	drag_preview.add_child(preview_texture)  # A Control node must be root, for offset/positioning to work, for reasons.
 
 	# Actually show the dragged preview
@@ -39,17 +22,20 @@ func _get_drag_data(at_position: Vector2):
 
 	# And remove the texture from the original control,
 	# So it looks like we're moving a card, rather than duplicating it.
-	self.remove_card()
+	# Only remove the texture, so we can pass self for AI player,
+	# that will not be dragging cards with the UI
+	#self.remove_card()
+	self.texture = null
  
 	# Then we return the object needed for ._can_drop_data() and ._drop_data()
 	return preview_texture
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 
-	if not (data is DragPreview):
+	if not (data is DraggedCard):
 		return false
 
-	var card_data = data as DragPreview
+	var card_data = data as DraggedCard
 
 	# TODO Kevin: Check that we are not trying to drop the card into the opponent's hand
 
@@ -68,14 +54,14 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 
 ## Cards can be dropped back into a player's own hand, for reordering purposes.
 func _drop_data(_pos, data):
-	assert(data is DragPreview)
+	assert(data is DraggedCard)
 
-	var card_data = data as DragPreview
+	var card_data = data as DraggedCard
 
 	assert(card_data.source != null)
 
 	# We would've had to set card_data.destination here.
-	#	But we have DragPreview check whether its source has been overwritten.
+	#	But we have DraggedCard check whether its source has been overwritten.
 
 	# Keep track of our current card
 	var current_card: Card = self.card
