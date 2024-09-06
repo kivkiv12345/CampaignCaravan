@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 func _register_cardslot_to_caravan(node: Node) -> void:
-	if not node is OpenNumericCardSlot:
+	if not node is CaravanCardSlot:
 		return
 	node.caravan = self
 
@@ -24,6 +24,15 @@ func _register_cardslot_to_caravan(node: Node) -> void:
 ## This should be called by Jacks and Jokers
 func _remove_card() -> void:
 	assert(false)
+
+
+func get_value() -> int:
+	var value: int = 0
+	for card in $PlayedCards.get_children():
+		assert(card is PlayedNumericCardSlot)
+		value += card.get_value()
+	return value
+		
 
 
 func _play_number_card(hand_card: CardHandSlot) -> void:

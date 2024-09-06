@@ -6,13 +6,22 @@ class_name PlayedNumericCardSlot
 func _play_face_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
-	played_card.set_card(hand_card.card)
 	
 	# TODO Kevin: This is pretty nasty,
 	#	but we currently don't have need for a proper FaceCardSlot.tscn scene,
-	#	so we just apply the script. 
+	#	so we just apply the script.
 	played_card.script = FaceCardSlot
+	assert(played_card is FaceCardSlot)
 	
+	# Apparently changing the script resets the card field, so it must be done first.
+	played_card.set_card(hand_card.card)
+	
+	# Also it seems that the _register_cardslot_to_caravan()
+	#	signal (on Caravan) isn't called recursivly.
+	#	So our face cards will not automatially be registered.
+	#	Which is why we do it here.
+	played_card.caravan = self.caravan
+
 	played_card.position = $OpenFaceCardSlot.position
 
 	$PlayedFaceCards.add_child(played_card)
@@ -37,6 +46,16 @@ func try_play_face_card(hand_card: CardHandSlot) -> bool:
 
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.can_play_face_card(hand_card)
+
+
+func get_value() -> int:
+	assert(self.card.is_numeric_card())
+	var value: int = self.card.rank
+	for facecard in $PlayedFaceCards.get_children():
+		assert(facecard is FaceCardSlot)
+		if facecard.card.rank == Card.Rank.KING:
+			value *= 2
+	return value
 
 
 func _register_facecard_to_numbercard(node: Node) -> void:

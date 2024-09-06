@@ -21,4 +21,4 @@ stretch_mode = 4
 visible = false
 layout_mode = 0
 
-[connection signal="child_entered_tree" from="." to="." method="_register_cardslot_to_caravan"]
+[connection signal="child_entered_tree" from="PlayedCards" to="." method="_register_cardslot_to_caravan"]
