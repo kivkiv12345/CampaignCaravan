@@ -62,3 +62,9 @@ eller en bestemt navngivning af noder ved brug af .find_parent().
 I stedet gør jeg som udgangspunkt brug af signalet child_entered_tree(),
 til at sikre at disse 'parent' variable sættes korrekt
 (Se sammenspillet mellem PlayedNumericCardSlot._register_facecard_to_numbercard og FaceCardSlot.number_card).
+
+Én udfordring jeg er stødt på CardSlot arvehierarkiet. GDScript understøtter ikke multipel nedarvning,
+og bruger "ducktyping" fremfor formelle interfaces. 
+Derfor har jeg været specialt udfordet med OpenFaceCardSlot, som jeg både vil nedarve fra OpenCardSlot og FaceCardSlot klasser.
+En OpenCardSlot ville have været nyttig til typetjek.
+Men samtidig så jeg FaceCardSlot som værende en mere vigtigt klasse, til at indføre et (number_card: PlayedNumericCardSlot) felt.
