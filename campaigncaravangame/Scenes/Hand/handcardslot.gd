@@ -3,6 +3,18 @@ extends CardSlot
  
 class_name CardHandSlot
 
+@export var hand: Hand = null
+
+
+func _ready() -> void:
+	self.hand = self.find_parent("Hand")
+
+
+func _on_card_played(dropslot: CardSlot) -> void:
+	assert(self.hand != null)
+	self.hand._on_card_played(dropslot, self)
+
+
 ## Is likely to spawn a DraggedCard Card when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position: Vector2):
 
@@ -48,6 +60,9 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 	#	so let's also deny that.
 	if card_data.source == self:
 		return false
+		
+	# TODO Kevin: Maybe it would be good to check whether this card is in play (being dragged),
+	#	which would prevent bugs with swapping cards that have already been played.
 
 	# Dropping the card here will swap locations in the hand.
 	return true

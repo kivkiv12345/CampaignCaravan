@@ -1,4 +1,4 @@
-extends OpenCardSlot
+extends FaceCardSlot
 
 class_name OpenFaceCardSlot
 
@@ -20,10 +20,10 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 
 
 ## Handled by base class
-#func _drop_data(_pos: Vector2, data: DraggedCard):
-	#
-	#assert(data is DraggedCard)
-	#
-	#data.destination = self
-	#
-	#self.texture = data.card.card_texture  # TODO Kevin: Rework this, probably
+func _drop_data(_pos: Vector2, data: Variant) -> void:
+	
+	assert(data is DraggedCard)
+	
+	data.destination = self
+	
+	self.number_card.try_play_face_card(data.source)

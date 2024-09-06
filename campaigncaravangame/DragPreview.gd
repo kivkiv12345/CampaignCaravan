@@ -6,7 +6,7 @@ extends TextureRect
 class_name DraggedCard
 
 var source: CardHandSlot = null
-var destination: OpenCardSlot = null  # Will be set by the OpenCardSlot._drop_data()
+var destination: CardSlot = null  # Will be set by the OpenCardSlot._drop_data()
 
 var card: Card = null  # Determines the preview
 

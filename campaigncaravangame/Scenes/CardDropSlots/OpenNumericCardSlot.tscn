@@ -15,3 +15,9 @@ layout_mode = 0
 offset_right = 95.0
 offset_bottom = 130.0
 mouse_filter = 2
+
+[node name="PlayedCards" type="TextureRect" parent="."]
+offset_right = 95.0
+offset_bottom = 130.0
+expand_mode = 1
+stretch_mode = 4

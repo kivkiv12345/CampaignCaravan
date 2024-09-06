@@ -1,4 +1,4 @@
-extends OpenCardSlot
+extends CaravanCardSlot
 
 class_name OpenNumericCardSlot
 
@@ -22,14 +22,13 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 	var drag_item: DraggedCard = data as DraggedCard
 	# TODO Kevin: Check if dropping on other player's side
 	
-	return drag_item.card.is_numeric_card()
+	return self.caravan.can_play_number_card(drag_item.source)
 
 
-## Handled by base class
-#func _drop_data(_pos: Vector2, data: DraggedCard):
-	#
-	#assert(data is DraggedCard)
-	#
-	#data.destination = self
-	#
-	#self.texture = data.card.card_texture  # TODO Kevin: Rework this, probably
+func _drop_data(_pos: Vector2, data: Variant):
+	
+	assert(data is DraggedCard)
+	
+	data.destination = self
+	
+	self.caravan.try_play_number_card(data.source)

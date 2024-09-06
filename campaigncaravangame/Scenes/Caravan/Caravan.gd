@@ -10,13 +10,13 @@ var player: Player = null
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for card_slot in self.get_children():
-		if not card_slot is OpenCardSlot:
+		if not card_slot is OpenNumericCardSlot:
 			continue
 		card_slot.caravan = self
 
 
 func _register_cardslot_to_caravan(node: Node) -> void:
-	if not node is OpenCardSlot:
+	if not node is OpenNumericCardSlot:
 		return
 	node.caravan = self
 
@@ -26,9 +26,9 @@ func _remove_card() -> void:
 	assert(false)
 
 
-func _play_card(hand_card: CardHandSlot) -> void:
+func _play_number_card(hand_card: CardHandSlot) -> void:
 	
-	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
+	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
 	played_card.position = $OpenNumericCardSlot.position
 
@@ -37,15 +37,16 @@ func _play_card(hand_card: CardHandSlot) -> void:
 
 	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, 30)
 	
-	self.emit_signal("on_card_played", played_card, hand_card)
+	hand_card._on_card_played(played_card)
+	#self.emit_signal("on_card_played", played_card, hand_card)
 
 
-func can_play_card(hand_card: CardHandSlot) -> bool:
-	return true
+func can_play_number_card(hand_card: CardHandSlot) -> bool:
+	return hand_card.card.is_numeric_card()
 
-func try_play_card(hand_card: CardHandSlot) -> bool:
-	if not self.can_play_card(hand_card):
+func try_play_number_card(hand_card: CardHandSlot) -> bool:
+	if not self.can_play_number_card(hand_card):
 		return false
 		
-	self._play_card(hand_card)
+	self._play_number_card(hand_card)
 	return true

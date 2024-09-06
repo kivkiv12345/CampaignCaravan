@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/CardDropSlots/CardSlot.gd" id="1_prp12"]
 
-[node name="PlayedCardSlot" type="TextureRect" groups=["CardSlots", "FaceCardSlots"]]
+[node name="PlayedCardSlot" type="TextureRect" groups=["CardSlots"]]
 offset_right = 95.0
 offset_bottom = 130.0
 expand_mode = 1
