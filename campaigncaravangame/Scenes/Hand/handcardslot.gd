@@ -86,3 +86,8 @@ func _drop_data(_pos, data):
 
 	# And move our (now) old card to the source of the dragged card
 	card_data.source.set_card(current_card)
+
+	# TODO Kevin: This is a pretty spaghetti place to reset the visual feedback.
+	#	But all other slots can rely on the fact that they go invisible when the card is dropped,
+	#	and then wait for the mouse to leave their hitbox to reset their color.
+	self.set_modulate(Color.WHITE)

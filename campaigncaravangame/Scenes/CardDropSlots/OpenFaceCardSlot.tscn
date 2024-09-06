@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" path="res://Scenes/CardDropSlots/OpenFaceCardSlot.gd" id="1_xpbkp"]
 
-[node name="FaceCardSlot" type="TextureRect" groups=["CardSlots", "FaceCardSlots"]]
+[node name="FaceCardSlot" type="TextureRect" groups=["CardSlots", "FaceCardSlots", "OpenCardSlots"]]
+visible = false
 offset_right = 95.0
 offset_bottom = 130.0
 expand_mode = 1

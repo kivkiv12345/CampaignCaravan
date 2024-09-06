@@ -25,6 +25,7 @@ FaceCardSlots=""
 NumericCardSlots=""
 CardSlots=""
 Caravans=""
+OpenCardSlots=""
 
 [rendering]
 

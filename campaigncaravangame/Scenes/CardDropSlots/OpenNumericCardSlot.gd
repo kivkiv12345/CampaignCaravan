@@ -32,3 +32,8 @@ func _drop_data(_pos: Vector2, data: Variant):
 	data.destination = self
 	
 	self.caravan.try_play_number_card(data.source)
+
+
+func can_play_card(hand_card: CardHandSlot) -> bool:
+	return self.caravan.can_play_number_card(hand_card)
+	return hand_card.hand.player == self.caravan.player and hand_card.card.is_numeric_card()

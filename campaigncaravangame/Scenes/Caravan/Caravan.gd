@@ -40,9 +40,44 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	hand_card._on_card_played(played_card)
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
+#enum _CaravanDirection { ASCENDING, DECENDING, NONE }
 
 func can_play_number_card(hand_card: CardHandSlot) -> bool:
-	return hand_card.card.is_numeric_card()
+	
+	if not hand_card.card.is_numeric_card():
+		return false
+		
+	if hand_card.hand.player != self.player:
+		# Number cards can not be played on other player's caravans.
+		return false
+		
+	var played_cards: Array[Node] = $PlayedCards.get_children()
+	
+	if played_cards.size() == 0:
+		# If the caravan is empty, it will not have a direction yet,
+		#	and so any numeric card is free to be played.
+		return true
+		
+	if (played_cards[-1] as PlayedNumericCardSlot).card.rank == hand_card.card.rank:
+		# Under no circumstances can 2 cards of the same numeric rank be played on top of eachother.
+		return false
+		
+	if (played_cards.size() >= 2):
+		#var direction: _CaravanDirection = _CaravanDirection.NONE
+		if (played_cards[-1] as PlayedNumericCardSlot).card.suit == hand_card.card.suit:
+			return true
+		
+		if (played_cards[-1] as PlayedNumericCardSlot).card.rank > (played_cards[-2] as PlayedNumericCardSlot).card.rank:
+			#direction = _CaravanDirection.ASCENDING
+			return hand_card.card.rank > (played_cards[-1] as PlayedNumericCardSlot).card.rank
+		elif (played_cards[-1] as PlayedNumericCardSlot).card.rank < (played_cards[-2] as PlayedNumericCardSlot).card.rank:
+			#direction = _CaravanDirection.DECENDING
+			return hand_card.card.rank < (played_cards[-1] as PlayedNumericCardSlot).card.rank
+		# Jacks and Jokers can cause the 2 last cards in a caravan to have the same rank,
+		#	in which case we allow this hand_card.card to set the new direction.
+			
+	
+	return true
 
 func try_play_number_card(hand_card: CardHandSlot) -> bool:
 	if not self.can_play_number_card(hand_card):

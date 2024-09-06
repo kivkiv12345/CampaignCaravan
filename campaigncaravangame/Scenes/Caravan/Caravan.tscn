@@ -18,6 +18,7 @@ expand_mode = 1
 stretch_mode = 4
 
 [node name="OpenNumericCardSlot" parent="." instance=ExtResource("2_itpdk")]
+visible = false
 layout_mode = 0
 
 [connection signal="child_entered_tree" from="." to="." method="_register_cardslot_to_caravan"]

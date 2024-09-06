@@ -9,6 +9,10 @@ const HAND_SIZE: int = 5
 ## The hand size will contain an extra card for each caravan during the initial round
 const CARAVAN_COUNT: int = 3
 
+
+@export var player: Player = null
+
+
 ## Signal handler for both child_entered_tree() and child_exiting_tree(),
 ##	which is therefore automatiaclly called when cards are either added or removed from the hand.
 func fix_card_spacing(_node: Node) -> void:

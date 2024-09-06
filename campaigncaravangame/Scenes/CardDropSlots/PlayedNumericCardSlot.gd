@@ -35,6 +35,10 @@ func try_play_face_card(hand_card: CardHandSlot) -> bool:
 	return true
 
 
+func can_play_card(hand_card: CardHandSlot) -> bool:
+	return self.can_play_face_card(hand_card)
+
+
 func _register_facecard_to_numbercard(node: Node) -> void:
 	assert(node is FaceCardSlot)
 	

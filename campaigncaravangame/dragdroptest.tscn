@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=4 format=3 uid="uid://ctgss67e70gan"]
 
+[ext_resource type="Script" path="res://player_manager.gd" id="1_oacld"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_1i3wy"]
 [ext_resource type="PackedScene" uid="uid://dnuabmj2eigsk" path="res://Scenes/Hand/Hand.tscn" id="3_bhije"]
 
-[node name="TableTop" type="Node2D"]
+[node name="TableTop" type="Node2D" node_paths=PackedStringArray("players")]
 position = Vector2(718, 447)
+script = ExtResource("1_oacld")
+players = [null]
 
 [node name="Hand" parent="." instance=ExtResource("3_bhije")]
 
