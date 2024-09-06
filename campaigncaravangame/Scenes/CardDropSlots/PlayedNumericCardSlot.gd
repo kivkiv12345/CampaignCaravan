@@ -7,7 +7,12 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
+	
+	# TODO Kevin: This is pretty nasty,
+	#	but we currently don't have need for a proper FaceCardSlot.tscn scene,
+	#	so we just apply the script. 
 	played_card.script = FaceCardSlot
+	
 	played_card.position = $OpenFaceCardSlot.position
 
 	$PlayedFaceCards.add_child(played_card)

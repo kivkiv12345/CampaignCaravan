@@ -43,3 +43,22 @@ Men dette kunne formentlig også gøres enten som en linked list af CardDropSlot
 Da hvert NumericCardDropSlot altid ligger nederst i karavanen,
 vil nye NumericCardDropSlots altid skulle oprettes under dette.
 FaceCardSlots er lignende, hvor nye slots skal oprettes til højre i stedet.
+
+
+6/9-2024 (Fredag Uge #1)
+------------------
+Jeg har efterhånden ændret hvordan OpenFaceCardSlot og OpenNumericCardSlot fungerer.
+Som det fungerer nu har Caravan.tscn 2 undernoder: PlayedCards (som fungerer som en liste af PlayedNumericCardSlots)
+og OpenNumericCardSlot. Hermed vedligeholder karavanen altid ét OpenNumericCardSlot, og flytter det løbende til at ligge i bunden af karavanen.
+Når et kort lægges på denne plads, er det karavanens ansvar at tjekke om det er gyldigt,
+mht til om karavanen er stigende eller faldende, eller om kortet lægges på modstanderens side.
+På samme måde har PlayedNumericCardSlot.tscn også 2 undernoder: OpenFaceCardSlot og PlayedFaceCards.
+Hermed vedligeholder PlayedNumericCardSlot.tscn sit OpenFaceCardSlot, på samme måde som Caravan.tscn med NumericCardDropSlot.
+Dette tillader at man bruger nodetræet selv som sandhedskilde, mht. at administrere hvilke nummerkort underhører hvilke karavaner,
+og hvilke ansigtskorts underhører hvilke nummerkort.
+Dog har jeg alligevel valgt at indfører felter på klasserne,
+da alternativene er enten at låse sig selv til en given nodestruktur ved at bruge .get_parent(),
+eller en bestemt navngivning af noder ved brug af .find_parent().
+I stedet gør jeg som udgangspunkt brug af signalet child_entered_tree(),
+til at sikre at disse 'parent' variable sættes korrekt
+(Se sammenspillet mellem PlayedNumericCardSlot._register_facecard_to_numbercard og FaceCardSlot.number_card).
