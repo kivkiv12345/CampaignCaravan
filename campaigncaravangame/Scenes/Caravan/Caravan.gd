@@ -21,9 +21,19 @@ func _register_cardslot_to_caravan(node: Node) -> void:
 	node.caravan = self
 
 
+const _number_card_spacing: int = 30
+
 ## This should be called by Jacks and Jokers
-func _remove_card() -> void:
-	assert(false)
+func remove_card(number_card: PlayedNumericCardSlot) -> void:
+	assert(number_card in $PlayedCards.get_children())
+	
+	
+	
+	for i in range(number_card.get_index(), $PlayedCards.get_child_count()):
+		$PlayedCards.get_child(i).position -= Vector2(0, self._number_card_spacing)
+	
+	$PlayedCards.remove_child(number_card)
+	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
 
 
 func get_value() -> int:
@@ -39,12 +49,13 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
+	
+	# First add the new card where the current slot is
 	played_card.position = $OpenNumericCardSlot.position
-
 	$PlayedCards.add_child(played_card)
-	#self.get_parent().move_child(self, -1)  # Make sure we are rendered on top
 
-	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, 30)
+	# Then move the slot to where the next card should be placed.
+	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
 	
 	hand_card._on_card_played(played_card)
 	#self.emit_signal("on_card_played", played_card, hand_card)

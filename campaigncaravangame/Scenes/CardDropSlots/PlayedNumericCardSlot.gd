@@ -30,6 +30,12 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 	$OpenFaceCardSlot.position = $PlayedFaceCards.get_child(-1).position + Vector2(30, 0)
 	
 	hand_card._on_card_played(played_card)
+	
+	# You might think it doesn't make sense to create the played_card
+	#	when it's gonnna be remove by a jack anyway.
+	#	But it probably, eventually, makes animation easier, probably.
+	if played_card.card.rank == Card.Rank.JACK:
+		self.caravan.remove_card(self)
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
 
