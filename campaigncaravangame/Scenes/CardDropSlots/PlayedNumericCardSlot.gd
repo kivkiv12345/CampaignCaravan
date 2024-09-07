@@ -36,6 +36,26 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 	#	But it probably, eventually, makes animation easier, probably.
 	if played_card.card.rank == Card.Rank.JACK:
 		self.caravan.remove_card(self)
+	elif played_card.card.rank == Card.Rank.JOKER:
+		for number_card in self.get_tree().get_nodes_in_group("NumericCardSlots"):
+			assert(number_card is CaravanCardSlot)
+			
+			if not number_card is PlayedNumericCardSlot:
+				# This is probably an open card slot, we which dont' want to remove.
+				# I haven't quite decided if I want these in the group.
+				continue
+			
+			if number_card == self:
+				continue
+			
+			# Playing a joker on an ace removes all other cards of the same suit
+			if self.card.rank == Card.Rank.ACE:
+				if number_card.card.suit == self.card.suit:
+					number_card.caravan.remove_card(number_card)
+			else:  # Otherwise it removes all other cards of the same rank
+				if number_card.card.rank == self.card.rank:
+					number_card.caravan.remove_card(number_card)
+
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
 

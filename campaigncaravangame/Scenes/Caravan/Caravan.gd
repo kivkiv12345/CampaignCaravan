@@ -33,8 +33,12 @@ func remove_card(number_card: PlayedNumericCardSlot) -> void:
 		$PlayedCards.get_child(i).position -= Vector2(0, self._number_card_spacing)
 	
 	$PlayedCards.remove_child(number_card)
-	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
-
+	#if $PlayedCards.get_child_count() == 0:
+		#$OpenNumericCardSlot.position = self.position
+	#else:
+		#$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
+	$OpenNumericCardSlot.position = Vector2(0, self._number_card_spacing*$PlayedCards.get_child_count())
+	
 
 func get_value() -> int:
 	var value: int = 0
@@ -56,7 +60,7 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 
 	# Then move the slot to where the next card should be placed.
 	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
-	
+
 	hand_card._on_card_played(played_card)
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
