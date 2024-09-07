@@ -23,12 +23,10 @@ func _register_cardslot_to_caravan(node: Node) -> void:
 
 const _number_card_spacing: int = 30
 
-## This should be called by Jacks and Jokers
+## Called by Jacks and Jokers
 func remove_card(number_card: PlayedNumericCardSlot) -> void:
 	assert(number_card in $PlayedCards.get_children())
-	
-	
-	
+
 	for i in range(number_card.get_index(), $PlayedCards.get_child_count()):
 		$PlayedCards.get_child(i).position -= Vector2(0, self._number_card_spacing)
 	
@@ -85,22 +83,37 @@ func can_play_number_card(hand_card: CardHandSlot) -> bool:
 	if (played_cards[-1] as PlayedNumericCardSlot).card.rank == hand_card.card.rank:
 		# Under no circumstances can 2 cards of the same numeric rank be played on top of eachother.
 		return false
-		
+
 	if (played_cards.size() >= 2):
 		#var direction: _CaravanDirection = _CaravanDirection.NONE
-		if (played_cards[-1] as PlayedNumericCardSlot).card.suit == hand_card.card.suit:
+		if (played_cards[-1] as PlayedNumericCardSlot).get_effective_suit() == hand_card.card.suit:
 			return true
-		
-		if (played_cards[-1] as PlayedNumericCardSlot).card.rank > (played_cards[-2] as PlayedNumericCardSlot).card.rank:
+
+		# Normal rank compare order
+		var last_card: PlayedNumericCardSlot = played_cards[-1]
+		var second_last_card: PlayedNumericCardSlot = played_cards[-2]
+
+		# TODO Kevin: Should multiple queens reverse direction multiple times?
+		#	Maybe make this a gamerule too.
+		var has_queen: bool = played_cards[-1].num_queens() % 2
+
+		# TODO Kevin: Gamerule to control whether queens reverse direction of caravan
+		if has_queen:  # Reverse rank compare order
+			# But hand_card.card.rank should still be compared
+			#	with the rank of the actual [-1] last card.
+			var temp_reverse: PlayedNumericCardSlot = last_card
+			last_card = second_last_card
+			second_last_card = temp_reverse
+
+		if last_card.card.rank > second_last_card.card.rank:
 			#direction = _CaravanDirection.ASCENDING
-			return hand_card.card.rank > (played_cards[-1] as PlayedNumericCardSlot).card.rank
-		elif (played_cards[-1] as PlayedNumericCardSlot).card.rank < (played_cards[-2] as PlayedNumericCardSlot).card.rank:
+			return hand_card.card.rank > played_cards[-1].card.rank
+		elif last_card.card.rank < second_last_card.card.rank:
 			#direction = _CaravanDirection.DECENDING
-			return hand_card.card.rank < (played_cards[-1] as PlayedNumericCardSlot).card.rank
+			return hand_card.card.rank < played_cards[-1].card.rank
 		# Jacks and Jokers can cause the 2 last cards in a caravan to have the same rank,
 		#	in which case we allow this hand_card.card to set the new direction.
-			
-	
+
 	return true
 
 func try_play_number_card(hand_card: CardHandSlot) -> bool:

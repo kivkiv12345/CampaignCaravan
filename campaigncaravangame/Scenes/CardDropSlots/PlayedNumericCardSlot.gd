@@ -50,7 +50,7 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 			
 			# Playing a joker on an ace removes all other cards of the same suit
 			if self.card.rank == Card.Rank.ACE:
-				if number_card.card.suit == self.card.suit:
+				if number_card.get_effective_suit() == self.card.suit:
 					number_card.caravan.remove_card(number_card)
 			else:  # Otherwise it removes all other cards of the same rank
 				if number_card.card.rank == self.card.rank:
@@ -82,6 +82,28 @@ func get_value() -> int:
 		if facecard.card.rank == Card.Rank.KING:
 			value *= 2
 	return value
+
+
+func num_queens() -> int:
+	assert(self.card.is_numeric_card())
+	var num_queens: int = 0
+	for facecard in $PlayedFaceCards.get_children():
+		assert(facecard is FaceCardSlot)
+		if facecard.card.rank == Card.Rank.QUEEN:
+			num_queens += 1
+	return num_queens
+
+
+## Returns the suit of the card, accounting for any queens played on it
+func get_effective_suit() -> Card.Suit:
+	# TODO Kevin: Gamerule to control whether queen changes suit
+	var facecards = $PlayedFaceCards.get_children()
+	facecards.reverse()  # Reverse so we find the last queen first
+	for facecard in facecards:
+		if facecard.card.rank == Card.Rank.QUEEN:
+			# Return the suit of the last played queen.
+			return facecard.card.suit
+	return self.card.suit
 
 
 func _register_facecard_to_numbercard(node: Node) -> void:
