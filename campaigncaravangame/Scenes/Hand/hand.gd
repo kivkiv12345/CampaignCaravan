@@ -1,15 +1,16 @@
-extends Node2D
+extends Control
 
 class_name Hand
 
 
 ## This is the amount of cards that will be kept on hand during the game
-const HAND_SIZE: int = 5
+const HAND_SIZE: int = 8
 
 ## The hand size will contain an extra card for each caravan during the initial round
 const CARAVAN_COUNT: int = 3
 
 
+@export var deck: DeckScene = null
 @export var player: Player = null
 
 
@@ -50,7 +51,7 @@ func fix_card_spacing(_node: Node) -> void:
 
 ## Draws a card from the player's deck, and adds it to their hand.
 func draw_card_from_deck() -> void:
-	var card: Card = $Deck.get_card()
+	var card: Card = self.deck.get_card()
 	
 	if card == null:
 		print("No more cards to draw")
@@ -84,4 +85,5 @@ func fill_initial_hand() -> void:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	self.fill_initial_hand()
+	if self.deck != null:
+		self.fill_initial_hand()

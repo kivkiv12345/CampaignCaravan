@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://caidjbr85fvy"]
+
+[ext_resource type="Script" path="res://PlayerClasses/Player.gd" id="1_w5vls"]
+[ext_resource type="PackedScene" uid="uid://dnuabmj2eigsk" path="res://Scenes/Hand/Hand.tscn" id="2_jcl0y"]
+
+[node name="Player" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_w5vls")
+
+[node name="Hand" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_jcl0y")]
+layout_mode = 1
+player = NodePath("..")

@@ -1,0 +1,148 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctgss67e70gan"]
+
+[ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
+[ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
+[ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
+[ext_resource type="Script" path="res://PlayerClasses/HumanPlayer.gd" id="3_ys5fo"]
+[ext_resource type="Script" path="res://Scenes/Caravan/CaravanValueCounter.gd" id="5_e3laf"]
+[ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="6_xbpa7"]
+
+[node name="TableTop" type="Node2D" node_paths=PackedStringArray("players")]
+position = Vector2(718, 447)
+script = ExtResource("1_uwe67")
+players = [null]
+
+[node name="Players" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Player" parent="Players" instance=ExtResource("2_xjwne")]
+offset_left = 1.0
+offset_top = -3.0
+offset_right = 1.0
+offset_bottom = -3.0
+script = ExtResource("3_ys5fo")
+
+[node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = -613.0
+offset_top = -107.0
+offset_right = -518.0
+offset_bottom = 23.0
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan1" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Caravan2" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = -453.0
+offset_top = -107.0
+offset_right = -358.0
+offset_bottom = 23.0
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan2" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Caravan3" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = -295.0
+offset_top = -107.0
+offset_right = -200.0
+offset_bottom = 23.0
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan3" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Deck" parent="Players/Player" instance=ExtResource("6_xbpa7")]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.408
+offset_left = 544.0
+offset_right = 1.34497
+offset_bottom = 0.0
+
+[node name="BotPlayer" parent="Players" instance=ExtResource("2_xjwne")]
+offset_left = 196.0
+offset_top = -296.0
+offset_right = 196.0
+offset_bottom = -296.0
+rotation = 3.14159
+
+[node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = 713.0
+offset_top = -97.0001
+offset_right = 808.0
+offset_bottom = 32.9999
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan1" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Caravan2" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = 553.0
+offset_top = -97.0001
+offset_right = 648.0
+offset_bottom = 32.9999
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan2" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+layout_mode = 0
+offset_left = 395.0
+offset_top = -97.0001
+offset_right = 490.0
+offset_bottom = 32.9999
+player = NodePath("..")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan3" node_paths=PackedStringArray("caravan")]
+layout_mode = 0
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("5_e3laf")
+caravan = NodePath("..")
+
+[node name="Deck" parent="Players/BotPlayer" instance=ExtResource("6_xbpa7")]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.408
+offset_left = -172.0
+offset_top = 1.59863e-05
+offset_right = -172.0
+offset_bottom = 1.59863e-05

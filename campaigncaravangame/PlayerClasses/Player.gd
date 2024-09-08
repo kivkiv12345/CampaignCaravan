@@ -2,7 +2,16 @@ extends Node
 
 class_name Player
 
-@export var hand: Hand = null
+@export var _hand_override = null
+@onready var hand: Hand = $Hand
+
+
+func _ready() -> void:
+	$Hand.player = self
+	$Hand.deck = $Deck
+	$Hand.fill_initial_hand()
+	if self._hand_override != null:
+		self.hand = self._hand_override
 
 
 func get_legal_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]:
