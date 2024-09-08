@@ -2,10 +2,10 @@ extends TextureRect
 
 class_name Caravan
 
-#signal on_card_play(dropslot: OpenCardSlot, card_drag: DraggedCard)  # TODO Kevin: Pass player here when it exists, probably
-signal on_card_played(dropslot: CardSlot, played_from: CardHandSlot)  # TODO Kevin: Pass player here when it exists, probably
+#signal on_card_played(dropslot: CardSlot, played_from: CardHandSlot)  # TODO Kevin: Pass player here when it exists, probably
+signal on_value_changed(caravan: Caravan, old_value: int, new_value: int)
 
-var player: Player = null
+@export var player: Player = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,17 +26,18 @@ const _number_card_spacing: int = 30
 ## Called by Jacks and Jokers
 func remove_card(number_card: PlayedNumericCardSlot) -> void:
 	assert(number_card in $PlayedCards.get_children())
+	
+	var before_value: int = self.get_value()
 
 	for i in range(number_card.get_index(), $PlayedCards.get_child_count()):
 		$PlayedCards.get_child(i).position -= Vector2(0, self._number_card_spacing)
 	
 	$PlayedCards.remove_child(number_card)
-	#if $PlayedCards.get_child_count() == 0:
-		#$OpenNumericCardSlot.position = self.position
-	#else:
-		#$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
+
 	$OpenNumericCardSlot.position = Vector2(0, self._number_card_spacing*$PlayedCards.get_child_count())
 	
+	self.on_value_changed.emit(self, before_value, self.get_value())
+
 
 func get_value() -> int:
 	var value: int = 0
@@ -44,13 +45,14 @@ func get_value() -> int:
 		assert(card is PlayedNumericCardSlot)
 		value += card.get_value()
 	return value
-		
 
 
 func _play_number_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
+	
+	var before_value: int = self.get_value()
 	
 	# First add the new card where the current slot is
 	played_card.position = $OpenNumericCardSlot.position
@@ -60,6 +62,8 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
 
 	hand_card._on_card_played(played_card)
+
+	self.on_value_changed.emit(self, before_value, self.get_value())
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
 #enum _CaravanDirection { ASCENDING, DECENDING, NONE }
