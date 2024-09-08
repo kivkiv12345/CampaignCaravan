@@ -3,6 +3,15 @@ extends CaravanCardSlot
 class_name PlayedNumericCardSlot
 
 
+func set_caravan(caravan: Caravan) -> void:
+	super(caravan)
+
+	$OpenFaceCardSlot.set_caravan(caravan)
+
+	for facecard in $PlayedFaceCards.get_children():
+		facecard.set_caravan(caravan)
+
+
 func _play_face_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
@@ -23,6 +32,8 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 	played_card.caravan = self.caravan
 
 	played_card.position = $OpenFaceCardSlot.position
+	
+	var before_value: int = self.caravan.get_value()
 
 	$PlayedFaceCards.add_child(played_card)
 	#self.get_parent().move_child(self, -1)  # Make sure we are rendered on top
@@ -55,8 +66,13 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 			else:  # Otherwise it removes all other cards of the same rank
 				if number_card.card.rank == self.card.rank:
 					number_card.caravan.remove_card(number_card)
+	elif played_card.card.rank == Card.Rank.KING:
+		self.caravan.emit_value_changed(before_value)
+		#self.number_card.caravan.on_value_changed.emit(self, before_value, self.get_value())
+		#self.caravan.on_value_changed.emit(self, before_value, self.get_value())
 
 	#self.emit_signal("on_card_played", played_card, hand_card)
+	hand_card.hand.player.end_turn()
 
 
 func can_play_face_card(hand_card: CardHandSlot) -> bool:
@@ -73,6 +89,8 @@ func try_play_face_card(hand_card: CardHandSlot) -> bool:
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.can_play_face_card(hand_card)
 
+func try_play_card(hand_card: CardHandSlot) -> bool:
+	return self.try_play_face_card(hand_card)
 
 func get_value() -> int:
 	assert(self.card.is_numeric_card())

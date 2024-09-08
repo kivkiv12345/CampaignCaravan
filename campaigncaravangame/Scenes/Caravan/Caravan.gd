@@ -39,6 +39,14 @@ func remove_card(number_card: PlayedNumericCardSlot) -> void:
 	self.on_value_changed.emit(self, before_value, self.get_value())
 
 
+## It seems that our child nodes can't emit our signal.
+## So we expose this function, so we can do it for them.
+## This is especially used when playing kings,
+## Which otherwise don't require our intervention.
+func emit_value_changed(old_value: int) -> void:
+	self.on_value_changed.emit(self, old_value, self.get_value())
+
+
 func get_value() -> int:
 	var value: int = 0
 	for card in $PlayedCards.get_children():
@@ -51,6 +59,7 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
+	played_card.set_caravan(self)
 	
 	var before_value: int = self.get_value()
 	
@@ -64,6 +73,7 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	hand_card._on_card_played(played_card)
 
 	self.on_value_changed.emit(self, before_value, self.get_value())
+	hand_card.hand.player.end_turn()
 	#self.emit_signal("on_card_played", played_card, hand_card)
 
 #enum _CaravanDirection { ASCENDING, DECENDING, NONE }

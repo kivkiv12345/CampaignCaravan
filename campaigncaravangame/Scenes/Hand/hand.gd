@@ -4,7 +4,7 @@ class_name Hand
 
 
 ## This is the amount of cards that will be kept on hand during the game
-const HAND_SIZE: int = 8
+const HAND_SIZE: int = 5
 
 ## The hand size will contain an extra card for each caravan during the initial round
 const CARAVAN_COUNT: int = 3
@@ -48,6 +48,13 @@ func fix_card_spacing(_node: Node) -> void:
 		card.position = Vector2(135.6-((i-1)*current_card_spacing), 0)
 
 
+func get_cards() -> Array[CardHandSlot]:
+	var cards: Array[CardHandSlot] = []
+	for card in $Cards.get_children():
+		assert(card is CardHandSlot)
+		cards.append(card)
+	return cards
+
 
 ## Draws a card from the player's deck, and adds it to their hand.
 func draw_card_from_deck() -> void:
@@ -66,16 +73,36 @@ func draw_card_from_deck() -> void:
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
 
 
-func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
+func can_discard_card(hand_card: CardHandSlot) -> bool:
 	
-	$Cards.remove_child(played_from)
+	if self.player.game_manager.current_player != self.player:
+		return false  # It is not our turn, so we cannot discard cards
 	
-	var round_number = 0  # TODO Kevin: Implement round number
-	
-	if round_number == 0:
-		return
+	if hand_card not in $Cards.get_children():
+		return false  # We don't have that card, this is almost an assert().
+		
+	return true
 
-	self.draw_card_from_deck()
+func _discard_card(hand_card: CardHandSlot) -> void:
+	assert(hand_card in $Cards.get_children())
+	$Cards.remove_child(hand_card)
+	hand_card.hand.player.end_turn()
+
+func try_discard_card(hand_card: CardHandSlot) -> bool:
+	
+	if not self.can_discard_card(hand_card):
+		return false
+		
+	self._discard_card(hand_card)
+	return true
+
+func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
+
+	assert(played_from in $Cards.get_children())
+	$Cards.remove_child(played_from)
+
+	if $Cards.get_child_count() < self.HAND_SIZE:
+		self.draw_card_from_deck()
 
 
 func fill_initial_hand() -> void:

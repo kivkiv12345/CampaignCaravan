@@ -8,7 +8,23 @@ class_name CaravanCardSlot
 @export var caravan: Caravan = null
 
 
+func set_caravan(caravan: Caravan) -> void:
+	self.caravan = caravan
+
+
+## Abstarct method
+func _play_card(hand_card: CardHandSlot) -> void:
+	assert(false)
+
 ## Abstarct method
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	assert(false)
 	return false
+
+func try_play_card(hand_card: CardHandSlot) -> bool:
+	
+	if not self.can_play_card(hand_card):
+		return false
+		
+	self._play_card(hand_card)
+	return true

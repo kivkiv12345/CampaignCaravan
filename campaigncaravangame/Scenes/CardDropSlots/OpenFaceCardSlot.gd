@@ -31,3 +31,6 @@ func _drop_data(_pos: Vector2, data: Variant) -> void:
 
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.number_card.can_play_face_card(hand_card)
+	
+func try_play_card(hand_card: CardHandSlot) -> bool:
+	return self.number_card.try_play_face_card(hand_card)
