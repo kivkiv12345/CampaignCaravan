@@ -49,7 +49,9 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 
 	var card_data = data as DraggedCard
 
-	# TODO Kevin: Check that we are not trying to drop the card into the opponent's hand
+	# Check that we are not trying to drop the card into the opponent's hand
+	if self.hand.player != card_data.source.hand.player:
+		return false
 
 	# We should probably not allow dropping a card which already has another destination.
 	#	Although I don't know how this is posible.
@@ -63,6 +65,7 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 		
 	# TODO Kevin: Maybe it would be good to check whether this card is in play (being dragged),
 	#	which would prevent bugs with swapping cards that have already been played.
+	#	But this probably requires introducing a new field, which incurs more state.
 
 	# Dropping the card here will swap locations in the hand.
 	return true
