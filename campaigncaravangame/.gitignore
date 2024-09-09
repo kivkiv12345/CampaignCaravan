@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+CampaignCaravan.sh
+CampaignCaravan.pck
+CampaignCaravan.x86_64
+
+release/*
