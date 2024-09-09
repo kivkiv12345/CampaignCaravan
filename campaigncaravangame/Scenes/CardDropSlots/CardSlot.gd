@@ -41,6 +41,8 @@ func _on_mouse_entered():
 	
 	var drag_data = get_viewport().gui_get_drag_data()
 	
+	# TODO Kevin: Snappy DraggedCard
+	
 	if self._can_drop_data(get_viewport().get_mouse_position(), drag_data):
 		self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
 

@@ -25,6 +25,23 @@ func _ready() -> void:
 
 const SoldStatus = Caravan.SoldStatus
 
+## Notify opposing caravans that they may now be sold,
+## due to a possible change to the value of the provided caravan.
+func notify_opponent_caravans(caravan: Caravan) -> void:
+	for player in self.players:
+		assert(player is Player)
+
+		if player == caravan.player:
+			continue  # No need to notify ourselves
+
+		# TODO Kevin: Are we comfortable using the index to check for tied caravans.
+		var opponent_caravan: Caravan = player.caravans[caravan.player.caravans.find(caravan)]
+		if opponent_caravan.get_value() > caravan.player.game_rules.caravan_max_value:
+			continue  # The opponent caravan is overburdened (Using our rules)
+
+		if opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value, opponent_caravan.player.game_rules.caravan_max_value+1):
+			opponent_caravan.update_sold_status(SoldStatus.SOLD)
+
 ## Check if the provided caravan is sold.
 ## This entails checking if the caravan is:
 ##	over/under-burdened, underbidding or tied with the opponent
@@ -35,8 +52,10 @@ const SoldStatus = Caravan.SoldStatus
 func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
 
 	if caravan.get_value() < caravan.player.game_rules.caravan_min_value:
+		self.notify_opponent_caravans(caravan)
 		return SoldStatus.UNDERBURDENED
 	elif caravan.get_value() > caravan.player.game_rules.caravan_max_value:
+		self.notify_opponent_caravans(caravan)
 		return SoldStatus.OVERBURDENED
 
 	for player in self.players:

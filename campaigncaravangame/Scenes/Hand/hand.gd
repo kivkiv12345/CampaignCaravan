@@ -55,14 +55,15 @@ func get_cards() -> Array[CardHandSlot]:
 		cards.append(card)
 	return cards
 
+enum _TryDrawCard {SUCCESS, NO_MORE_CARDS, HAND_FULL}
 
-## Draws a card from the player's deck, and adds it to their hand.
-func draw_card_from_deck() -> void:
+func _draw_card_from_deck() -> _TryDrawCard:
+	
 	var card: Card = self.deck.get_card()
 	
 	if card == null:
-		print("No more cards to draw")
-		return
+		#print("No more cards to draw")
+		return _TryDrawCard.NO_MORE_CARDS
 	
 	var hand_card_slot: Node = preload("res://Scenes/Hand/HandCardSlot.tscn").instantiate()
 	hand_card_slot.hand = self
@@ -71,7 +72,29 @@ func draw_card_from_deck() -> void:
 	#hand_card_slot.position += Vector2(base_shift+(shift_per_card*$Cards.get_child_count()), 0)
 	
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
+	
+	return _TryDrawCard.SUCCESS
 
+## Draws a card from the player's deck, and adds it to their hand.
+func try_draw_card_from_deck() -> _TryDrawCard:
+	
+	if self.get_cards().size() >= self.player.game_rules.hand_size:
+		return _TryDrawCard.HAND_FULL
+	
+	return _draw_card_from_deck()
+
+func try_fill_hand() -> bool:
+	
+	while true:
+		match self.try_draw_card_from_deck():
+			_TryDrawCard.NO_MORE_CARDS:
+				return false
+			_TryDrawCard.HAND_FULL:
+				break
+			_:
+				continue  # We have not filled our hand yet.
+	
+	return true
 
 func get_lowest_value_card() -> CardHandSlot:
 	var hand_cards: Array[CardHandSlot] = self.get_cards()
@@ -99,8 +122,15 @@ func can_discard_card(hand_card: CardHandSlot) -> bool:
 
 func _discard_card(hand_card: CardHandSlot) -> void:
 	assert(hand_card in $Cards.get_children())
+	assert(self == hand_card.hand)
+	
 	$Cards.remove_child(hand_card)
-	hand_card.hand.player.end_turn()
+	self.try_fill_hand()
+	
+	if self.get_cards().size() == 0:
+		self.player.lose()
+	else:
+		hand_card.hand.player.end_turn()
 
 func try_discard_card(hand_card: CardHandSlot) -> bool:
 	
@@ -116,15 +146,17 @@ func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
 	$Cards.remove_child(played_from)
 
 	if $Cards.get_child_count() < self.player.game_rules.hand_size:
-		self.draw_card_from_deck()
+		self.try_fill_hand()
 		
 	if self.get_cards().size() == 0:
 		self.player.lose()
 
 
 func fill_initial_hand() -> void:
-	while $Cards.get_child_count() < self.player.game_rules.hand_size+self.player.game_rules.caravan_count:
-		self.draw_card_from_deck()
+	for __ in range(self.player.game_rules.hand_size+self.player.game_rules.caravan_count):
+		if $Cards.get_child_count() >= self.player.game_rules.hand_size+self.player.game_rules.caravan_count:
+			break
+		self._draw_card_from_deck()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
