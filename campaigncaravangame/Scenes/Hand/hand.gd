@@ -65,8 +65,8 @@ func draw_card_from_deck() -> void:
 		return
 	
 	var hand_card_slot: Node = preload("res://Scenes/Hand/HandCardSlot.tscn").instantiate()
+	hand_card_slot.hand = self
 	hand_card_slot.set_card(card)
-	
 	
 	#hand_card_slot.position += Vector2(base_shift+(shift_per_card*$Cards.get_child_count()), 0)
 	
@@ -101,14 +101,13 @@ func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
 	assert(played_from in $Cards.get_children())
 	$Cards.remove_child(played_from)
 
-	if $Cards.get_child_count() < self.HAND_SIZE:
+	if $Cards.get_child_count() < self.player.game_rules.hand_size:
 		self.draw_card_from_deck()
 
 
 func fill_initial_hand() -> void:
-	while $Cards.get_child_count() < self.HAND_SIZE+self.CARAVAN_COUNT:
+	while $Cards.get_child_count() < self.player.game_rules.hand_size+self.player.game_rules.caravan_count:
 		self.draw_card_from_deck()
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

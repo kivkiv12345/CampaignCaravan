@@ -7,6 +7,11 @@ class_name Player
 @export var has_lost: bool = false
 @export var game_rules: GameRules = GameRules.new()
 @export var caravans: Array[Caravan] = []
+@export var is_enemy_player: bool = true
+
+# Putting this property here could cause "invalid" state with multiple current players.
+#	but at the same time it also reduces coupling to the GameManager node.
+var is_current_player: bool = false
 
 signal turn_ended(player: Player)
 

@@ -12,6 +12,7 @@ enum Rank { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK,
 var suit: Suit
 var rank: Rank
 var card_texture: Texture2D
+var back_texture: Texture2D
 
 func _init(suit: Suit, rank: Rank):
 	self.suit = suit

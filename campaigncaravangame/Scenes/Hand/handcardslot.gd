@@ -14,12 +14,20 @@ func _on_card_played(dropslot: CardSlot) -> void:
 	assert(self.hand != null)
 	self.hand._on_card_played(dropslot, self)
 
+## Show the back texture of cards in the opponent's hand
+func set_card(new_card: Card) -> void:
+	super(new_card)
+	if self.hand.player.is_enemy_player:
+		self.texture = new_card.back_texture
 
 ## Is likely to spawn a DraggedCard Card when the player goes to drag this card from thier hand.
 func _get_drag_data(at_position: Vector2):
 
 	if self.texture == null:  # But 'error' if this doesn't work
 		return null  # This is almost an assertion, but returning null is a good way to handle this error.
+		
+	if self.hand.player.is_enemy_player:
+		return null  # We are not allowed to take cards out of the enemy' hand
 
 	if self.hand.player.has_lost:
 		return null  # Players that have lost can only spectate

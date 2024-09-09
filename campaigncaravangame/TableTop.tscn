@@ -8,10 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="6_xbpa7"]
 [ext_resource type="Script" path="res://PlayerClasses/BotPlayer.gd" id="7_ao5mc"]
 
-[node name="TableTop" type="Node2D" node_paths=PackedStringArray("players")]
+[node name="TableTop" type="Node2D" node_paths=PackedStringArray("players", "starting_player")]
 position = Vector2(718, 447)
 script = ExtResource("1_uwe67")
 players = [NodePath("Players/Player"), NodePath("Players/BotPlayer")]
+starting_player = NodePath("Players/Player")
 
 [node name="Players" type="Control" parent="."]
 layout_mode = 3
@@ -27,6 +28,7 @@ offset_bottom = -3.0
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
+is_enemy_player = false
 
 [node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0

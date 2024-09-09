@@ -6,7 +6,7 @@ class_name GameManager
 
 
 @export var players: Array[Player] = []
-@export var current_player: Player = null
+@export var starting_player: Player = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,8 +16,9 @@ func _ready() -> void:
 		player.init()
 		if player not in self.players:
 			self.players.append(player)
-	if self.current_player == null:
-		self.current_player = self.players[0]  # Default starting player
+	if self.starting_player == null:
+		self.starting_player = self.players[0]  # Default starting player
+	assert(self.starting_player in self.players)
 
 ## Check if the provided caravan is sold.
 ## This entails checking if the caravan is:
@@ -130,12 +131,19 @@ func advance_turn(old_player: Player) -> void:
 		print("Player %s has won!" % winning_player.name)
 		return
 	
+	old_player.is_current_player = false
 	var next_player_index = self.players.find(old_player) + 1
 	if next_player_index >= self.players.size():
 		next_player_index = 0
 	
 	var next_player: Player = self.players[next_player_index]
-	self.current_player = next_player
+	next_player.is_current_player = true
+	
+	var num_current_players = 0
+	for player in self.players:
+		if player.is_current_player:
+			num_current_players += 1
+	assert(num_current_players == 1)
 	
 	# TODO Kevin: Starting the next turn from a signal,
 	#	will happen before the last (AI) turn will properly finish.

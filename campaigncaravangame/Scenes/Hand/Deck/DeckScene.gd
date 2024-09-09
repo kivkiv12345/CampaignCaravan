@@ -27,6 +27,7 @@ func fill_deck(_deck: Deck) -> void:
 		deckcard_back.position += Vector2(self.rng.randf_range(-self.OFFSET_LIMIT, self.OFFSET_LIMIT), self.rng.randf_range(-self.OFFSET_LIMIT, self.OFFSET_LIMIT))  # And a bit of random offset
 		
 		deckcard_back.texture = TextureManager.back_textures[self.rng.randi_range(0, TextureManager.back_textures.size()-1)]
+		card.back_texture = deckcard_back.texture
 		
 		$Cards.add_child(deckcard_back)
 
