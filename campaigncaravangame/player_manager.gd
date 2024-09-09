@@ -20,30 +20,46 @@ func _ready() -> void:
 		self.starting_player = self.players[0]  # Default starting player
 	assert(self.starting_player in self.players)
 
+const SoldStatus = Caravan.SoldStatus
+
 ## Check if the provided caravan is sold.
 ## This entails checking if the caravan is:
 ##	over/under-burdened, underbidding or tied with the opponent
-func caravan_is_sold(caravan: Caravan) -> bool:
+## It might initally seem that this method should exist on the Caravn class,
+##	but the Caravan is only loosly coupled to the larger game state.
+##	So it has no concept about opponent caravans.
+##	Which is needed to determine if a caravan has been outbid, or is tied.
+func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
 
-	if caravan.get_value() not in range(caravan.player.game_rules.caravan_min_value, caravan.player.game_rules.caravan_max_value+1):
-		return false
+	if caravan.get_value() < caravan.player.game_rules.caravan_min_value:
+		return SoldStatus.UNDERBURDENED
+	elif caravan.get_value() > caravan.player.game_rules.caravan_max_value+1:
+		return SoldStatus.OVERBURDENED
 
-	for player in players:
+	for player in self.players:
 		assert(player is Player)
-		
+
 		if player == caravan.player:
 			continue  # No need to check if we are outbidding our own caravan
-			
+
 		# TODO Kevin: Are we comfortable using the index to check for tied caravans.
 		var opponent_caravan: Caravan = player.caravans[caravan.player.caravans.find(caravan)]
 		if opponent_caravan.get_value() > caravan.player.game_rules.caravan_max_value:
 			continue  # The opponent caravan is overburdened (Using our rules)
-		
+
 		# TODO Kevin: How do we indicate that a Caravan is tied (for the UI)?
-		if opponent_caravan.get_value() >= caravan.get_value():
-			return false  # We are either outbid or tied with this opponent caravan.
-		
-	return true
+		if opponent_caravan.get_value() > caravan.get_value():
+			# TODO Kevin: Maybe this is a bit spaghetti,
+			#	but we need to tell the other caravan, that it is outbid now.
+			opponent_caravan.emit_value_changed(opponent_caravan.get_value())
+			return SoldStatus.OUTBID
+		elif opponent_caravan.get_value() == caravan.get_value():
+			# TODO Kevin: This is just as spaghetti as the outbid situation.
+			opponent_caravan.emit_value_changed(opponent_caravan.get_value())
+			return SoldStatus.TIED
+
+	# Success!
+	return SoldStatus.SOLD
 
 
 ## Source: https://chatgpt.com
@@ -98,7 +114,7 @@ func check_for_winner() -> Player:
 		for caravan in player.caravans:
 			caravan_idx += 1
 			assert(caravan is Caravan)
-			if caravan_is_sold(caravan):
+			if get_caravan_sold_status(caravan) == SoldStatus.SOLD:
 				num_caravans_won[player] += 1
 				index_sold[caravan_idx] = true  # A caravan on this index/pair has been sold
 				

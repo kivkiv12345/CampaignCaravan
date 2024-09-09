@@ -83,11 +83,12 @@ func start_turn() -> void:
 				# Make sure playing kings on the enemy actually hurts them
 				if hand_card.card.rank == Card.Rank.KING:
 					if (legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()*2)) <= self.game_rules.caravan_max_value:
-						print(legal_slot.number_card.rank)
 						print("DDD")
 						continue  # Playing this king would not overburden the enemy caravan
 				# Make sure we don't accidentally 'fix' an enemy caravan
 				elif hand_card.card.rank == Card.Rank.JACK:
+					# TODO Kevin: If playing a jack on the enemy,
+					#	make sure to prioritize the most valuable cards in sold caravans.
 					if legal_slot.caravan.get_value() > self.game_rules.caravan_max_value:
 						print("EEE")
 						continue  # Don't play jacks on overburdended enemy caravans

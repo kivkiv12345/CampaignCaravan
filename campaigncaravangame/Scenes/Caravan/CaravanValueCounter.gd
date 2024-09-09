@@ -15,4 +15,17 @@ func _ready() -> void:
 
 
 func _update_shown_value(caravan: Caravan, old_value: int, new_value: int) -> void:
+	
+	const SoldStatus = Caravan.SoldStatus
+	
+	match caravan.player.game_manager.get_caravan_sold_status(caravan):
+		SoldStatus.OVERBURDENED:
+			self.self_modulate = Color.RED
+		SoldStatus.TIED:
+			self.self_modulate = Color.BLUE
+		SoldStatus.SOLD:
+			self.self_modulate = Color.GREEN
+		_:  # Default
+			self.self_modulate = Color.WHITE
+
 	self.text = String.num_int64(new_value)

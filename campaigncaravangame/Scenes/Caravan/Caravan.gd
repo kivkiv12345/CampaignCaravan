@@ -7,6 +7,8 @@ signal on_value_changed(caravan: Caravan, old_value: int, new_value: int)
 
 @export var player: Player = null
 
+enum SoldStatus {SOLD, UNDERBURDENED, OVERBURDENED, TIED, OUTBID}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for card_slot in self.get_children():
