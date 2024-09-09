@@ -14,11 +14,11 @@ func set_caravan(caravan: Caravan) -> void:
 
 ## Abstarct method
 func _play_card(hand_card: CardHandSlot) -> void:
-	assert(false)
+	assert(false, "Abstarct method")
 
 ## Abstarct method
 func can_play_card(hand_card: CardHandSlot) -> bool:
-	assert(false)
+	assert(false, "Abstarct method")
 	return false
 
 func try_play_card(hand_card: CardHandSlot) -> bool:

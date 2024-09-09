@@ -3,20 +3,15 @@ extends Control
 class_name DeckScene
 
 var deck: Deck = null
-var seed: int = 12345  # Simply detemines the back textures of cards in the deck, the cards drawn or therein
+@export var texture_seed: int = 12345  # Simply detemines the back textures of cards in the deck, the cards drawn or therein
 var rng = RandomNumberGenerator.new()
 
 const ROT_LIMIT = 0.2
 const OFFSET_LIMIT = 10
 
 
-#@export var player: Player = null
-
 func _ready() -> void:
-	self.rng.seed = self.seed
-	self.fill_deck(Deck.new(30, 108, 16337))
-	#if self.player:
-		#self.player.hand.deck = self
+	self.rng.seed = self.texture_seed
 
 func fill_deck(_deck: Deck) -> void:
 	self.deck = _deck

@@ -19,13 +19,14 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Player" parent="Players" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_xjwne")]
+[node name="Player" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 offset_left = 1.0
 offset_top = -3.0
 offset_right = 1.0
 offset_bottom = -3.0
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
+caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 
 [node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -84,7 +85,7 @@ offset_left = 544.0
 offset_right = 1.34497
 offset_bottom = 0.0
 
-[node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager") instance=ExtResource("2_xjwne")]
+[node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 offset_left = 196.0
 offset_top = -296.0
 offset_right = 196.0
@@ -92,6 +93,7 @@ offset_bottom = -296.0
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
 game_manager = NodePath("../..")
+caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 
 [node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0

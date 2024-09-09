@@ -76,6 +76,13 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 
 
 func can_play_face_card(hand_card: CardHandSlot) -> bool:
+	
+	if self.caravan.player.has_lost:
+		return false  # There is no point in playing cards on the caravan of a player that has lost.
+		
+	if hand_card.hand.player.has_lost:
+		return false  # Players that have lost can only spectate
+	
 	return hand_card.card.is_face_card()
 
 func try_play_face_card(hand_card: CardHandSlot) -> bool:

@@ -20,7 +20,6 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 		return false  # Under no circumstances can we drop something which is not a card.
 	
 	var drag_item: DraggedCard = data as DraggedCard
-	# TODO Kevin: Check if dropping on other player's side
 	
 	return self.caravan.can_play_number_card(drag_item.source)
 

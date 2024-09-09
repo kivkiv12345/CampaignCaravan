@@ -83,6 +83,12 @@ func can_play_number_card(hand_card: CardHandSlot) -> bool:
 	if not hand_card.card.is_numeric_card():
 		return false
 		
+	if self.player.has_lost:
+		return false  # There is no point in playing cards on the caravan of a player that has lost.
+		
+	if hand_card.hand.player.has_lost:
+		return false  # Players that have lost can only spectate
+		
 	if hand_card.hand.player != self.player:
 		# Number cards can not be played on other player's caravans.
 		return false
