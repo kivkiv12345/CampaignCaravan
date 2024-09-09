@@ -4,6 +4,7 @@ class_name Caravan
 
 #signal on_card_played(dropslot: CardSlot, played_from: CardHandSlot)  # TODO Kevin: Pass player here when it exists, probably
 signal on_value_changed(caravan: Caravan, old_value: int, new_value: int)
+signal new_sold_status(caravan: Caravan, new_status: SoldStatus)
 
 @export var player: Player = null
 
@@ -48,6 +49,8 @@ func remove_card(number_card: PlayedNumericCardSlot) -> void:
 func emit_value_changed(old_value: int) -> void:
 	self.on_value_changed.emit(self, old_value, self.get_value())
 
+func update_sold_status(status: SoldStatus) -> void:
+	self.new_sold_status.emit(self, status)
 
 func get_value() -> int:
 	var value: int = 0

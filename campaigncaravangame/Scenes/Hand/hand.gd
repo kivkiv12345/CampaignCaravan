@@ -73,10 +73,24 @@ func draw_card_from_deck() -> void:
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
 
 
+func get_lowest_value_card() -> CardHandSlot:
+	var hand_cards: Array[CardHandSlot] = self.get_cards()
+	assert(hand_cards.size() > 0)
+	var lowest_hand_card: CardHandSlot = hand_cards[0]
+	
+	for hand_card in hand_cards:
+		if hand_card.card.rank < lowest_hand_card.card.rank:
+			lowest_hand_card = hand_card
+			
+	return lowest_hand_card
+
 func can_discard_card(hand_card: CardHandSlot) -> bool:
 	
-	if self.player.game_manager.current_player != self.player:
+	if not self.player.is_current_player:
 		return false  # It is not our turn, so we cannot discard cards
+		
+	if self.player.has_lost:
+		return false  # We have lost, and can therfore not discard cards
 	
 	if hand_card not in $Cards.get_children():
 		return false  # We don't have that card, this is almost an assert().
@@ -103,6 +117,9 @@ func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
 
 	if $Cards.get_child_count() < self.player.game_rules.hand_size:
 		self.draw_card_from_deck()
+		
+	if self.get_cards().size() == 0:
+		self.player.lose()
 
 
 func fill_initial_hand() -> void:

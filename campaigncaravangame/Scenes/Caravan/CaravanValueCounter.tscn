@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3tn8xycuivvq"]
+
+[ext_resource type="Script" path="res://Scenes/Caravan/CaravanValueCounter.gd" id="1_eqqb4"]
+
+[node name="CaravanValueCounter" type="RichTextLabel"]
+offset_top = -29.0
+offset_right = 30.0
+offset_bottom = 1.0
+script = ExtResource("1_eqqb4")

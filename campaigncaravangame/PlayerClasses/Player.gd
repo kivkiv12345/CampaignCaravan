@@ -4,7 +4,6 @@ class_name Player
 
 @onready var hand: Hand = $Hand
 @export var game_manager: GameManager = null
-@export var has_lost: bool = false
 @export var game_rules: GameRules = GameRules.new()
 @export var caravans: Array[Caravan] = []
 @export var is_enemy_player: bool = true
@@ -13,7 +12,10 @@ class_name Player
 #	but at the same time it also reduces coupling to the GameManager node.
 var is_current_player: bool = false
 
+var has_lost: bool = false
+
 signal turn_ended(player: Player)
+signal lost(player: Player)
 
 func _ready() -> void:
 	
@@ -53,3 +55,4 @@ func end_turn() -> void:
 func lose() -> void:
 	print("Player %s loses" % self.name)
 	self.has_lost = true
+	self.lost.emit(self)

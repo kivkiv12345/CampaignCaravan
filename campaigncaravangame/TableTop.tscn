@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=11 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
 [ext_resource type="Script" path="res://PlayerClasses/HumanPlayer.gd" id="3_ys5fo"]
 [ext_resource type="Script" path="res://GameRules.gd" id="4_uinwl"]
-[ext_resource type="Script" path="res://Scenes/Caravan/CaravanValueCounter.gd" id="5_e3laf"]
+[ext_resource type="PackedScene" uid="uid://d3tn8xycuivvq" path="res://Scenes/Caravan/CaravanValueCounter.tscn" id="6_5qcvu"]
 [ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="6_xbpa7"]
 [ext_resource type="Script" path="res://PlayerClasses/BotPlayer.gd" id="7_ao5mc"]
+[ext_resource type="Script" path="res://Scenes/Hand/Deck/DeckSizeCounter.gd" id="8_uc4vp"]
 
 [sub_resource type="Resource" id="Resource_qwpsr"]
 script = ExtResource("4_uinwl")
@@ -42,7 +43,6 @@ offset_right = 1.0
 offset_bottom = -3.0
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
-has_lost = false
 game_rules = SubResource("Resource_qwpsr")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 is_enemy_player = false
@@ -55,13 +55,10 @@ offset_right = -518.0
 offset_bottom = 23.0
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan1" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter2" parent="Players/Player/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_top = -36.0
+offset_bottom = -6.0
 
 [node name="Caravan2" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -71,13 +68,10 @@ offset_right = -358.0
 offset_bottom = 23.0
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan2" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter" parent="Players/Player/Caravan2" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_top = -36.0
+offset_bottom = -6.0
 
 [node name="Caravan3" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -87,13 +81,10 @@ offset_right = -200.0
 offset_bottom = 23.0
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/Player/Caravan3" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter" parent="Players/Player/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_top = -36.0
+offset_bottom = -6.0
 
 [node name="Deck" parent="Players/Player" instance=ExtResource("6_xbpa7")]
 layout_direction = 2
@@ -104,6 +95,16 @@ offset_left = 544.0
 offset_right = 1.34497
 offset_bottom = 0.0
 
+[node name="DeckSizeCounter" type="RichTextLabel" parent="Players/Player/Deck"]
+layout_mode = 0
+offset_left = -15.6725
+offset_top = 43.0
+offset_right = 109.328
+offset_bottom = 68.0
+bbcode_enabled = true
+text = "[center]54 cards[/center]"
+script = ExtResource("8_uc4vp")
+
 [node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 offset_left = 196.0
 offset_top = -296.0
@@ -112,9 +113,7 @@ offset_bottom = -296.0
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
 game_manager = NodePath("../..")
-has_lost = false
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
-is_enemy_player = true
 
 [node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -124,13 +123,11 @@ offset_right = 808.0
 offset_bottom = 32.9999
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan1" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_left = 9.15527e-05
+offset_top = -33.0
+offset_bottom = -3.0
 
 [node name="Caravan2" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -140,13 +137,11 @@ offset_right = 648.0
 offset_bottom = 32.9999
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan2" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan2" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_left = 0.000106812
+offset_top = -33.0
+offset_bottom = -3.0
 
 [node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -156,13 +151,11 @@ offset_right = 490.0
 offset_bottom = 32.9999
 player = NodePath("..")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Players/BotPlayer/Caravan3" node_paths=PackedStringArray("caravan")]
+[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_top = -29.0
-offset_right = 30.0
-offset_bottom = 1.0
-script = ExtResource("5_e3laf")
-caravan = NodePath("..")
+offset_left = 0.00012207
+offset_top = -33.0
+offset_bottom = -3.0
 
 [node name="Deck" parent="Players/BotPlayer" instance=ExtResource("6_xbpa7")]
 layout_direction = 2
@@ -174,5 +167,8 @@ offset_top = 1.59863e-05
 offset_right = -172.0
 offset_bottom = 1.59863e-05
 
+[connection signal="lost" from="Players/Player" to="." method="on_player_lost"]
 [connection signal="turn_ended" from="Players/Player" to="." method="advance_turn"]
+[connection signal="deck_size_changed" from="Players/Player/Deck" to="Players/Player/Deck/DeckSizeCounter" method="_on_deck_deck_size_changed"]
+[connection signal="lost" from="Players/BotPlayer" to="." method="on_player_lost"]
 [connection signal="turn_ended" from="Players/BotPlayer" to="." method="advance_turn"]

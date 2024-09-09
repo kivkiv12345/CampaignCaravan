@@ -18,27 +18,6 @@ func _shuffled_hand() -> Array[CardHandSlot]:
 		
 	return cards
 
-func _discard_lowest_value_card() -> bool:
-	# TODO Kevin: This may not where we want to function to be implemented.
-	var hand_cards: Array[CardHandSlot] = self.hand.get_cards()
-	assert(hand_cards.size() > 0)
-	var lowest_hand_card: CardHandSlot = hand_cards[0]
-	
-	for hand_card in hand_cards:
-		if hand_card.card.rank < lowest_hand_card.card.rank:
-			lowest_hand_card = hand_card
-			
-	return self.hand.try_discard_card(lowest_hand_card)
-	
-	
-func can_discard_cards() -> bool:
-	return !self.has_lost
-
-func try_discard_lowest_value_card() -> bool:
-	if not self.can_discard_cards():
-		return false
-	self._discard_lowest_value_card()
-	return true
 
 func start_turn() -> void:
 	var cards: Array[CardHandSlot] = self._shuffled_hand()
@@ -83,6 +62,7 @@ func start_turn() -> void:
 				# Make sure playing kings on the enemy actually hurts them
 				if hand_card.card.rank == Card.Rank.KING:
 					if (legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()*2)) <= self.game_rules.caravan_max_value:
+						# TODO Kevin: There is a bug here, for some reason kings are played anyway.
 						print("DDD")
 						continue  # Playing this king would not overburden the enemy caravan
 				# Make sure we don't accidentally 'fix' an enemy caravan
@@ -101,7 +81,7 @@ func start_turn() -> void:
 				return
 	
 	# We didn't have any cards to play, so we must discard something.
-	if self.try_discard_lowest_value_card():
+	if self.hand.try_discard_card(self.hand.get_lowest_value_card()):
 		return  # We ended our turn by discarding a card
 		
 	# Maybe the reason we weren't able to perform any actions, is because we have lost.

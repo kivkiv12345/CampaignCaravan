@@ -2,6 +2,10 @@ extends Control
 
 class_name DeckScene
 
+
+signal card_drawn(deck: DeckScene, card: Card)
+signal deck_size_changed(deck: DeckScene)
+
 var deck: Deck = null
 @export var texture_seed: int = 12345  # Simply detemines the back textures of cards in the deck, the cards drawn or therein
 var rng = RandomNumberGenerator.new()
@@ -30,9 +34,18 @@ func fill_deck(_deck: Deck) -> void:
 		card.back_texture = deckcard_back.texture
 		
 		$Cards.add_child(deckcard_back)
+		
+	self.deck_size_changed.emit(self)
+
+
+func get_deck_size() -> int:
+	return $Cards.get_child_count()
 
 
 func get_card() -> Card:
 	var cards: Array[Node] = $Cards.get_children()
 	$Cards.remove_child(cards.back())
-	return self.deck.cards.pop_back()
+	var card: Card = self.deck.cards.pop_back()
+	self.deck_size_changed.emit(self)
+	self.card_drawn.emit(self, card)
+	return card

@@ -8,6 +8,8 @@ class_name GameManager
 @export var players: Array[Player] = []
 @export var starting_player: Player = null
 
+var game_over_man: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 
@@ -19,6 +21,7 @@ func _ready() -> void:
 	if self.starting_player == null:
 		self.starting_player = self.players[0]  # Default starting player
 	assert(self.starting_player in self.players)
+	self.starting_player.is_current_player = true
 
 const SoldStatus = Caravan.SoldStatus
 
@@ -33,7 +36,7 @@ func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
 
 	if caravan.get_value() < caravan.player.game_rules.caravan_min_value:
 		return SoldStatus.UNDERBURDENED
-	elif caravan.get_value() > caravan.player.game_rules.caravan_max_value+1:
+	elif caravan.get_value() > caravan.player.game_rules.caravan_max_value:
 		return SoldStatus.OVERBURDENED
 
 	for player in self.players:
@@ -47,16 +50,20 @@ func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
 		if opponent_caravan.get_value() > caravan.player.game_rules.caravan_max_value:
 			continue  # The opponent caravan is overburdened (Using our rules)
 
-		# TODO Kevin: How do we indicate that a Caravan is tied (for the UI)?
 		if opponent_caravan.get_value() > caravan.get_value():
+			# Opponent caravan must be sold, because it is outbidding us, without being overburdened
+			assert(opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value, opponent_caravan.player.game_rules.caravan_max_value+1))
 			# TODO Kevin: Maybe this is a bit spaghetti,
 			#	but we need to tell the other caravan, that it is outbid now.
-			opponent_caravan.emit_value_changed(opponent_caravan.get_value())
+			opponent_caravan.update_sold_status(SoldStatus.SOLD)
 			return SoldStatus.OUTBID
 		elif opponent_caravan.get_value() == caravan.get_value():
 			# TODO Kevin: This is just as spaghetti as the outbid situation.
-			opponent_caravan.emit_value_changed(opponent_caravan.get_value())
+			opponent_caravan.update_sold_status(SoldStatus.TIED)
 			return SoldStatus.TIED
+		elif caravan.get_value() > opponent_caravan.get_value():
+			# Tell the opponent caravan that we just outbid it (Yes; this is also spaghetti)
+			opponent_caravan.update_sold_status(SoldStatus.OUTBID)
 
 	# Success!
 	return SoldStatus.SOLD
@@ -87,10 +94,22 @@ static func _get_unique_max_key(dict: Dictionary) -> Player:
 
 
 func check_for_winner() -> Player:
-	
+
 	var players: Array[Player] = self.players
 	assert(players.size() != 0)
 	var num_caravans: int = players[0].game_rules.caravan_count
+	
+	# Check if all but 1 player has lost
+	var not_lost_player: Player = null
+	var num_active_players: int = 0
+	for player in players:
+		if not player.has_lost:
+			num_active_players += 1
+			not_lost_player = player
+			
+	assert(num_active_players != 0)
+	if num_active_players == 1:
+		return not_lost_player  # This is the last remaining player, so they must have won
 	
 	# Exactly 1 caravan for every "pair" must be sold for someone to win.
 	var index_sold: Array[bool] = []
@@ -135,16 +154,24 @@ func check_for_winner() -> Player:
 	return winning_player
 
 
+func celebrate_winner(winning_player: Player):
+	self.game_over_man = true
+	for player in self.players:
+		if player != winning_player:
+			player.lose()
+	print("Player %s has won!" % winning_player.name)
+
 
 func advance_turn(old_player: Player) -> void:
 	
-	var winning_player: Player = self.check_for_winner()
+	# We should be responsible for advanding to the next player.
+	# This also helps to guard against weird stuff from the Player.lost() signal.
+	assert(old_player.is_current_player)
 	
+	var winning_player: Player = self.check_for_winner()
 	if winning_player:
-		for player in self.players:
-			if player != winning_player:
-				player.lose()
-		print("Player %s has won!" % winning_player.name)
+		self.game_over_man = true
+		self.celebrate_winner(winning_player)
 		return
 	
 	old_player.is_current_player = false
@@ -163,5 +190,9 @@ func advance_turn(old_player: Player) -> void:
 	
 	# TODO Kevin: Starting the next turn from a signal,
 	#	will happen before the last (AI) turn will properly finish.
-	#	This probably means a game between AIs will play out in a recursive manner on the stack.
+	#	This probably means a game between AIs will play out recursivly on the stack.
 	next_player.start_turn()
+
+func on_player_lost(player: Player) -> void:
+	if not self.game_over_man and player.is_current_player:
+		self.advance_turn(player)
