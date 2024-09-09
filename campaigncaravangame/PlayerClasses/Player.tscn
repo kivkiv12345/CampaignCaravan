@@ -7,8 +7,6 @@
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_w5vls")
-has_lost = null
-is_enemy_player = null
 
 [node name="Hand" parent="." node_paths=PackedStringArray("player") instance=ExtResource("2_jcl0y")]
 layout_mode = 1

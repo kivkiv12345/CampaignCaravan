@@ -95,6 +95,11 @@ func can_play_number_card(hand_card: CardHandSlot) -> bool:
 		
 	var played_cards: Array[Node] = $PlayedCards.get_children()
 	
+	# TODO Kevin: In case of differnt rulesets,
+	#	should we follow the rules of: hand_card.hand.player or self.caravan.player ?
+	if played_cards.size() >= self.player.game_rules.caravan_max_cards:
+		return false  # This caravan is at, or over, its maximum permissable size.
+	
 	if played_cards.size() == 0:
 		# If the caravan is empty, it will not have a direction yet,
 		#	and so any numeric card is free to be played.
@@ -117,8 +122,8 @@ func can_play_number_card(hand_card: CardHandSlot) -> bool:
 		#	Maybe make this a gamerule too.
 		var has_queen: bool = played_cards[-1].num_queens() % 2
 
-		# TODO Kevin: Gamerule to control whether queens reverse direction of caravan
-		if has_queen:  # Reverse rank compare order
+		# TODO Kevin: Same question about which ruleset to follow here
+		if has_queen and self.player.game_rules.queen_changes_direction:  # Reverse rank compare order
 			# But hand_card.card.rank should still be compared
 			#	with the rank of the actual [-1] last card.
 			var temp_reverse: PlayedNumericCardSlot = last_card

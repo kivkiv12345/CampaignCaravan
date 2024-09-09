@@ -1,12 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=10 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
 [ext_resource type="Script" path="res://PlayerClasses/HumanPlayer.gd" id="3_ys5fo"]
+[ext_resource type="Script" path="res://GameRules.gd" id="4_uinwl"]
 [ext_resource type="Script" path="res://Scenes/Caravan/CaravanValueCounter.gd" id="5_e3laf"]
 [ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="6_xbpa7"]
 [ext_resource type="Script" path="res://PlayerClasses/BotPlayer.gd" id="7_ao5mc"]
+
+[sub_resource type="Resource" id="Resource_qwpsr"]
+script = ExtResource("4_uinwl")
+caravan_max_value = 26
+caravan_min_value = 21
+caravan_max_cards = 20
+queen_changes_suit = true
+queen_changes_direction = true
+number_card_max_faces = 6
+hand_size = 5
+deck_min_size = 30
+deck_max_size = 108
+deck_require_unique_cards = true
+deck_seed = 4
 
 [node name="TableTop" type="Node2D" node_paths=PackedStringArray("players", "starting_player")]
 position = Vector2(718, 447)
@@ -27,6 +42,8 @@ offset_right = 1.0
 offset_bottom = -3.0
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
+has_lost = false
+game_rules = SubResource("Resource_qwpsr")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 is_enemy_player = false
 
@@ -95,7 +112,9 @@ offset_bottom = -296.0
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
 game_manager = NodePath("../..")
+has_lost = false
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
+is_enemy_player = true
 
 [node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0

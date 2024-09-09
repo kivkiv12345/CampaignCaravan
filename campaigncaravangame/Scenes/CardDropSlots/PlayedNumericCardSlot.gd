@@ -83,6 +83,11 @@ func can_play_face_card(hand_card: CardHandSlot) -> bool:
 	if hand_card.hand.player.has_lost:
 		return false  # Players that have lost can only spectate
 	
+	# TODO Kevin: In case of differnt rulesets,
+	#	should we follow the rules of: hand_card.hand.player or self.caravan.player ?
+	if $PlayedFaceCards.get_child_count() >= hand_card.hand.player.game_rules.number_card_max_faces:
+		return false
+	
 	return hand_card.card.is_face_card()
 
 func try_play_face_card(hand_card: CardHandSlot) -> bool:
@@ -119,15 +124,20 @@ func num_queens() -> int:
 	return num_queens
 
 
-## Returns the suit of the card, accounting for any queens played on it
+## Returns the suit of the card, accounting for any queens played on it (if there's a gamerule for it)
 func get_effective_suit() -> Card.Suit:
-	# TODO Kevin: Gamerule to control whether queen changes suit
+
+	# Here we have no option but to follow the rules set by the owner of the caravan.
+	if not self.caravan.player.game_rules.queen_changes_suit:
+		return self.card.suit
+
 	var facecards = $PlayedFaceCards.get_children()
 	facecards.reverse()  # Reverse so we find the last queen first
 	for facecard in facecards:
 		if facecard.card.rank == Card.Rank.QUEEN:
 			# Return the suit of the last played queen.
 			return facecard.card.suit
+
 	return self.card.suit
 
 

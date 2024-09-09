@@ -3,11 +3,14 @@ extends Resource
 class_name GameRules
 
 
-@export var caravan_max_value: int = 26
-@export var caravan_min_value: int = 21
+@export var caravan_max_value: int = 26  # Maximum value to sell a caravan (inclusive)
+@export var caravan_min_value: int = 21  # Minimum value to sell a caravan (inclusive)
+@export var caravan_max_cards: int = 20  # Maximum number of cards that can be played in a caravan
 
 @export var queen_changes_suit: bool = true  # Whether playing a queen changes the direction of the caravan it's played on.
 @export var queen_changes_direction: bool = true  # Whether playing a queen changes the suit of its number card.
+
+@export var number_card_max_faces: int = 6  # Maximum number of face cards applied to a number card.
 
 @export var hand_size: int = 5  # Number of cards that may be kept in the hand during play
 
@@ -22,8 +25,19 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 #	It's not used to determine of 2 GameRules are equal.
 @export var deck_seed: int = 12345
 
+## Useful to disallow playing with different rules between players, not that this is a requirement
 func same_rules(game_rules: GameRules) -> bool:
 	if game_rules == self:
 		return true
 
-	return game_rules.caravan_max_value == self.caravan_max_value and game_rules.caravan_mix_value == self.caravan_mix_value and game_rules.queen_changes_suit == self.queen_changes_suit and game_rules.queen_changes_direction == self.queen_changes_direction and game_rules.hand_size == self.hand_size and game_rules.caravan_count == self.caravan_count and game_rules.deck_min_size == self.deck_min_size and game_rules.deck_max_size == self.deck_max_size and game_rules.deck_require_unique_cards == self.deck_require_unique_cards
+	return game_rules.caravan_max_value == self.caravan_max_value and \
+	game_rules.caravan_min_value == self.caravan_min_value and \
+	game_rules.caravan_max_cards == self.caravan_max_cards and \
+	game_rules.queen_changes_suit == self.queen_changes_suit and \
+	game_rules.queen_changes_direction == self.queen_changes_direction and \
+	game_rules.number_card_max_faces == self.number_card_max_faces and \
+	game_rules.hand_size == self.hand_size and \
+	game_rules.caravan_count == self.caravan_count and \
+	game_rules.deck_min_size == self.deck_min_size and \
+	game_rules.deck_max_size == self.deck_max_size and \
+	game_rules.deck_require_unique_cards == self.deck_require_unique_cards
