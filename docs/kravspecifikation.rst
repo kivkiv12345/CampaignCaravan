@@ -61,50 +61,55 @@ Kravspecifikation
 
    * - K3
      - KN1
-     - Produktet/spillet genkender når spillere vinder/taber
+     - Produktet/spillet respekterer spilleregler vedr. afskaffelse af kort
      - 1
 
    * - K4
+     - KN1
+     - Produktet/spillet respekterer spilleregler vedr. afskaffelse af karavaner
+     - 2
+
+   * - K5
+     - KN1
+     - Produktet/spillet genkender når spillere vinder/taber
+     - 1
+
+   * - K6
      - KN3
      - Multiplayer; Mulighed for at spille imod andre menneskelige modstandere (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere)
      - 2
 
-   * - K5
+   * - K7
      - KN3
      - Bot/CPU modstander; Mulighed for at spille imod en prædefineret algoritme el. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere)
      - 2
 
-   * - K6
+   * - K8
+     - KN4
+     - Spillet indeholder en guide som forklarer reglerne
+     - 3
+
+   * - K9
      - KN1
      - Mulighed for at tilpasse kortdæk (bredt udvalg af implementationsmuligheder)
      - 3
 
-   * - K7
+   * - K10
      - KN6
      - Produktet/spillet understøtter udvalgte tilpasninger af spilleregler
      - 3
 
-   * - K8
+   * - K11
      - KN4
      - Produktet kan lagre tilpassede spilledæk/spilleregler
      - 4
 
-   * - K9
-     - KN
-     - 
-     - 
-
-   * - K10
-     - KN
-     - 
+   * - K12
+     - KN5
+     - Produktet/spillet kan logge træk i spillet, til database og eller blot i spillet.
      - 
 
-   * - K11
+   * - K13
      - KN3
      - AI modstander (med ML). Sandsynligvis vha. integration med generativ AI model. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere). Denne modstandertype er nedprioriteret grundet kompleksitet.
-     - 
-
-   * - K12
-     - KN
-     - 
      - 
