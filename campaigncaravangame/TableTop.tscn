@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=12 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bb51cpbx6i6kn" path="res://Scenes/Hand/Deck/Deck.tscn" id="6_xbpa7"]
 [ext_resource type="Script" path="res://PlayerClasses/BotPlayer.gd" id="7_ao5mc"]
 [ext_resource type="Script" path="res://Scenes/Hand/Deck/DeckSizeCounter.gd" id="8_uc4vp"]
+[ext_resource type="PackedScene" uid="uid://l8saoo5gq6v7" path="res://Scenes/WinLoseLabel.tscn" id="9_wpiup"]
 
 [sub_resource type="Resource" id="Resource_qwpsr"]
 script = ExtResource("4_uinwl")
@@ -106,6 +107,18 @@ bbcode_enabled = true
 text = "[center]54 cards[/center]"
 script = ExtResource("8_uc4vp")
 
+[node name="WinLoseLabel" parent="Players/Player" instance=ExtResource("9_wpiup")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -632.0
+offset_top = -50.0
+offset_right = -200.0
+offset_bottom = -9.0
+grow_horizontal = 1
+grow_vertical = 1
+
 [node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 offset_left = 196.0
 offset_top = -296.0
@@ -168,8 +181,25 @@ offset_top = 1.59863e-05
 offset_right = -172.0
 offset_bottom = 1.59863e-05
 
+[node name="WinLoseLabel" parent="Players/BotPlayer" instance=ExtResource("9_wpiup")]
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 395.0
+offset_top = -31.999
+offset_right = 827.0
+offset_bottom = 14.001
+grow_horizontal = 1
+grow_vertical = 1
+text = "[center]DUNNO[/center]"
+
 [connection signal="lost" from="Players/Player" to="." method="on_player_lost"]
+[connection signal="lost" from="Players/Player" to="Players/Player/WinLoseLabel" method="_on_player_lost"]
 [connection signal="turn_ended" from="Players/Player" to="." method="advance_turn"]
+[connection signal="won" from="Players/Player" to="Players/Player/WinLoseLabel" method="_on_player_won"]
 [connection signal="deck_size_changed" from="Players/Player/Deck" to="Players/Player/Deck/DeckSizeCounter" method="_on_deck_deck_size_changed"]
 [connection signal="lost" from="Players/BotPlayer" to="." method="on_player_lost"]
+[connection signal="lost" from="Players/BotPlayer" to="Players/BotPlayer/WinLoseLabel" method="_on_player_lost"]
 [connection signal="turn_ended" from="Players/BotPlayer" to="." method="advance_turn"]
+[connection signal="won" from="Players/BotPlayer" to="Players/BotPlayer/WinLoseLabel" method="_on_player_won"]

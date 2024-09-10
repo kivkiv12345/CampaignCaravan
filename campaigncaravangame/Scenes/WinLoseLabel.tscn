@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://l8saoo5gq6v7"]
+
+[ext_resource type="Script" path="res://Scenes/WinLoseLabel.gd" id="1_din6r"]
+
+[node name="WinLoseLabel" type="RichTextLabel"]
+anchors_preset = -1
+anchor_right = 0.405
+anchor_bottom = 0.077
+offset_right = -0.560028
+offset_bottom = 0.103996
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+bbcode_enabled = true
+text = "[center]LOSER[/center]"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_din6r")

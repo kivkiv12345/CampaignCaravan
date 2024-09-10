@@ -16,6 +16,7 @@ var has_lost: bool = false
 
 signal turn_ended(player: Player)
 signal lost(player: Player)
+signal won(player: Player)
 
 func _ready() -> void:
 	
@@ -50,6 +51,13 @@ func start_turn() -> void:
 ## Called by the various objects in the game
 func end_turn() -> void:
 	self.turn_ended.emit(self)
+
+
+func win() -> void:
+	if self.has_lost:
+		return  # Can we win, after losing?
+	# TODO Kevin: Actually, I don't know if we want to print here
+	self.won.emit(self)
 
 
 func lose() -> void:

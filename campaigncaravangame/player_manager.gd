@@ -184,6 +184,7 @@ func celebrate_winner(winning_player: Player):
 			player.lose()
 
 	print("Player %s has won!" % winning_player.name)
+	winning_player.win()
 
 
 func advance_turn(old_player: Player) -> void:
