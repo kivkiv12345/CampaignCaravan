@@ -7,7 +7,7 @@ class_name CardSlot
 var card: Card = null
 @export var fix_rotation: bool = true  # Allow control over whether to correct rotation
 
-func _init() -> void:
+func _ready() -> void:
 	# We are connecting these signals in code,
 	#	to make sure they're also applied to subclasses.
 	self.mouse_entered.connect(self._on_mouse_entered)

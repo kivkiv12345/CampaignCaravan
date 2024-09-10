@@ -105,6 +105,7 @@ func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: 
 	# Duplicate the base deck to create a potential full deck
 	self.cards = []
 
+	@warning_ignore( "integer_division" )
 	var num_decks: int = max_size/self._base_deck.size()
 	if max_size % self._base_deck.size():  # Simulate ceil()
 		num_decks += 1

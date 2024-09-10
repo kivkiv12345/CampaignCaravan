@@ -140,7 +140,7 @@ func try_discard_card(hand_card: CardHandSlot) -> bool:
 	self._discard_card(hand_card)
 	return true
 
-func _on_card_played(dropslot: CardSlot, played_from: CardHandSlot) -> void:
+func _on_card_played(_dropslot: CardSlot, played_from: CardHandSlot) -> void:
 
 	assert(played_from in $Cards.get_children())
 	$Cards.remove_child(played_from)

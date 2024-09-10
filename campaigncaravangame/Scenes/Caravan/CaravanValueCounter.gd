@@ -15,11 +15,11 @@ func _ready() -> void:
 	self.caravan.new_sold_status.connect(self._update_sold_status)
 	self.text = String.num_int64(self.caravan.get_value())
 	if self.fix_rotation:
-		self.pivot_offset = Vector2i(self.size.x, self.size.y) / 2
+		self.pivot_offset = Vector2(self.size.x, self.size.y) / 2.0
 		self.rotation = -self.get_global_transform_with_canvas().get_rotation()
 
 
-func _update_sold_status(caravan: Caravan, sold_status: Caravan.SoldStatus) -> void:
+func _update_sold_status(_caravan: Caravan, sold_status: Caravan.SoldStatus) -> void:
 	
 	const SoldStatus = Caravan.SoldStatus
 	
@@ -34,11 +34,11 @@ func _update_sold_status(caravan: Caravan, sold_status: Caravan.SoldStatus) -> v
 			self.self_modulate = Color.WHITE
 
 
-func _update_shown_value(caravan: Caravan, old_value: int, new_value: int) -> void:
+func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> void:
 	
 	const SoldStatus = Caravan.SoldStatus
 	
-	match caravan.player.game_manager.get_caravan_sold_status(caravan):
+	match _caravan.player.game_manager.get_caravan_sold_status(_caravan):
 		SoldStatus.OVERBURDENED:
 			self.self_modulate = Color.RED
 		SoldStatus.TIED:

@@ -114,14 +114,14 @@ static func _get_unique_max_key(dict: Dictionary) -> Player:
 
 func check_for_winner() -> Player:
 
-	var players: Array[Player] = self.players
-	assert(players.size() != 0)
-	var num_caravans: int = players[0].game_rules.caravan_count
+	var _players: Array[Player] = self.players
+	assert(_players.size() != 0)
+	var num_caravans: int = _players[0].game_rules.caravan_count
 	
 	# Check if all but 1 player has lost
 	var not_lost_player: Player = null
 	var num_active_players: int = 0
-	for player in players:
+	for player in _players:
 		if not player.has_lost:
 			num_active_players += 1
 			not_lost_player = player
@@ -139,7 +139,7 @@ func check_for_winner() -> Player:
 
 	# TODO Kevin: This loop is not super efficient,
 	#	and could be improved by using a better API than caravan_is_sold()
-	for player in players:
+	for player in _players:
 		
 		# We don't yet know how to check for a winner, if there is an unequal number of caravans.
 		assert(player is Player)

@@ -6,18 +6,18 @@ class_name Card
 
 # Enums for card suits and ranks
 # Start from 1, as to reserve Vector2i.ZERO for errors
-enum Suit { CLOVER = 1, DIAMOND, HEARTS, SPADES, JOKER0, JOKER1 }  # Jokers don't have a suit, and we use this fact to uniquely idenfity either of them (for texturing purposes).
-enum Rank { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, JOKER }
+enum Suit { NONE = 0, CLOVER = 1, DIAMOND, HEARTS, SPADES, JOKER0, JOKER1 }  # Jokers don't have a suit, and we use this fact to uniquely idenfity either of them (for texturing purposes).
+enum Rank { NONE = 0, ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, JOKER }
 
-var suit: Suit
-var rank: Rank
+var suit: Suit = Suit.NONE
+var rank: Rank = Rank.NONE
 var card_texture: Texture2D
 var back_texture: Texture2D
 
-func _init(suit: Suit, rank: Rank):
-	self.suit = suit
-	self.rank = rank
-	self.card_texture = TextureManager.get_card_texture(suit, rank)
+func _init(_suit: Suit, _rank: Rank):
+	self.suit = _suit
+	self.rank = _rank
+	self.card_texture = TextureManager.get_card_texture(_suit, _rank)
 
 
 func is_face_card() -> bool:

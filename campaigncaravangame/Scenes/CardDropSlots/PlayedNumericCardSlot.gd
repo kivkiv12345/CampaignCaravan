@@ -6,13 +6,13 @@ class_name PlayedNumericCardSlot
 # TODO Kevin: Maybe we should make played cards have a fading modulation.
 #	That way it would be easier to see which card the opponent just played
 
-func set_caravan(caravan: Caravan) -> void:
-	super(caravan)
+func set_caravan(_caravan: Caravan) -> void:
+	super(_caravan)
 
-	$OpenFaceCardSlot.set_caravan(caravan)
+	$OpenFaceCardSlot.set_caravan(_caravan)
 
 	for facecard in $PlayedFaceCards.get_children():
-		facecard.set_caravan(caravan)
+		facecard.set_caravan(_caravan)
 
 
 func _play_face_card(hand_card: CardHandSlot) -> void:
@@ -119,12 +119,12 @@ func get_value() -> int:
 
 func num_queens() -> int:
 	assert(self.card.is_numeric_card())
-	var num_queens: int = 0
+	var _num_queens: int = 0
 	for facecard in $PlayedFaceCards.get_children():
 		assert(facecard is FaceCardSlot)
 		if facecard.card.rank == Card.Rank.QUEEN:
-			num_queens += 1
-	return num_queens
+			_num_queens += 1
+	return _num_queens
 
 
 ## Returns the suit of the card, accounting for any queens played on it (if there's a gamerule for it)

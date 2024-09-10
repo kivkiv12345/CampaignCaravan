@@ -11,16 +11,16 @@ var destination: CardSlot = null  # Will be set by the OpenCardSlot._drop_data()
 var card: Card = null  # Determines the preview
 
 
-func _init(source: CardHandSlot, card: Card, render_offset: Vector2 = Vector2.ZERO):
-	self.source = source
-	self.card = card
-	self.texture = card.card_texture
+func _init(_source: CardHandSlot, _card: Card, render_offset: Vector2 = Vector2.ZERO):
+	self.source = _source
+	self.card = _card
+	self.texture = _card.card_texture
 
 	self.tree_exiting.connect(self._on_tree_exiting)
 	self.tree_entered.connect(self._on_tree_entered)
 	
-	self.expand_mode = source.expand_mode
-	self.size = source.size
+	self.expand_mode = _source.expand_mode
+	self.size = _source.size
 		
 	if render_offset:
 		self.position = render_offset
