@@ -177,12 +177,12 @@ func celebrate_winner(winning_player: Player):
 	
 	if self.game_over_man:  # We have already celebrated the winner
 		return
+	self.game_over_man = true
 	
 	for player in self.players:
 		if player != winning_player:
 			player.lose()
-			
-	self.game_over_man = true
+
 	print("Player %s has won!" % winning_player.name)
 
 
