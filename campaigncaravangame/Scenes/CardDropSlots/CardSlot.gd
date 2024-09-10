@@ -38,14 +38,45 @@ func _on_mouse_entered():
 	
 	if not self.has_method("_can_drop_data"):
 		return
-	
+
 	var drag_data = get_viewport().gui_get_drag_data()
 	
-	# TODO Kevin: Snappy DraggedCard
-	
+	if not drag_data is DraggedCard:
+		return
+		
 	if self._can_drop_data(get_viewport().get_mouse_position(), drag_data):
 		self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
+		
+		if not self.is_in_group("OpenCardSlots"):
+			# CardHandSlot, or other subclass that we don't want snapping for.
+			# This is probably not very SOLID
+			# Ideally we would connect this signal in a subclass,
+			# but GDScript has neither multiple inheritance nor proper interfaces.
+			# So OpenCardSlots is left as a humble group.
+			return
+		
+		drag_data.visible = false
+		assert(self.card == null)
+		assert(self.texture == null)
+		# Setting the card here is merely meant as a preview to actually playing the card, 
+		#	hence the previous asserts
+		self.set_card(drag_data.card)
 
 ## Inspired by: https://forum.godotengine.org/t/how-to-change-the-color-of-a-label-after-the-mouse-hovers-over-a-button/52092/2
 func _on_mouse_exited():
+	
 	self.set_modulate(Color.WHITE)
+	
+	if not self.is_in_group("OpenCardSlots"):
+		# CardHandSlot, or other subclass that we don't want snapping for.
+		# This is probably not very SOLID
+		# Ideally we would connect this signal in a subclass,
+		# but GDScript has neither multiple inheritance nor proper interfaces.
+		# So OpenCardSlots is left as a humble group.
+		return
+
+	self.remove_card()
+	var drag_data = get_viewport().gui_get_drag_data()
+	
+	if drag_data is DraggedCard:
+		drag_data.visible = true

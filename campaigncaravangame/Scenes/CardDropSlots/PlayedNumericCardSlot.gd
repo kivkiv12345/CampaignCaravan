@@ -3,6 +3,9 @@ extends CaravanCardSlot
 class_name PlayedNumericCardSlot
 
 
+# TODO Kevin: Maybe we should make played cards have a fading modulation.
+#	That way it would be easier to see which card the opponent just played
+
 func set_caravan(caravan: Caravan) -> void:
 	super(caravan)
 
