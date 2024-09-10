@@ -2,8 +2,8 @@ extends Resource
 
 class_name Deck
 
-const MIN_SIZE = 30
-const MAX_SIZE = 108
+#const MIN_SIZE = 30
+#const MAX_SIZE = 108
 
 const Suit := Card.Suit
 const Rank := Card.Rank
@@ -98,14 +98,22 @@ var cards: Array[Card] = []
 
 func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: int = 0) -> void:
 	# Ensure valid size bounds
-	assert(min_size >= MIN_SIZE and max_size <= MAX_SIZE and min_size <= max_size,
-		"Error: Invalid deck size range. Must be between %d and %d, with min_size <= max_size." % [MIN_SIZE, MAX_SIZE])
+	#assert(min_size >= MIN_SIZE and max_size <= MAX_SIZE and min_size <= max_size,
+		#"Error: Invalid deck size range. Must be between %d and %d, with min_size <= max_size." % [MIN_SIZE, MAX_SIZE])
+
 
 	# Duplicate the base deck to create a potential full deck
-	self.cards = _base_deck.duplicate() + _base_deck.duplicate()
+	self.cards = []
+
+	var num_decks: int = max_size/self._base_deck.size()
+	if max_size % self._base_deck.size():  # Simulate ceil()
+		num_decks += 1
+
+	for __ in range(num_decks):
+		self.cards += self._base_deck.duplicate()
+
 
 	self.shuffle(_seed)
-
 
 	var rng = RandomNumberGenerator.new()
 	rng.seed = _seed

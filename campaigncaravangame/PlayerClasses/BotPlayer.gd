@@ -4,23 +4,22 @@ class_name BotPlayer
 
 var rng = RandomNumberGenerator.new()
 
-func _shuffled_hand() -> Array[CardHandSlot]:
-	var cards: Array[CardHandSlot] = self.hand.get_cards()
+func _seeded_shuffle(array: Array[Variant]) -> Array[Variant]:
 
 	# Shuffle the cards using the seeded RNG
-	for i in range(cards.size()):
-		var j = self.rng.randi_range(0, cards.size() - 1)
+	for i in range(array.size()):
+		var j = self.rng.randi_range(0, array.size() - 1)
 
 		# Swap self.cards[i] and self.cards[j]
-		var cardi: CardHandSlot = cards[i]
-		cards[i] = cards[j]
-		cards[j] = cardi
+		var arrayi: Variant = array[i]
+		array[i] = array[j]
+		array[j] = arrayi
 		
-	return cards
+	return array
 
 
 func start_turn() -> void:
-	var cards: Array[CardHandSlot] = self._shuffled_hand()
+	var cards: Array[CardHandSlot] = self._seeded_shuffle(self.hand.get_cards())
 	assert(cards.size())
 	
 	for hand_card in cards:
@@ -30,8 +29,8 @@ func start_turn() -> void:
 		#	We should also prefer to play them on our own caravans,
 		#	as playing them on enemy caravans might help them more than we harm them.
 		
-		# TODO Kevin: Should we shuffle the legal slots too?
 		var legal_slots: Array[CaravanCardSlot] = self.get_legal_slots(hand_card)
+		self._seeded_shuffle(legal_slots)
 		
 		if legal_slots.size() == 0:
 			continue  # Nowhere to play this card

@@ -48,11 +48,12 @@ func _on_mouse_entered():
 		self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
 		
 		if not self.is_in_group("OpenCardSlots"):
-			# CardHandSlot, or other subclass that we don't want snapping for.
-			# This is probably not very SOLID
+			# This is a CardHandSlot, or other subclass that we don't want snapping for.
+			# This "if" is probably not very SOLID
 			# Ideally we would connect this signal in a subclass,
 			# but GDScript has neither multiple inheritance nor proper interfaces.
 			# So OpenCardSlots is left as a humble group.
+			# TODO Kevin: Actually, we could probably move parts of this signal to CaravanCardSlot
 			return
 		
 		drag_data.visible = false
@@ -73,6 +74,7 @@ func _on_mouse_exited():
 		# Ideally we would connect this signal in a subclass,
 		# but GDScript has neither multiple inheritance nor proper interfaces.
 		# So OpenCardSlots is left as a humble group.
+		# TODO Kevin: Actually, we could probably move parts of this signal to CaravanCardSlot
 		return
 
 	self.remove_card()

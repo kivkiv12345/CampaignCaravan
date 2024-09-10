@@ -23,7 +23,7 @@ hand_size = 5
 deck_min_size = 30
 deck_max_size = 108
 deck_require_unique_cards = true
-deck_seed = 4
+deck_seed = 6
 
 [node name="TableTop" type="Node2D" node_paths=PackedStringArray("players", "starting_player")]
 position = Vector2(718, 447)

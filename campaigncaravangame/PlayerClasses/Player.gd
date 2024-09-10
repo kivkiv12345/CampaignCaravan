@@ -53,6 +53,12 @@ func end_turn() -> void:
 
 
 func lose() -> void:
+	if self.has_lost:
+		return
+
+	if self.hand.get_cards().size() == 0:
+		print("Player %s has run out of cards" % self.name)
+
 	print("Player %s loses" % self.name)
 	self.has_lost = true
 	self.lost.emit(self)
