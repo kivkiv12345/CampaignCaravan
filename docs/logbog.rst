@@ -68,3 +68,38 @@ og bruger "ducktyping" fremfor formelle interfaces.
 Derfor har jeg været specialt udfordet med OpenFaceCardSlot, som jeg både vil nedarve fra OpenCardSlot og FaceCardSlot klasser.
 En OpenCardSlot ville have været nyttig til typetjek.
 Men samtidig så jeg FaceCardSlot som værende en mere vigtigt klasse, til at indføre et (number_card: PlayedNumericCardSlot) felt.
+
+
+7/9-2024 - 8/9-2024 (Weekend Uge #1)
+------------------
+Weekend logbogen koster ekstra, men den kan tilgås gratis på:
+https://github.com/kivkiv12345/CampaignCaravan/commits/master/
+
+
+9/9-2024 (Mandag Uge #2)
+------------------
+I dag var planen at endelig færdiggøre tidsplanen, men først skulle kravspecifikationen færddiggøres.
+Mange af de manglende punkter dertil var åbenlåse, men alligevel havde jeg svært ved at nå de 12-15 krav jeg gerne ville op på.
+Efter at have skrevet, og tænkt, mig til en håndfuld punkter, besluttede jeg mig at overveje de sidste over et par linje kode (koden skulle nemlig også plejes).
+Vedrørende koden lå mit fokus helt naturligt på Quality of Life of bugfixes. Derfor fik jeg denne dag implimenteret en grafisk præsentation af solgte karavane.
+Denne tilføjelse gav hjemmel til refleksioner Vedrørende Caravan klassen. Caravan klassen er nemlig kun meget løst koblet til det større spilstadie,
+men hvor vidt den er solgt afhænger meget af værdien på den overstående modstanderkaravane.
+
+
+10/9-2024 (Tirsdag Uge #2)
+------------------
+Det er efterhånden flere dage jeg har frustreret mig over hvor bøvligt det kunne være at spille ansigtskort på store karavaner.
+Det skyldes den store mænge tætliggende nummerkort, som gjorde det svært at se hvor man faktisk var ved at lægge sit kort.
+Situationen var heller ikke afhjulpet af det faktum at de var svært at se den grønne markering på de åbne felter.
+
+Gud ske lov kom løsningen som en åbenbaring i går aftes.
+Jeg skal bare vise en forhåndsvisning (forgrønnet endda) af det løftede kort,
+i det åbne felt, når man holder musen derover.
+Dette giver også en følelse af at kortet er magnetisk tiltrukket de åbne felter.
+Og specialt med ansigtskort klargører det hvor kortet vil komme til at ligge.
+
+Desværre fremmer denne fantastiske funktionalitet ikke tidsplanen,
+hvilket jeg i stedet gjorde ved faktisk at lave tidsplanen.
+
+Derudover tror jeg også jeg er ved at blive syg. Jeg føler mig dog heldigvis ikke dårlig (endnu?).
+Men min næse har gennemgået størstedelen af en køkkenrulle, og dette faktum brister mine skraldespande.
