@@ -86,7 +86,7 @@ Kravspecifikation
 
    * - K8
      - KN4
-     - Spillet indeholder en guide som forklarer reglerne
+     - Spillet indeholder en guide/instruktioner som forklarer reglerne
      - 3
 
    * - K9
@@ -107,9 +107,9 @@ Kravspecifikation
    * - K12
      - KN5
      - Produktet/spillet kan logge træk i spillet, til database og eller blot i spillet.
-     - 
+     - 5
 
    * - K13
      - KN3
      - AI modstander (med ML). Sandsynligvis vha. integration med generativ AI model. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere). Denne modstandertype er nedprioriteret grundet kompleksitet.
-     - 
+     - 6
