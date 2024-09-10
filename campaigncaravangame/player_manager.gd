@@ -220,3 +220,6 @@ func advance_turn(old_player: Player) -> void:
 func on_player_lost(player: Player) -> void:
 	if not self.game_over_man and player.is_current_player:
 		self.advance_turn(player)
+
+
+# TODO Kevin: Add panels, underlaying the caravans, showing how they are paired

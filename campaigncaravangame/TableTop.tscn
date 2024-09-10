@@ -19,6 +19,7 @@ caravan_max_cards = 20
 queen_changes_suit = true
 queen_changes_direction = true
 number_card_allow_faces_first_round = true
+number_card_require_face_match_suit = true
 number_card_max_faces = 6
 hand_size = 5
 deck_min_size = 30

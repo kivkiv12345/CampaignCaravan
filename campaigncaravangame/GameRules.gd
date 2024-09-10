@@ -11,6 +11,7 @@ class_name GameRules
 @export var queen_changes_direction: bool = true  # Whether playing a queen changes the suit of its number card.
 
 @export var number_card_allow_faces_first_round: bool = true  # TODO Kevin: Implement
+@export var number_card_require_face_match_suit: bool = true  # TODO Kevin: Implement
 @export var number_card_max_faces: int = 6  # Maximum number of face cards applied to a number card.
 
 @export var hand_size: int = 5  # Number of cards that may be kept in the hand during play
@@ -36,6 +37,8 @@ func same_rules(game_rules: GameRules) -> bool:
 	game_rules.caravan_max_cards == self.caravan_max_cards and \
 	game_rules.queen_changes_suit == self.queen_changes_suit and \
 	game_rules.queen_changes_direction == self.queen_changes_direction and \
+	game_rules.number_card_allow_faces_first_round == self.number_card_allow_faces_first_round and \
+	game_rules.number_card_require_face_match_suit == self.number_card_require_face_match_suit and \
 	game_rules.number_card_max_faces == self.number_card_max_faces and \
 	game_rules.hand_size == self.hand_size and \
 	game_rules.caravan_count == self.caravan_count and \

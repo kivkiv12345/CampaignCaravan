@@ -49,3 +49,7 @@ func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> 
 			self.self_modulate = Color.WHITE
 
 	self.text = String.num_int64(new_value)
+
+
+# TODO Kevin: Make like a _on_pending_value_change() signal handler,
+#	that shows an arrow to the new value. Would also need an _on_abort_pending_value_change()
