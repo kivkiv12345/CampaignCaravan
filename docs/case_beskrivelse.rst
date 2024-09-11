@@ -1,10 +1,6 @@
 
-Case Beskrivelse
-===========================
-
-
 Case 
----------------------
+^^^^^^^^^^^^^^^^^^
 Videospillet Fallout New Vegas opfandt kortspillet Caravan,
 som spilles med (traditionelt 30-108) normale spillekort.
 I videospillet kan kortspillet kun spilles under visse omstændigheder,
@@ -19,7 +15,7 @@ men tilsyneladende er denne tjeneste ikke længere tilgængelig.
 
 
 Om Spillet
-~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 Spillet kan i princippet spilles med flere end 2 spillere,
 men af pragmatiske grunde spilles det kun som en duel mellem 2 spillere.
 Her er målet at opbygge 3 "karavaner" (bunker af kort).
@@ -32,6 +28,6 @@ Er spillet alligevel uafgjort, fortsætter det indtil én spiller vinder.
 
 
 Problemformulering
----------------------
+^^^^^^^^^^^^^^^^^^
 Hvordan kan jeg bygge en udgave af kortspillet Caravan,
 som kan spilles uafhængigt af Fallout New Vegas?
