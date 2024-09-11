@@ -103,3 +103,24 @@ hvilket jeg i stedet gjorde ved faktisk at lave tidsplanen.
 
 Derudover tror jeg også jeg er ved at blive syg. Jeg føler mig dog heldigvis ikke dårlig (endnu?).
 Men min næse har gennemgået størstedelen af en køkkenrulle, og dette faktum brister mine skraldespande.
+
+
+11/9-2024 (Onsdag Uge #2)
+------------------
+Fokus i dag har eksklusivt været på procesrapporten.
+Generelt er jeg ret langsom til at skrive rapporter, og i dag har ikke været en undtagelse.
+Alligevel er jeg ret tilfreds med fremskridtet i dag.
+Indtil videre har jeg gjort mig massere af tanker under udviklingen af spillet.
+Desværre føler jeg at disse tanker er flygtige, hvor jeg enten kan nå at implementere dem i spillet,
+eller dokumentere dem i rapporterne.
+Her lyder svaret nok åbenlyst (til dig min kære læser),
+men selv har jeg svært ved at vælge hvad der skal komme først.
+Jeg kan skrive koden først, og senere komme tilbage udvride tankerne bag den i procesrapporten.
+Men denne process indebærer en vis tab af præcesion og detaljer.
+Ligevidt kan procesrapporten skrives med førsteprioritet,
+men det er meget svært for mig at, både præcist og fuldendt, dokumentere mine tanker.
+Derfor er det heller ikke ideelt at skrive koden på bagkant af dokumentationen
+(især fordi den da beskrevede implementation kan være inkompatibel med virkeligheden).
+
+Ureleteret er jeg heller ikke snottet længere.
+Næsen skulle lige pustes igennem i morges, men efter det har den ikke været noget problem.
