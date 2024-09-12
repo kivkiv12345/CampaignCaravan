@@ -72,7 +72,7 @@ hvor der sikres at klassen ikke kan instantieres uden at blive tildelt objekter 
 Yderligere er konstruktøren et naturligt punkt at udføre fornuftighedstjek mellem metodens argumenter,
 og dermed sikre en samhørighed til klassens funktion.
 
-** Design Patterns velgenet til Godot **
+**Design Patterns velgenet til Godot**
 
 "Design Patterens" (i forhold til programmering) er en række typiske anvendte teknikker,
 hvor brugen deraf giver et fagsprog som gør det lettere at beskrive problemstillinger og løsninger dertil.
@@ -83,7 +83,6 @@ i deres (1994) bog _"Design Patterns: Elements of Reusable Object-Oriented Softw
 Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/design-patterns
 
 * Observer Pattern
-
     Godot's brug af Observer mønstret kaldes "Signals".
     Her kan en klasse/node definere en række signaler som den er i stand til at udsende.
     Herefter kan "lyttere" forbinde metoder som skal køres når signalet udsendes.
@@ -127,8 +126,9 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
             for player in players:
                 assert(player is Player)
                 player.init()
+                ...
 
-** Programmeringssprog supportereret af Godot **
+**Programmeringssprog supportereret af Godot**
 
 Godot supporterer flere forskellige programmeringssprog:
 
@@ -218,7 +218,7 @@ For mig var én af Godot's store salgspunkter muligheden for at eksportere til H
 Jeg ser det som en kæmpe fordel at kunne hoste spillet som en server,
 og blot inkludere et link dertil i disse rapporter.
 
-** Alternativer **
+**Alternativer**
 
 * Unity
     Unity står som én af de 2 kæmper inden for spiludviklingsværktøjer.
