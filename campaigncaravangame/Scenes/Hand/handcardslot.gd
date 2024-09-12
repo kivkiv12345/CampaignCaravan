@@ -7,6 +7,7 @@ class_name CardHandSlot
 
 
 func _ready() -> void:
+	super()
 	self.hand = self.find_parent("Hand")
 
 
