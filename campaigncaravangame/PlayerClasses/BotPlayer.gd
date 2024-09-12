@@ -81,14 +81,13 @@ func start_turn() -> void:
 	
 	# We didn't have any cards to play, so we must discard something.
 	if self.hand.try_discard_card(self.hand.get_lowest_value_card()):
-		# TODO Kevin: There seems to be a bug where the AI can end up discarding/playing cards without drawing new ones.
 		print("FFF")
 		return  # We ended our turn by discarding a card
 		
 	# Maybe the reason we weren't able to perform any actions, is because we have lost.
 	if self.has_lost:
 		# How about that.
-		# You could argue we should this first,
+		# You could argue we should check this first,
 		# but doing it down here allows us to check if all of our guards are working correctly.
 		return
 	

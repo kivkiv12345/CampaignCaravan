@@ -81,7 +81,7 @@ https://github.com/kivkiv12345/CampaignCaravan/commits/master/
 I dag var planen at endelig færdiggøre tidsplanen, men først skulle kravspecifikationen færddiggøres.
 Mange af de manglende punkter dertil var åbenlåse, men alligevel havde jeg svært ved at nå de 12-15 krav jeg gerne ville op på.
 Efter at have skrevet, og tænkt, mig til en håndfuld punkter, besluttede jeg mig at overveje de sidste over et par linje kode (koden skulle nemlig også plejes).
-Vedrørende koden lå mit fokus helt naturligt på Quality of Life of bugfixes. Derfor fik jeg denne dag implimenteret en grafisk præsentation af solgte karavane.
+Vedrørende koden lå mit fokus helt naturligt på Quality of Life of bugfixes. Derfor fik jeg denne dag implementeret en grafisk præsentation af solgte karavane.
 Denne tilføjelse gav hjemmel til refleksioner Vedrørende Caravan klassen. Caravan klassen er nemlig kun meget løst koblet til det større spilstadie,
 men hvor vidt den er solgt afhænger meget af værdien på den overstående modstanderkaravane.
 
@@ -124,3 +124,16 @@ Derfor er det heller ikke ideelt at skrive koden på bagkant af dokumentationen
 
 Ureleteret er jeg heller ikke snottet længere.
 Næsen skulle lige pustes igennem i morges, men efter det har den ikke været noget problem.
+
+
+12/9-2024 (Torsdag Uge #2)
+------------------
+I dag har fortsat handlet om procesrapporten,
+men derudover har jeg også eksperimenteret lidt med mine hostingmuligheder herhjemme.
+Jeg har en Raspberry PI 4, som jeg nu har koblet op i mit teknikrum.
+For én gangs skyld fungerede port-forwarding også bare uden problemer,
+selv endda uden statisk IP adresse.
+Uanset hvad er planen at jeg skal have skaffet mig et domæne,
+men muligvis at DynDNS ville kunne erstatte en statisk IP adresse derefter.
+
+I løbet af dagen har jeg haft stor success med brugen af GitHub Pages til hosting af spillet.
