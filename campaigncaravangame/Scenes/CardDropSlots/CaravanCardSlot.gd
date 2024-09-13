@@ -13,7 +13,7 @@ func set_caravan(_caravan: Caravan) -> void:
 
 
 ## Abstarct method
-func _play_card(_hand_card: CardHandSlot) -> void:
+func _play_card(_hand_card: CardHandSlot, animate: bool = true) -> void:
 	assert(false, "Abstarct method")
 
 ## Abstarct method
@@ -21,10 +21,10 @@ func can_play_card(_hand_card: CardHandSlot) -> bool:
 	assert(false, "Abstarct method")
 	return false
 
-func try_play_card(hand_card: CardHandSlot) -> bool:
+func try_play_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	
 	if not self.can_play_card(hand_card):
 		return false
 		
-	self._play_card(hand_card)
+	self._play_card(hand_card, animate)
 	return true

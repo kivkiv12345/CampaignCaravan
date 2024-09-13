@@ -15,7 +15,7 @@ func set_caravan(_caravan: Caravan) -> void:
 		facecard.set_caravan(_caravan)
 
 
-func _play_face_card(hand_card: CardHandSlot) -> void:
+func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
 	
@@ -34,14 +34,19 @@ func _play_face_card(hand_card: CardHandSlot) -> void:
 	#	Which is why we do it here.
 	played_card.caravan = self.caravan
 
-	played_card.position = $OpenFaceCardSlot.position
-	
 	var before_value: int = self.caravan.get_value()
 
 	$PlayedFaceCards.add_child(played_card)
 	#self.get_parent().move_child(self, -1)  # Make sure we are rendered on top
+	
+	if animate:
+		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		played_card.global_position = hand_card.global_position
+		tween.tween_property(played_card, "position", $OpenFaceCardSlot.position, 1)
+	else:
+		played_card.position = $OpenFaceCardSlot.position
 
-	$OpenFaceCardSlot.position = $PlayedFaceCards.get_child(-1).position + Vector2(30, 0)
+	$OpenFaceCardSlot.position += Vector2(30, 0)
 	
 	hand_card._on_card_played(played_card)
 	
@@ -93,18 +98,18 @@ func can_play_face_card(hand_card: CardHandSlot) -> bool:
 	
 	return hand_card.card.is_face_card()
 
-func try_play_face_card(hand_card: CardHandSlot) -> bool:
+func try_play_face_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	if not self.can_play_face_card(hand_card):
 		return false
 		
-	self._play_face_card(hand_card)
+	self._play_face_card(hand_card, animate)
 	return true
 
 
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.can_play_face_card(hand_card)
 
-func try_play_card(hand_card: CardHandSlot) -> bool:
+func try_play_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	return self.try_play_face_card(hand_card)
 
 func get_value() -> int:

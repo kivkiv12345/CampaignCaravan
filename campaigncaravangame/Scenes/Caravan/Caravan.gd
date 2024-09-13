@@ -60,7 +60,7 @@ func get_value() -> int:
 	return value
 
 
-func _play_number_card(hand_card: CardHandSlot) -> void:
+func _play_number_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	
 	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
@@ -68,12 +68,18 @@ func _play_number_card(hand_card: CardHandSlot) -> void:
 	
 	var before_value: int = self.get_value()
 	
-	# First add the new card where the current slot is
-	played_card.position = $OpenNumericCardSlot.position
 	$PlayedCards.add_child(played_card)
+	
+	# First add the new card where the current slot is
+	if animate:
+		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		played_card.global_position = hand_card.global_position
+		tween.tween_property(played_card, "position", $OpenNumericCardSlot.position, 1)
+	else:
+		played_card.position = $OpenNumericCardSlot.position
 
 	# Then move the slot to where the next card should be placed.
-	$OpenNumericCardSlot.position = $PlayedCards.get_child(-1).position + Vector2(0, self._number_card_spacing)
+	$OpenNumericCardSlot.position += Vector2(0, self._number_card_spacing)
 
 	hand_card._on_card_played(played_card)
 
@@ -146,9 +152,9 @@ func can_play_number_card(hand_card: CardHandSlot) -> bool:
 
 	return true
 
-func try_play_number_card(hand_card: CardHandSlot) -> bool:
+func try_play_number_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	if not self.can_play_number_card(hand_card):
 		return false
 		
-	self._play_number_card(hand_card)
+	self._play_number_card(hand_card, animate)
 	return true

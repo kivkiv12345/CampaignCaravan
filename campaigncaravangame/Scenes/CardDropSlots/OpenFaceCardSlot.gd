@@ -19,18 +19,17 @@ func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 	return drag_item.card.is_face_card()
 
 
-## Handled by base class
 func _drop_data(_pos: Vector2, data: Variant) -> void:
 	
 	assert(data is DraggedCard)
 	
 	data.destination = self
 	
-	self.number_card.try_play_face_card(data.source)
+	self.number_card.try_play_face_card(data.source, false)
 
 
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.number_card.can_play_face_card(hand_card)
 	
-func try_play_card(hand_card: CardHandSlot) -> bool:
+func try_play_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	return self.number_card.try_play_face_card(hand_card)

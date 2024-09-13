@@ -50,15 +50,15 @@ game_rules = SubResource("Resource_qwpsr")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 is_enemy_player = false
 
-[node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+[node name="Caravan3" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = -613.0
+offset_left = -295.0
 offset_top = -107.0
-offset_right = -518.0
+offset_right = -200.0
 offset_bottom = 23.0
 player = NodePath("..")
 
-[node name="CaravanValueCounter2" parent="Players/Player/Caravan1" instance=ExtResource("6_5qcvu")]
+[node name="CaravanValueCounter" parent="Players/Player/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
 offset_top = -36.0
 offset_bottom = -6.0
@@ -76,20 +76,21 @@ layout_mode = 0
 offset_top = -36.0
 offset_bottom = -6.0
 
-[node name="Caravan3" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+[node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = -295.0
+offset_left = -613.0
 offset_top = -107.0
-offset_right = -200.0
+offset_right = -518.0
 offset_bottom = 23.0
 player = NodePath("..")
 
-[node name="CaravanValueCounter" parent="Players/Player/Caravan3" instance=ExtResource("6_5qcvu")]
+[node name="CaravanValueCounter2" parent="Players/Player/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
 offset_top = -36.0
 offset_bottom = -6.0
 
 [node name="Deck" parent="Players/Player" instance=ExtResource("6_xbpa7")]
+show_behind_parent = true
 layout_direction = 2
 layout_mode = 1
 anchors_preset = -1
@@ -130,17 +131,17 @@ script = ExtResource("7_ao5mc")
 game_manager = NodePath("../..")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 
-[node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+[node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = 713.0
+offset_left = 395.0
 offset_top = -97.0001
-offset_right = 808.0
+offset_right = 490.0
 offset_bottom = 32.9999
 player = NodePath("..")
 
-[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan1" instance=ExtResource("6_5qcvu")]
+[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_left = 9.15527e-05
+offset_left = 0.00012207
 offset_top = -33.0
 offset_bottom = -3.0
 
@@ -158,21 +159,22 @@ offset_left = 0.000106812
 offset_top = -33.0
 offset_bottom = -3.0
 
-[node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
+[node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = 395.0
+offset_left = 713.0
 offset_top = -97.0001
-offset_right = 490.0
+offset_right = 808.0
 offset_bottom = 32.9999
 player = NodePath("..")
 
-[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan3" instance=ExtResource("6_5qcvu")]
+[node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
-offset_left = 0.00012207
+offset_left = 9.15527e-05
 offset_top = -33.0
 offset_bottom = -3.0
 
 [node name="Deck" parent="Players/BotPlayer" instance=ExtResource("6_xbpa7")]
+show_behind_parent = true
 layout_direction = 2
 layout_mode = 1
 anchors_preset = -1
