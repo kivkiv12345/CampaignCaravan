@@ -137,3 +137,31 @@ Uanset hvad er planen at jeg skal have skaffet mig et domæne,
 men muligvis at DynDNS ville kunne erstatte en statisk IP adresse derefter.
 
 I løbet af dagen har jeg haft stor success med brugen af GitHub Pages til hosting af spillet.
+
+
+13/9-2024 (Fredag Uge #2)
+------------------
+I går fik jeg skrevet det meste af hvad jeg kunne, inden jeg fortsætter på koden.
+Så i dag er fokus på få indført en menu i spillet.
+
+For ikke at gentage skaléringsfejlene med resten af spillet,
+har jeg valgt at tage udgangspunkt i et turtorial til menuen:
+https://www.youtube.com/watch?v=vsKxB66_ngw
+https://www.youtube.com/watch?v=8boLA6Hdvn8
+
+Det er mit håb at dette kan sikre at menuen laves med de rigtige ankre,
+og andre endnu ukendte gode skikker i Godot.
+
+Derudover er jeg også begyndt at planlægge persistent lagring af spilledæk.
+Denne Godot udvidelse (https://github.com/2shady4u/godot-sqlite)
+skulle kunne tillade mig at bruge en SQLite database til spillet (endda også HTML5 eksporterede versioner).
+
+Eftermiddagen bruge jeg på at stjæ- låne lydeffekter, fonts og farvetema fra selveste Fallout New Vegas,
+indtil videre giver det en rigtig fed effect på hovedmenuen.
+Dog mangler jeg stadig af integrere dem med resten af spillet.
+
+Aftenen gik på at indføre nogle "tween" animationer,
+Godot 4.0+ har gjort dem rigtigt nemme.
+Så de ser allerede rigtigt gode ud med de numeriske kort,
+men det bliver alligevel lidt udfordrene med knægte og jokere.
+Men det er et problem til i morgen.
