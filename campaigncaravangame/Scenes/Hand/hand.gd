@@ -57,6 +57,25 @@ func get_cards() -> Array[CardHandSlot]:
 
 enum _TryDrawCard {SUCCESS, NO_MORE_CARDS, HAND_FULL}
 
+static func _random_cardflip_sound():
+	# TODO Kevin: It feels a bit weird not having sounds during the
+	#	first few rounds when no new cards are drawn.
+	#	So maybe we should just play these anyway?
+	const card_sounds = [
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_01.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_02.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_03.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_04.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_05.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_06.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_07.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_09.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_10.wav"),
+		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_11.wav"),
+	]
+	var rand_index:int = randi() % card_sounds.size()
+	SoundManager.playback.play_stream(card_sounds[rand_index], 0, 0, randf_range(0.98, 1.05))
+
 func _draw_card_from_deck() -> _TryDrawCard:
 	
 	var card: Card = self.deck.get_card()
@@ -72,6 +91,7 @@ func _draw_card_from_deck() -> _TryDrawCard:
 	#hand_card_slot.position += Vector2(base_shift+(shift_per_card*$Cards.get_child_count()), 0)
 	
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
+	_random_cardflip_sound()
 	
 	return _TryDrawCard.SUCCESS
 

@@ -6,7 +6,7 @@ extends TextureRect
 class_name DraggedCard
 
 var source: CardHandSlot = null
-var destination: CardSlot = null  # Will be set by the OpenCardSlot._drop_data()
+var destination: TextureRect = null  # Will be set by the OpenCardSlot._drop_data()
 
 var card: Card = null  # Determines the preview
 
@@ -39,6 +39,7 @@ func _on_tree_exiting()->void:
 	# As per the source linked above, this is a good location to emit a signal.
 	# But for now it's probably better to message the destination directly.
 	if self.destination == null:
+		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/menu/ui_menu_cancel.wav"), 0, 0, randf_range(0.98, 1.05))
 		self.return_to_original_position()
 
 

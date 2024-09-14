@@ -1,0 +1,48 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://byjfx31cqk6qt"]
+
+[ext_resource type="FontFile" uid="uid://crnftrw2o1g51" path="res://monofonto_rg.otf" id="1_1axl7"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wep76"]
+bg_color = Color(1, 0.713726, 0.258824, 0.0823529)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.713726, 0.258824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nljm2"]
+bg_color = Color(1, 0.713726, 0.258824, 0.0823529)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.713726, 0.258824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cwt3n"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.713228, 0.244945, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shrsi"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwepg"]
+bg_color = Color(1, 0.713726, 0.258824, 0.0823529)
+border_color = Color(1, 0.713726, 0.258824, 1)
+
+[resource]
+Button/colors/font_color = Color(1, 0.713726, 0.258824, 1)
+Button/colors/font_focus_color = Color(1, 0.725482, 0.29335, 1)
+Button/colors/font_hover_color = Color(1, 0.713726, 0.258824, 1)
+Button/colors/font_hover_pressed_color = Color(1, 0.761421, 0.410384, 1)
+Button/colors/font_pressed_color = Color(0.875828, 0.594532, 0, 1)
+Button/fonts/font = ExtResource("1_1axl7")
+Button/styles/focus = SubResource("StyleBoxFlat_wep76")
+Button/styles/hover = SubResource("StyleBoxFlat_nljm2")
+Button/styles/hover_pressed = SubResource("StyleBoxFlat_cwt3n")
+Button/styles/normal = SubResource("StyleBoxFlat_shrsi")
+Button/styles/pressed = SubResource("StyleBoxFlat_jwepg")
+RichTextLabel/colors/default_color = Color(1, 0.713228, 0.244945, 1)

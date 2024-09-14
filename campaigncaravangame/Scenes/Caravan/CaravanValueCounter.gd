@@ -4,6 +4,7 @@ class_name CaravanValueCounter
 
 @export var caravan: Caravan = null
 @export var fix_rotation: bool = true  # Allow control over whether to correct rotation
+@onready var default_color: Color = self.get_theme_color("default_color")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -25,13 +26,13 @@ func _update_sold_status(_caravan: Caravan, sold_status: Caravan.SoldStatus) -> 
 	
 	match sold_status:
 		SoldStatus.OVERBURDENED:
-			self.self_modulate = Color.RED
+			self.add_theme_color_override("default_color", Color.RED)
 		SoldStatus.TIED:
-			self.self_modulate = Color.BLUE
+			self.add_theme_color_override("default_color", Color.BLUE)
 		SoldStatus.SOLD:
-			self.self_modulate = Color.GREEN
+			self.add_theme_color_override("default_color", Color.GREEN)
 		_:  # Default
-			self.self_modulate = Color.WHITE
+			self.add_theme_color_override("default_color", self.default_color)
 
 
 func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> void:
@@ -40,13 +41,13 @@ func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> 
 	
 	match _caravan.player.game_manager.get_caravan_sold_status(_caravan):
 		SoldStatus.OVERBURDENED:
-			self.self_modulate = Color.RED
+			self.add_theme_color_override("default_color", Color.RED)
 		SoldStatus.TIED:
-			self.self_modulate = Color.BLUE
+			self.add_theme_color_override("default_color", Color.BLUE)
 		SoldStatus.SOLD:
-			self.self_modulate = Color.GREEN
+			self.add_theme_color_override("default_color", Color.GREEN)
 		_:  # Default
-			self.self_modulate = Color.WHITE
+			self.add_theme_color_override("default_color", self.default_color)
 
 	self.text = String.num_int64(new_value)
 

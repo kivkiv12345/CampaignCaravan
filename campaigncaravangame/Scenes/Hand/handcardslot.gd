@@ -106,3 +106,6 @@ func _drop_data(_pos, data):
 	#	But all other slots can rely on the fact that they go invisible when the card is dropped,
 	#	and then wait for the mouse to leave their hitbox to reset their color.
 	self.set_modulate(Color.WHITE)
+	
+	card_data.destination = card_data
+	card_data.return_to_original_position()

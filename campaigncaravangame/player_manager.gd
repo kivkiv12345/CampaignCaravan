@@ -172,6 +172,24 @@ func check_for_winner() -> Player:
 	
 	return winning_player
 
+static func _random_caps_up_sound():
+	# TODO Kevin: Now we just need to have the UI show: "you picked up 105 caps"
+	const caps_sounds = [
+		preload("res://FalloutNVUISounds/items/bottlecaps/up/ui_items_bottlecaps_up_01.wav"),
+		preload("res://FalloutNVUISounds/items/bottlecaps/up/ui_items_bottlecaps_up_02.wav"),
+		preload("res://FalloutNVUISounds/items/bottlecaps/up/ui_items_bottlecaps_up_03.wav"),
+		preload("res://FalloutNVUISounds/items/bottlecaps/up/ui_items_bottlecaps_up_04.wav"),
+	]
+	var rand_index:int = randi() % caps_sounds.size()
+	SoundManager.playback.play_stream(caps_sounds[rand_index], 0, 0, randf_range(0.98, 1.05))
+
+static func _random_caps_down_sound():
+	const caps_sounds = [
+		preload("res://FalloutNVUISounds/items/bottlecaps/down/ui_items_bottlecaps_down_01.wav"),
+		preload("res://FalloutNVUISounds/items/bottlecaps/down/ui_items_bottlecaps_down_02.wav"),
+	]
+	var rand_index:int = randi() % caps_sounds.size()
+	SoundManager.playback.play_stream(caps_sounds[rand_index], 0, 0, randf_range(0.98, 1.05))
 
 func celebrate_winner(winning_player: Player):
 	
@@ -182,9 +200,31 @@ func celebrate_winner(winning_player: Player):
 	for player in self.players:
 		if player != winning_player:
 			player.lose()
-
+	
+	if winning_player.is_enemy_player:  # We lost
+		_random_caps_down_sound()
+		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_bad.wav"), 0, 0, randf_range(0.98, 1.05))
+	else:  # We won, yay!
+		_random_caps_up_sound()
+		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_good.wav"), 0, 0, randf_range(0.98, 1.05))
+		
+		
+		if randi_range(0, 1) == 1:  # 50% chance of playing the level up sound
+			var timer: Timer = Timer.new()
+			timer.wait_time = 1.8  # Add a slight delay, for added effect.
+			timer.one_shot = true
+			timer.connect("timeout", _level_up_sound, ConnectFlags.CONNECT_ONE_SHOT)  # ONE_SHOT automatically cleans up
+			self.add_child(timer)  # Add the timer to the scene tree
+			timer.start()
+		
+		# TODO Kevin: Could be pretty fun with a random change of level up sound here
+		#SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_experienceup.wav"), 0, 0, randf_range(0.98, 1.05))
 	print("Player %s has won!" % winning_player.name)
 	winning_player.win()
+
+
+static func _level_up_sound() -> void:
+	SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/ui_leveluptext.wav"), 0, 0, randf_range(0.98, 1.05))
 
 
 func advance_turn(old_player: Player) -> void:

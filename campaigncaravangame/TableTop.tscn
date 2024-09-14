@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=13 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
+[ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="2_b4anq"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
 [ext_resource type="Script" path="res://PlayerClasses/HumanPlayer.gd" id="3_ys5fo"]
@@ -38,6 +39,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+theme = ExtResource("2_b4anq")
 
 [node name="Player" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 offset_left = 1.0
