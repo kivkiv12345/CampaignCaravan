@@ -33,6 +33,16 @@ func remove_card() -> void:
 	self.texture = null
 
 
+## Needed for release export to work, probably because CardSlot is a base class
+func _can_drop_data(_at_position: Vector2, _data: Variant) -> bool:
+	return false
+
+
+## May not be neccesary like _can_drop_data(), but we include it for completeness.
+func _drop_data(_at_position: Vector2, _data: Variant) -> void:
+	return
+
+
 ## Inspired by: https://forum.godotengine.org/t/how-to-change-the-color-of-a-label-after-the-mouse-hovers-over-a-button/52092/2
 func _on_mouse_entered():
 	
@@ -40,28 +50,30 @@ func _on_mouse_entered():
 		return
 
 	var drag_data = get_viewport().gui_get_drag_data()
-	
+
 	if not drag_data is DraggedCard:
 		return
-		
-	if self._can_drop_data(get_viewport().get_mouse_position(), drag_data):
-		self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
-		
-		if not self.is_in_group("OpenCardSlots"):
-			# This is a CardHandSlot, or other subclass that we don't want snapping for.
-			# This "if" is probably not very SOLID
-			# Ideally we would connect this signal in a subclass,
-			# but GDScript has neither multiple inheritance nor proper interfaces.
-			# So OpenCardSlots is left as a humble group.
-			# TODO Kevin: Actually, we could probably move parts of this signal to CaravanCardSlot
-			return
-		
-		drag_data.visible = false
-		assert(self.card == null)
-		assert(self.texture == null)
-		# Setting the card here is merely meant as a preview to actually playing the card, 
-		#	hence the previous asserts
-		self.set_card(drag_data.card)
+
+	if not self._can_drop_data(get_viewport().get_mouse_position(), drag_data):
+		return
+
+	self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
+
+	if not self.is_in_group("OpenCardSlots"):
+		# This is a CardHandSlot, or other subclass that we don't want snapping for.
+		# This "if" is probably not very SOLID
+		# Ideally we would connect this signal in a subclass,
+		# but GDScript has neither multiple inheritance nor proper interfaces.
+		# So OpenCardSlots is left as a humble group.
+		# TODO Kevin: Actually, we could probably move parts of this signal to CaravanCardSlot
+		return
+
+	drag_data.visible = false
+	assert(self.card == null)
+	assert(self.texture == null)
+	# Setting the card here is merely meant as a preview to actually playing the card, 
+	#	hence the previous asserts
+	self.set_card(drag_data.card)
 
 ## Inspired by: https://forum.godotengine.org/t/how-to-change-the-color-of-a-label-after-the-mouse-hovers-over-a-button/52092/2
 func _on_mouse_exited():

@@ -13,7 +13,7 @@ func set_caravan(_caravan: Caravan) -> void:
 
 
 ## Abstarct method
-func _play_card(_hand_card: CardHandSlot, animate: bool = true) -> void:
+func _play_card(_hand_card: CardHandSlot, _animate: bool = true) -> void:
 	assert(false, "Abstarct method")
 
 ## Abstarct method

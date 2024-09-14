@@ -36,5 +36,5 @@ func _drop_data(_pos: Vector2, data: Variant):
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.caravan.can_play_number_card(hand_card)
 
-func try_play_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
+func try_play_card(hand_card: CardHandSlot, _animate: bool = true) -> bool:
 	return self.caravan.try_play_number_card(hand_card)
