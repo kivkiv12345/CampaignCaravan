@@ -1,0 +1,3 @@
+[submodule "campaigncaravangame/release/godot4-web-local-testing-example"]
+	path = campaigncaravangame/release/godot4-web-local-testing-example
+	url = https://github.com/liana-p/godot4-web-local-testing-example.git
