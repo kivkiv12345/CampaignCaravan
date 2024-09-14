@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1726334924|13044576';
+const CACHE_VERSION = '1726336561|12419558';
 /** @type {string} */
 const CACHE_PREFIX = 'CampaignCaravan-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
