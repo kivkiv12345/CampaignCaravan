@@ -109,7 +109,7 @@ func try_play_face_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 func can_play_card(hand_card: CardHandSlot) -> bool:
 	return self.can_play_face_card(hand_card)
 
-func try_play_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
+func try_play_card(hand_card: CardHandSlot, _animate: bool = true) -> bool:
 	return self.try_play_face_card(hand_card)
 
 func get_value() -> int:
