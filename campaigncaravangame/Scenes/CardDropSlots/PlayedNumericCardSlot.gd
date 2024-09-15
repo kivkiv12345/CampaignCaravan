@@ -40,9 +40,15 @@ func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	#self.get_parent().move_child(self, -1)  # Make sure we are rendered on top
 	
 	if animate:
-		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		self.caravan.ongoing_tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 		played_card.global_position = hand_card.global_position
-		tween.tween_property(played_card, "position", $OpenFaceCardSlot.position, 1)
+		self.caravan.ongoing_tween.tween_property(played_card, "position", $OpenFaceCardSlot.position, 1)
+
+		# Set callback to clear the ongoing_tween
+		self.caravan.ongoing_tween.tween_callback(
+			func():
+				self.caravan.ongoing_tween = null  # Animation is complete, clear the tween.
+		)
 	else:
 		played_card.position = $OpenFaceCardSlot.position
 

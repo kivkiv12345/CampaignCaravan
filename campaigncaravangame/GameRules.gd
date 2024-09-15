@@ -21,6 +21,7 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 # TODO Kevin: Can we represent rules about decks here?
 @export var deck_min_size: int = 30
 @export var deck_max_size: int = 108
+@export var deck_shuffle: bool = true  # TODO Kevin: Implement
 @export var deck_require_unique_cards: bool = true  # Can a deck be filled of only: 10's, 6's and  kings?
 
 # TODO Kevin: This setting may not continue to live here.
@@ -44,4 +45,5 @@ func same_rules(game_rules: GameRules) -> bool:
 	game_rules.caravan_count == self.caravan_count and \
 	game_rules.deck_min_size == self.deck_min_size and \
 	game_rules.deck_max_size == self.deck_max_size and \
+	game_rules.deck_shuffle == self.deck_shuffle and \
 	game_rules.deck_require_unique_cards == self.deck_require_unique_cards

@@ -7,6 +7,7 @@ signal on_value_changed(caravan: Caravan, old_value: int, new_value: int)
 signal new_sold_status(caravan: Caravan, new_status: SoldStatus)
 
 @export var player: Player = null
+var ongoing_tween: Tween = null
 
 enum SoldStatus {SOLD, UNDERBURDENED, OVERBURDENED, TIED, OUTBID}
 
@@ -26,19 +27,71 @@ func _register_cardslot_to_caravan(node: Node) -> void:
 
 const _number_card_spacing: int = 30
 
+## Source: https://chatgpt.com
+func _fix_card_spacing() -> void:
+	# Go through each remaining card in PlayedCards and adjust their position
+	for i in range($PlayedCards.get_child_count()):
+		var card = $PlayedCards.get_child(i)
+		var target_position: Vector2 = Vector2(0, i * self._number_card_spacing)
+		
+		# Tween each card to its new position
+		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		tween.tween_property(card, "position", target_position, 0.5)
+	
+	# Adjust OpenNumericCardSlot position (if applicable)
+	$OpenNumericCardSlot.position = Vector2(0, self._number_card_spacing * $PlayedCards.get_child_count())
+	
+
 ## Called by Jacks and Jokers
+## Help from: https://chatgpt.com
 func remove_card(number_card: PlayedNumericCardSlot) -> void:
 	assert(number_card in $PlayedCards.get_children())
-	
-	var before_value: int = self.get_value()
 
-	for i in range(number_card.get_index(), $PlayedCards.get_child_count()):
-		$PlayedCards.get_child(i).position -= Vector2(0, self._number_card_spacing)
+	# Move affected card to CardsToRemove node, so we can recalculate caravan value immediately
+	assert($CardsToRemove != null)
+
+	var before_value: int = self.get_value()
+	
+	# Store the original z-index before moving the card,
+	#	so we can correctly render cards in the middle of caravans when animating their removal.
+	var original_z_index = number_card.get_z_index()
 	
 	$PlayedCards.remove_child(number_card)
-
-	$OpenNumericCardSlot.position = Vector2(0, self._number_card_spacing*$PlayedCards.get_child_count())
+	$CardsToRemove.add_child(number_card)
 	
+	# Restore its z-index to maintain its drawing order,
+	#	which will have been borked when we moved number_card to $CardsToRemove
+	number_card.set_z_index(original_z_index)
+
+	## Source: https://chatgpt.com
+	## Function to create and animate the card off-screen
+	var _animate_card_removal = func ():
+		# Get the viewport size to determine how far off-screen the card should move
+		var viewport_rect: Rect2 = get_viewport().get_visible_rect()
+		var offscreen_distance: float = viewport_rect.size.y  # Move down by the height of the viewport
+		
+		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		var target_position: Vector2 = number_card.position + Vector2(0, offscreen_distance)
+		
+		# Animate the card
+		tween.tween_property(number_card, "position", target_position, 1)
+		
+		# Use a callback to remove the card after the animation completes
+		tween.tween_callback(func():
+
+			# Fix card spacing immediately so that the gameplay is not slowed down
+			self._fix_card_spacing()
+
+			number_card.queue_free()
+		)
+
+	# Check if there's an ongoing tween (e.g., when bot plays a jack)
+	if ongoing_tween:
+		ongoing_tween.tween_callback(_animate_card_removal)  # Wait for the face card animation to finish
+	else:
+		_animate_card_removal.call()  # Animate immediately if no ongoing face card animation
+
+	# Update the caravan's value immediately
 	self.on_value_changed.emit(self, before_value, self.get_value())
 
 

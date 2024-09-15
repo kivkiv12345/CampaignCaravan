@@ -10,6 +10,13 @@ expand_mode = 1
 stretch_mode = 4
 script = ExtResource("1_judbn")
 
+[node name="CardsToRemove" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 95.0
+offset_bottom = 130.0
+expand_mode = 1
+stretch_mode = 4
+
 [node name="PlayedCards" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 95.0
@@ -21,4 +28,5 @@ stretch_mode = 4
 visible = false
 layout_mode = 0
 
+[connection signal="child_entered_tree" from="CardsToRemove" to="." method="_register_cardslot_to_caravan"]
 [connection signal="child_entered_tree" from="PlayedCards" to="." method="_register_cardslot_to_caravan"]
