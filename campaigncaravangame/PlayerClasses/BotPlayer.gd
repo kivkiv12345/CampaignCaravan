@@ -41,7 +41,7 @@ func start_turn() -> void:
 			if legal_slot.caravan.player == self:
 				
 				# TODO Kevin: Check that we don't win the game for the enemy by playing this card.
-				#	This could happen if the enemy has their caravan 1 and 2, and we finish our 3. 
+				#	This could happen if the enemy has their caravan 1 and 2, and we finish our 3.
 				
 				if hand_card.card.rank == Card.Rank.KING:
 					# Do not overburden ourselves with kings

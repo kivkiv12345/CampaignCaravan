@@ -7,7 +7,6 @@ func _ready() -> void:
 
 
 func _on_play_pressed() -> void:
-	#self.get_tree().change_scene_to_file("res://Scenes/PlaySetup.tscn")
 	self.get_tree().change_scene_to_file("res://TableTop.tscn")
 
 
@@ -21,3 +20,7 @@ func _on_options_pressed() -> void:
 
 func _on_exit_pressed() -> void:
 	self.get_tree().quit()
+
+
+func _on_custom_game_pressed() -> void:
+	self.get_tree().change_scene_to_file("res://Scenes/PlaySetup.tscn")

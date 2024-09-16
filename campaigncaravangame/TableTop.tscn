@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=14 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
 [ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="2_b4anq"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://PlayerClasses/BotPlayer.gd" id="7_ao5mc"]
 [ext_resource type="Script" path="res://Scenes/Hand/Deck/DeckSizeCounter.gd" id="8_uc4vp"]
 [ext_resource type="PackedScene" uid="uid://l8saoo5gq6v7" path="res://Scenes/WinLoseLabel.tscn" id="9_wpiup"]
+[ext_resource type="PackedScene" uid="uid://e0tsv8uo1qfs" path="res://Scenes/GameOverModal.tscn" id="12_330lx"]
 
 [sub_resource type="Resource" id="Resource_qwpsr"]
 script = ExtResource("4_uinwl")
@@ -25,27 +26,44 @@ number_card_max_faces = 6
 hand_size = 5
 deck_min_size = 30
 deck_max_size = 108
+deck_shuffle = true
 deck_require_unique_cards = true
 deck_seed = 6
 
-[node name="TableTop" type="Node2D" node_paths=PackedStringArray("players", "starting_player")]
-position = Vector2(718, 447)
+[node name="TableTop" type="Control" node_paths=PackedStringArray("players", "starting_player")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_uwe67")
 players = [NodePath("Players/Player"), NodePath("Players/BotPlayer")]
 starting_player = NodePath("Players/Player")
 
 [node name="Players" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchor_left = 0.622
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.54407
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("2_b4anq")
 
 [node name="Player" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
-offset_left = 1.0
-offset_top = -3.0
-offset_right = 1.0
-offset_bottom = -3.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.176
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -94.912
+offset_top = 164.0
+offset_right = -455.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
 game_rules = SubResource("Resource_qwpsr")
@@ -124,10 +142,15 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
-offset_left = 196.0
-offset_top = -296.0
-offset_right = 196.0
-offset_bottom = -296.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.167
+anchor_right = 1.0
+anchor_bottom = 0.46
+offset_left = 95.021
+offset_top = 161.0
+offset_right = -269.0
+offset_bottom = -137.08
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
 game_manager = NodePath("../..")
@@ -199,10 +222,25 @@ grow_horizontal = 1
 grow_vertical = 1
 text = "[center]DUNNO[/center]"
 
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="GameOverModal" parent="CenterContainer" instance=ExtResource("12_330lx")]
+visible = false
+layout_mode = 2
+
 [connection signal="lost" from="Players/Player" to="." method="on_player_lost"]
 [connection signal="lost" from="Players/Player" to="Players/Player/WinLoseLabel" method="_on_player_lost"]
+[connection signal="lost" from="Players/Player" to="CenterContainer/GameOverModal" method="_on_player_lost"]
 [connection signal="turn_ended" from="Players/Player" to="." method="advance_turn"]
 [connection signal="won" from="Players/Player" to="Players/Player/WinLoseLabel" method="_on_player_won"]
+[connection signal="won" from="Players/Player" to="CenterContainer/GameOverModal" method="_on_player_won"]
 [connection signal="deck_size_changed" from="Players/Player/Deck" to="Players/Player/Deck/DeckSizeCounter" method="_on_deck_deck_size_changed"]
 [connection signal="lost" from="Players/BotPlayer" to="." method="on_player_lost"]
 [connection signal="lost" from="Players/BotPlayer" to="Players/BotPlayer/WinLoseLabel" method="_on_player_lost"]

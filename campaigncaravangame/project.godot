@@ -32,6 +32,10 @@ CardSlots=""
 Caravans=""
 OpenCardSlots=""
 
+[gui]
+
+theme/custom="res://Scenes/FalloutNVAmberTheme.tres"
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

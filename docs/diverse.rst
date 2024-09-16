@@ -21,7 +21,7 @@ I tilfælde hvor 2 overstående karavaner står lige (har samme værdi), vil det
 .. image:: evidence/HowToWin3.png
 
 Dog er spillet lavet således at det er tilstrækkeligt at én af hver af de modstående karavaner sælges.
-Hermed vinder spilleren som har solgt flest 2/3 karavaner.
+Hermed vinder spilleren som har solgt flest (2/3) karavaner.
 
 .. image:: evidence/HowToWin1.png
 
