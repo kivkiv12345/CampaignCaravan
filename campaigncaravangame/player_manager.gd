@@ -7,6 +7,8 @@ class_name GameManager
 
 @export var players: Array[Player] = []
 @export var starting_player: Player = null
+@export var auto_restart: bool = false
+@export var auto_restart_delay: float = 3
 
 var game_over_man: bool = false
 
@@ -207,16 +209,11 @@ func celebrate_winner(winning_player: Player):
 	else:  # We won, yay!
 		_random_caps_up_sound()
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_good.wav"), 0, 0, randf_range(0.98, 1.05))
-		
-		
-		if randi_range(0, 1) == 1:  # 50% chance of playing the level up sound
-			var timer: Timer = Timer.new()
-			timer.wait_time = 1.8  # Add a slight delay, for added effect.
-			timer.one_shot = true
-			timer.connect("timeout", _level_up_sound, ConnectFlags.CONNECT_ONE_SHOT)  # ONE_SHOT automatically cleans up
-			self.add_child(timer)  # Add the timer to the scene tree
-			timer.start()
-		
+
+		if not self.auto_restart:
+			if randi_range(0, 1) == 1:  # 50% chance of playing the level up sound
+				CaravanUtils.delay(_level_up_sound, 1.8, self)
+
 		# TODO Kevin: Could be pretty fun with a random change of level up sound here
 		#SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_experienceup.wav"), 0, 0, randf_range(0.98, 1.05))
 	print("Player %s has won!" % winning_player.name)
@@ -225,6 +222,10 @@ func celebrate_winner(winning_player: Player):
 
 static func _level_up_sound() -> void:
 	SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/ui_leveluptext.wav"), 0, 0, randf_range(0.98, 1.05))
+
+
+func restart() -> void:
+	assert(false)
 
 
 func advance_turn(old_player: Player) -> void:
@@ -236,8 +237,11 @@ func advance_turn(old_player: Player) -> void:
 	var winning_player: Player = self.check_for_winner()
 	if winning_player:
 		self.celebrate_winner(winning_player)
+
+		if self.auto_restart:
+			CaravanUtils.delay(self.restart, self.auto_restart_delay, self)
 		return
-	
+
 	old_player.is_current_player = false
 	var next_player_index = self.players.find(old_player) + 1
 	if next_player_index >= self.players.size():

@@ -19,7 +19,8 @@ func _on_options_pressed() -> void:
 
 
 func _on_exit_pressed() -> void:
-	self.get_tree().quit()
+	# Give time for the button sound to play
+	CaravanUtils.delay(self.get_tree().quit, 0.16, self)
 
 
 func _on_custom_game_pressed() -> void:

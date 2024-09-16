@@ -3,6 +3,8 @@ extends Player
 class_name BotPlayer
 
 var rng = RandomNumberGenerator.new()
+@export var min_delay: float = 0.0
+@export var max_delay: float = 0.0
 
 func _seeded_shuffle(array: Array[Variant]) -> Array[Variant]:
 
@@ -18,7 +20,7 @@ func _seeded_shuffle(array: Array[Variant]) -> Array[Variant]:
 	return array
 
 
-func start_turn() -> void:
+func perform_turn() -> void:
 	var cards: Array[CardHandSlot] = self._seeded_shuffle(self.hand.get_cards())
 	assert(cards.size())
 	
@@ -94,3 +96,10 @@ func start_turn() -> void:
 	# Somehow we started our turn without being able to perform any actions.
 	# This should not be possible, and we should've lost before this/our turn started.
 	assert(false)
+
+
+func start_turn() -> void:
+	if self.min_delay or self.max_delay:
+		CaravanUtils.delay(self.perform_turn, self.rng.randf_range(self.min_delay, self.max_delay), self)
+	else:
+		self.perform_turn()

@@ -38,11 +38,15 @@ func _on_facecard_mouse_entered() -> void:
 	# We have self._on_mouse_entered return a bool, indicating whether a card has snapped to us.
 	if !self._on_mouse_entered():
 		return
-		
+
 	# TODO Kevin: How should we color the preview on enemy carvans?
 	if self.caravan.player.is_enemy_player:
 		return
-	
+
 	assert(self.card && self.card.is_face_card())
+
+	if self.card.rank != Card.Rank.KING:
+		return
+
 	if (self.caravan.get_value() + (self.number_card.get_value())) > self.caravan.player.game_rules.caravan_max_value:
 		self.self_modulate = Color.ORANGE_RED

@@ -8,6 +8,11 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qd7ov"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0.713726, 0.258824, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nljm2"]
 bg_color = Color(1, 0.713726, 0.258824, 0.0823529)
@@ -28,7 +33,7 @@ border_color = Color(1, 0.713228, 0.244945, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shrsi"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwepg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y4hc3"]
 bg_color = Color(1, 0.713726, 0.258824, 0.0823529)
 border_color = Color(1, 0.713726, 0.258824, 1)
 
@@ -69,7 +74,7 @@ Button/styles/focus = SubResource("StyleBoxFlat_qd7ov")
 Button/styles/hover = SubResource("StyleBoxFlat_nljm2")
 Button/styles/hover_pressed = SubResource("StyleBoxFlat_cwt3n")
 Button/styles/normal = SubResource("StyleBoxFlat_shrsi")
-Button/styles/pressed = SubResource("StyleBoxFlat_jwepg")
+Button/styles/pressed = SubResource("StyleBoxFlat_y4hc3")
 ButtonCheckboxMCM/base_type = &"Button"
 ButtonCheckboxMCM/colors/font_pressed_color = Color(1, 0.713228, 0.244945, 1)
 ButtonCheckboxMCM/colors/icon_disabled_color = Color(0.396197, 0.516814, 0.908956, 1)

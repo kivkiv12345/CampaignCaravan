@@ -128,8 +128,9 @@ size_flags_horizontal = 3
 tooltip_text = "Whether playing a queen changes the direction of the caravan it's played on."
 theme_type_variation = &"ButtonCheckboxMCM"
 toggle_mode = true
+button_pressed = true
 text = "Queen Changes Suit"
-icon = ExtResource("2_xmr2c")
+icon = ExtResource("4_bnw7l")
 alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
@@ -143,8 +144,9 @@ size_flags_horizontal = 3
 tooltip_text = "Whether playing a queen changes the suit of its number card."
 theme_type_variation = &"ButtonCheckboxMCM"
 toggle_mode = true
+button_pressed = true
 text = "Queen Changes Direction"
-icon = ExtResource("2_xmr2c")
+icon = ExtResource("4_bnw7l")
 alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
@@ -274,7 +276,7 @@ script = ExtResource("3_2cbb5")
 
 [node name="DeckSeedCardsHBoxContainer2" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-tooltip_text = "Seed for randomized deck, leave blank for random"
+tooltip_text = "Seed for randomized deck, leave blank (or 0) for random"
 
 [node name="DeckSeedLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2"]
 layout_mode = 2
@@ -282,7 +284,7 @@ text = "Deck Seed "
 
 [node name="DeckSeedLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2" instance=ExtResource("1_wh0lf")]
 layout_mode = 2
-tooltip_text = "Seed for randomized deck, leave blank for random"
+tooltip_text = "Seed for randomized deck, leave blank (or 0) for random"
 
 [node name="Control" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)

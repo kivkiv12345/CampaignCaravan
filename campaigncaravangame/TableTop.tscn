@@ -153,6 +153,8 @@ offset_right = -269.0
 offset_bottom = -137.08
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
+min_delay = 0.0
+max_delay = 0.0
 game_manager = NodePath("../..")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 

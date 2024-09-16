@@ -38,17 +38,8 @@ func _on_main_menu_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	self.get_tree().quit()
-
-
-func _delay_appearance() -> void:
-
-	var timer: Timer = Timer.new()
-	timer.wait_time = self.delay  # Add a slight delay, for added effect.
-	timer.one_shot = true
-	timer.connect("timeout", self.make_visible_and_focus, ConnectFlags.CONNECT_ONE_SHOT)  # ONE_SHOT automatically cleans up
-	self.add_child(timer)  # Add the timer to the scene tree
-	timer.start()
+	# Give time for the button sound to play
+	CaravanUtils.delay(self.get_tree().quit, 0.16, self)
 
 
 func _on_player_lost(player: Player) -> void:
@@ -65,7 +56,8 @@ func _on_player_lost(player: Player) -> void:
 	$VBoxContainer/ContinueMargin.visible = false
 	
 	if self.delay != 0:
-		self._delay_appearance()
+		# Add a slight delay, for added effect.
+		CaravanUtils.delay(self.make_visible_and_focus, self.delay, self)
 	else:
 		self.make_visible_and_focus()
 
@@ -84,7 +76,8 @@ func _on_player_won(player: Player) -> void:
 	$VBoxContainer/ContinueMargin.visible = false
 	
 	if self.delay != 0:
-		self._delay_appearance()
+		# Add a slight delay, for added effect.
+		CaravanUtils.delay(self.make_visible_and_focus, self.delay, self)
 	else:
 		self.make_visible_and_focus()
 
