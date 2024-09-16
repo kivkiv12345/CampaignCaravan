@@ -79,7 +79,7 @@ func _on_player_won(player: Player) -> void:
 		
 	var num_caps_won: int = randi_range(100, 400)
 
-	$VBoxContainer/MarginContainer/Label.text = "Congrulations, you won %d caps!" % num_caps_won
+	$VBoxContainer/MarginContainer/Label.text = "Congratulations, you won %d caps!" % num_caps_won
 	
 	$VBoxContainer/ContinueMargin.visible = false
 	
