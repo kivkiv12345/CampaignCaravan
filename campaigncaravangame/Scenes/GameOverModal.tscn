@@ -9,6 +9,10 @@ script = ExtResource("1_7t4d0")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 
+[node name="Spacer1" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -17,10 +21,25 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="Label" type="Label" parent="VBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
+size_flags_vertical = 1
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ContinueMargin" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 3
+
+[node name="Continue" type="Button" parent="VBoxContainer/ContinueMargin"]
+layout_mode = 2
+text = "Continue"
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -49,12 +68,13 @@ layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 3
+theme_override_constants/margin_bottom = 15
 
 [node name="QuitButton" type="Button" parent="VBoxContainer/MarginContainer4"]
 layout_mode = 2
 text = "Quit"
 
+[connection signal="pressed" from="VBoxContainer/ContinueMargin/Continue" to="." method="_on_continue_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer2/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer3/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer4/QuitButton" to="." method="_on_quit_button_pressed"]

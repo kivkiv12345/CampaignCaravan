@@ -5,6 +5,16 @@ class_name GameOverModal
 
 @export var delay: float = 2
 
+var _end_game_player: Player = null
+
+
+func _input(event: InputEvent) -> void:
+	if Input.is_action_pressed("pause"):
+		if self._end_game_player == null:
+			$VBoxContainer/MarginContainer/Label.text = "Game is still in progress"
+		self.make_visible_and_focus()
+		$VBoxContainer/ContinueMargin/Continue.grab_focus()
+
 
 func make_visible_and_focus() -> void:
 	
@@ -12,7 +22,8 @@ func make_visible_and_focus() -> void:
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_messagewindow.wav"), 0, 0, randf_range(0.98, 1.05))
 	
 	self.visible = true
-	$VBoxContainer/MarginContainer2/RestartButton.grab_focus()
+	if get_viewport().gui_get_focus_owner() == null:
+		$VBoxContainer/MarginContainer2/RestartButton.grab_focus()
 
 
 func _on_restart_button_pressed() -> void:
@@ -43,10 +54,14 @@ func _on_player_lost(player: Player) -> void:
 	
 	if player.is_enemy_player:
 		return  # Not our human player
+		
+	self._end_game_player = player
 
 	var num_caps_lost: int = randi_range(100, 400)
 
 	$VBoxContainer/MarginContainer/Label.text = "Too bad, you lost %d caps" % num_caps_lost
+	
+	$VBoxContainer/ContinueMargin.visible = false
 	
 	if self.delay != 0:
 		self._delay_appearance()
@@ -59,11 +74,19 @@ func _on_player_won(player: Player) -> void:
 	if player.is_enemy_player:
 		return  # Not our human player
 		
+	self._end_game_player = player
+		
 	var num_caps_won: int = randi_range(100, 400)
 
 	$VBoxContainer/MarginContainer/Label.text = "Congrulations, you won %d caps!" % num_caps_won
+	
+	$VBoxContainer/ContinueMargin.visible = false
 	
 	if self.delay != 0:
 		self._delay_appearance()
 	else:
 		self.make_visible_and_focus()
+
+
+func _on_continue_pressed() -> void:
+	self.visible = false
