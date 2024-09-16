@@ -165,3 +165,9 @@ Godot 4.0+ har gjort dem rigtigt nemme.
 Så de ser allerede rigtigt gode ud med de numeriske kort,
 men det bliver alligevel lidt udfordrene med knægte og jokere.
 Men det er et problem til i morgen.
+
+
+16/9-2024 (Mandag Uge #3)
+------------------
+Fokus i dag har været at implementere menuen hvor spilleindstillingerne kan tilpasses,
+da jeg ser den som en forudsætning for menuen hvor kortdækket kan tilpasses, og dermed databasen.
