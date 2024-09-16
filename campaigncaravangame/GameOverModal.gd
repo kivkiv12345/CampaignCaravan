@@ -9,11 +9,12 @@ var _end_game_player: Player = null
 
 
 func _input(event: InputEvent) -> void:
-	if Input.is_action_pressed("pause"):
+	if event.is_action("pause"):
 		if self._end_game_player == null:
 			$VBoxContainer/MarginContainer/Label.text = "Game is still in progress"
 		self.make_visible_and_focus()
-		$VBoxContainer/ContinueMargin/Continue.grab_focus()
+		if get_viewport().gui_get_focus_owner() == null:
+			$VBoxContainer/ContinueMargin/Continue.grab_focus()
 
 
 func make_visible_and_focus() -> void:

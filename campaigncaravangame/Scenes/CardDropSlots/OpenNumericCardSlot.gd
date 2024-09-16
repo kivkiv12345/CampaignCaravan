@@ -3,15 +3,9 @@ extends CaravanCardSlot
 class_name OpenNumericCardSlot
 
 
-#func play_card(card: Card) -> void:
-	#var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
-	#played_card.set_card(card)
-	#self.add_sibling(played_card)
-	#self.get_parent().move_child(self, -1)  # Make sure we are rendered on top
-	#
-	#print(self.get_parent().get_children())
-	#
-	#self.position += Vector2(0, 30)
+func _ready() -> void:
+	super()
+	self.mouse_entered.disconnect(self._on_mouse_entered)
 
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
@@ -38,3 +32,18 @@ func can_play_card(hand_card: CardHandSlot) -> bool:
 
 func try_play_card(hand_card: CardHandSlot, _animate: bool = true) -> bool:
 	return self.caravan.try_play_number_card(hand_card)
+
+
+func _on_numericcard_mouse_entered() -> void:
+	
+	# We have self._on_mouse_entered return a bool, indicating whether a card has snapped to us.
+	if !self._on_mouse_entered():
+		return
+		
+	# TODO Kevin: How should we color the preview on enemy carvans?
+	if self.caravan.player.is_enemy_player:
+		return
+	
+	assert(self.card && self.card.is_numeric_card())
+	if (self.caravan.get_value() + self.card.rank) > self.caravan.player.game_rules.caravan_max_value:
+		self.self_modulate = Color.ORANGE_RED

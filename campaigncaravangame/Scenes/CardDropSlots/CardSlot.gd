@@ -44,18 +44,19 @@ func _drop_data(_at_position: Vector2, _data: Variant) -> void:
 
 
 ## Inspired by: https://forum.godotengine.org/t/how-to-change-the-color-of-a-label-after-the-mouse-hovers-over-a-button/52092/2
-func _on_mouse_entered():
+## Returns a bool, indicating whether a card has snapped to this slot
+func _on_mouse_entered() -> bool:
 	
 	if not self.has_method("_can_drop_data"):
-		return
+		return false
 
 	var drag_data = get_viewport().gui_get_drag_data()
 
 	if not drag_data is DraggedCard:
-		return
+		return false
 
 	if not self._can_drop_data(get_viewport().get_mouse_position(), drag_data):
-		return
+		return false
 
 	self.set_modulate(Color.GREEN_YELLOW)  # TODO Kevin: Ideally I would want a white/brigter color, but that erases the modulation.
 
@@ -66,7 +67,7 @@ func _on_mouse_entered():
 		# but GDScript has neither multiple inheritance nor proper interfaces.
 		# So OpenCardSlots is left as a humble group.
 		# TODO Kevin: Actually, we could probably move parts of this signal to CaravanCardSlot
-		return
+		return false
 
 	drag_data.visible = false
 	assert(self.card == null)
@@ -74,6 +75,9 @@ func _on_mouse_entered():
 	# Setting the card here is merely meant as a preview to actually playing the card, 
 	#	hence the previous asserts
 	self.set_card(drag_data.card)
+	
+	return true
+
 
 ## Inspired by: https://forum.godotengine.org/t/how-to-change-the-color-of-a-label-after-the-mouse-hovers-over-a-button/52092/2
 func _on_mouse_exited():

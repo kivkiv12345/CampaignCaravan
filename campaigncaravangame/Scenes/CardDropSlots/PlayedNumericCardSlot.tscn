@@ -21,3 +21,4 @@ offset_right = 139.0
 number_card = NodePath("..")
 
 [connection signal="child_entered_tree" from="PlayedFaceCards" to="." method="_register_facecard_to_numbercard"]
+[connection signal="mouse_entered" from="OpenFaceCardSlot" to="OpenFaceCardSlot" method="_on_facecard_mouse_entered"]

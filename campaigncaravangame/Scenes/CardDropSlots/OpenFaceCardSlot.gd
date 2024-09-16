@@ -3,11 +3,9 @@ extends FaceCardSlot
 class_name OpenFaceCardSlot
 
 
-#func play_card(card: Card) -> void:
-	#assert(false)
-	#var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedCardSlot.tscn").instantiate()
-	#played_card.set_card(card)
-	#self.parent.add_child_below_node(played_card)
+func _ready() -> void:
+	super()
+	self.mouse_entered.disconnect(self._on_mouse_entered)
 
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
@@ -33,3 +31,18 @@ func can_play_card(hand_card: CardHandSlot) -> bool:
 	
 func try_play_card(hand_card: CardHandSlot, _animate: bool = true) -> bool:
 	return self.number_card.try_play_face_card(hand_card)
+
+
+func _on_facecard_mouse_entered() -> void:
+
+	# We have self._on_mouse_entered return a bool, indicating whether a card has snapped to us.
+	if !self._on_mouse_entered():
+		return
+		
+	# TODO Kevin: How should we color the preview on enemy carvans?
+	if self.caravan.player.is_enemy_player:
+		return
+	
+	assert(self.card && self.card.is_face_card())
+	if (self.caravan.get_value() + (self.number_card.get_value())) > self.caravan.player.game_rules.caravan_max_value:
+		self.self_modulate = Color.ORANGE_RED

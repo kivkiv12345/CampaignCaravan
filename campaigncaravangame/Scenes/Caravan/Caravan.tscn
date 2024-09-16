@@ -30,3 +30,4 @@ layout_mode = 0
 
 [connection signal="child_entered_tree" from="CardsToRemove" to="." method="_register_cardslot_to_caravan"]
 [connection signal="child_entered_tree" from="PlayedCards" to="." method="_register_cardslot_to_caravan"]
+[connection signal="mouse_entered" from="OpenNumericCardSlot" to="OpenNumericCardSlot" method="_on_numericcard_mouse_entered"]
