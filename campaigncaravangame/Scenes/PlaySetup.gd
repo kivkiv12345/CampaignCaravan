@@ -4,7 +4,7 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if get_viewport().gui_get_focus_owner() == null:
-			self.find_child("BackButton").grab_focus()
+		self.find_child("BackButton").grab_focus()
 
 
 func _on_back_button_pressed() -> void:
