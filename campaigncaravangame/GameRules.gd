@@ -26,7 +26,12 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 
 # TODO Kevin: This setting may not continue to live here.
 #	It's not used to determine of 2 GameRules are equal.
-@export var deck_seed: int = 12345
+@export var deck_seed: int = 0
+
+
+func _init() -> void:
+	if self.deck_seed == 0:
+		self.deck_seed = randi()
 
 ## Useful to disallow playing with different rules between players, not that this is a requirement
 func same_rules(game_rules: GameRules) -> bool:

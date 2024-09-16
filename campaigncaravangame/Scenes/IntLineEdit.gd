@@ -8,9 +8,9 @@ func _on_text_changed(new_text: String) -> void:
 	
 	# Filter the input to allow only valid integers
 	var valid_text = ""
-	for char in new_text:
-		if char.is_valid_int():
-			valid_text += char
+	for character in new_text:
+		if character.is_valid_int():
+			valid_text += character
 	
 	# Update the text
 	self.text = valid_text

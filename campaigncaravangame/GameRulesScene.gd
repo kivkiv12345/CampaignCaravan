@@ -8,13 +8,12 @@ func to_game_rules() -> GameRules:
 	var game_rules = GameRules.new()
 	
 
-	game_rules.caravan_max_value = 0
-	if $HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit.text != "":
-		game_rules.caravan_max_value = int($HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit.text)
-	game_rules.caravan_min_value = 0
+	if $HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer/MaxValueLineEdit.text != "":
+		game_rules.caravan_max_value = int($HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer/MaxValueLineEdit.text)
+
 	if $HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit.text != "":
 		game_rules.caravan_min_value = int($HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit.text)
-	game_rules.caravan_max_cards = 0
+
 	if $HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit.text != "":
 		game_rules.caravan_max_cards = int($HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit.text)
 
@@ -29,10 +28,9 @@ func to_game_rules() -> GameRules:
 
 	#game_rules.hand_size = 
 
-	game_rules.deck_min_size = 0
 	if $HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit.text != "":
 		game_rules.deck_min_size = int($HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit.text)
-	game_rules.deck_max_size = 0
+
 	if $HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit.text != "":
 		game_rules.deck_max_size = int($HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit.text)
 	game_rules.deck_shuffle = $HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton.is_pressed()
