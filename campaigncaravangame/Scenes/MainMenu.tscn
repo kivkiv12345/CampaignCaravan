@@ -45,15 +45,18 @@ layout_mode = 2
 
 [node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Start a game with randomized decks and default game rules."
 text = "Play"
 
 [node name="Custom Game" type="Button" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+tooltip_text = "Prepare a game with customized decks and game rules."
 text = "Custom Game"
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Options for game volume and such. Not yet implemented, please come back later."
 disabled = true
 text = "Options"
 

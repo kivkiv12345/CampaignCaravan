@@ -64,11 +64,12 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
 [node name="CopyDown" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
-custom_minimum_size = Vector2(250, 30)
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Copy from opponent to player"
+tooltip_text = "Copy from opponent to player"
+text = "Copy Down"
 script = ExtResource("4_fqbnv")
 from = NodePath("../../../../MarginContainer/EnemySettings")
 to = NodePath("../../../../MarginContainer3/OurSettings")
@@ -78,11 +79,12 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
 [node name="CopyUp" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
-custom_minimum_size = Vector2(250, 30)
+custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "Copy from player to opponent"
+tooltip_text = "Copy from player to opponent"
+text = "Copy Up"
 script = ExtResource("4_fqbnv")
 from = NodePath("../../../../MarginContainer3/OurSettings")
 to = NodePath("../../../../MarginContainer/EnemySettings")
