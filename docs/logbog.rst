@@ -171,3 +171,16 @@ Men det er et problem til i morgen.
 ------------------
 Fokus i dag har været at implementere menuen hvor spilleindstillingerne kan tilpasses,
 da jeg ser den som en forudsætning for menuen hvor kortdækket kan tilpasses, og dermed databasen.
+
+
+17/9-2024 (Tirsdag Uge #3)
+------------------
+Planen var at i dag skulle bruges på at oprette projektets database.
+Dog aftenen her har involveret undersøgelse hertil.
+Men støstedelen af dagen er gået på en række forbedringer,
+som egentlig ikke stod direkte skrevet i kravspecifikation,
+men som jeg alligevel ser som væsentlige for at spillet skal være præsentabelt.
+Primært understået:
+- Fikset GitHub CI Action
+- Mini tutorial på main menu, i form at 2 bots som spiller mod hinanden
+- Flere indstillinger til tilpassede spilleregler

@@ -60,12 +60,12 @@ Det er muligt at spille flere ansigtskort på samme numeriske kort.
 
 * Konge
     Kongen fordobler værdien af kortet hvorpå han er spillet.
-    Hvis flere konger spilles på samme numeriske kort, ændres værdien multiplikativt (9, 18, 36, 72).
+    Hvis flere konger spilles på samme numeriske kort, ændres værdien multiplikativt (9, 18, 36, 72, ...).
 
 * Joker
     I en vis forstand fungerer jokeren som en modsætningen af knægten.
     Når en joker spilles på et numerisk kort,
-    fjernes alle andre kort, af samme numeriske værdi, fra alle karavanerne i spillet.
+    fjernes alle andre kort, af samme numeriske rank, fra alle karavanerne i spillet.
 
     Spiller man en joker på et es, fjernes alle andre kort med samme kulør (som esset) i stedet.
 
