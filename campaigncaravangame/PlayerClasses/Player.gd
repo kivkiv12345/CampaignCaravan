@@ -7,6 +7,7 @@ class_name Player
 @export var game_rules: GameRules = GameRules.new()
 @export var caravans: Array[Caravan] = []
 @export var is_enemy_player: bool = true
+@export var reverse_caravans: bool = false
 
 # Putting this property here could cause "invalid" state with multiple current players.
 #	but at the same time it also reduces coupling to the GameManager node.
@@ -27,6 +28,34 @@ func _ready() -> void:
 
 
 func init() -> void:
+
+	if self.hand == null:
+		self.hand = $Hand
+
+	# TODO Kevin: More spaghetti
+	if self.hand.deck == null:
+		self.hand.deck = $Deck
+
+	if self.game_manager == null:
+		self.game_manager = self.find_parent("TableTop")
+
+	if self.caravans == null:
+		self.caravans = []
+
+	# TODO Kevin: Spaghetti
+	if self.caravans.size() == 0:
+		
+		var children = self.get_children()
+
+		if self.reverse_caravans:
+			children.reverse()
+
+		for child in children:
+			if not child is Caravan:
+				continue
+			self.caravans.append(child)
+			child.player = self
+
 	$Deck.fill_deck(Deck.new(self.game_rules.deck_min_size, self.game_rules.deck_max_size, self.game_rules.deck_seed))
 	$Hand.fill_initial_hand()
 

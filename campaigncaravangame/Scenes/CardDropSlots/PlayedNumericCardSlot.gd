@@ -96,7 +96,13 @@ func can_play_face_card(hand_card: CardHandSlot) -> bool:
 		
 	if hand_card.hand.player.has_lost:
 		return false  # Players that have lost can only spectate
-	
+
+	# This is pretty spaghetti,
+	#	but it prevents an assertion where face cards are played on number cards that are being removed.
+	#	How that's possible I dont rightly know.
+	if self not in self.caravan.find_child("PlayedCards", false).get_children():
+		return false
+
 	# TODO Kevin: In case of differnt rulesets,
 	#	should we follow the rules of: hand_card.hand.player or self.caravan.player ?
 	if $PlayedFaceCards.get_child_count() >= hand_card.hand.player.game_rules.number_card_max_faces:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://drht5vqiro1jy"]
+[gd_scene load_steps=4 format=3 uid="uid://drht5vqiro1jy"]
 
 [ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="1_7n4py"]
 [ext_resource type="Script" path="res://Scenes/MainMenu.gd" id="1_pgnp1"]
+[ext_resource type="PackedScene" uid="uid://ctgss67e70gan" path="res://TableTop.tscn" id="3_2hbss"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -12,6 +13,18 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_7n4py")
 script = ExtResource("1_pgnp1")
+
+[node name="TableTop" parent="." instance=ExtResource("3_2hbss")]
+layout_mode = 1
+auto_restart = true
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1

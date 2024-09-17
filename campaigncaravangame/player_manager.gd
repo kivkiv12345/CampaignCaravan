@@ -11,6 +11,7 @@ class_name GameManager
 @export var auto_restart_delay: float = 3
 
 var game_over_man: bool = false
+var restore_hook: Callable
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -145,7 +146,7 @@ func check_for_winner() -> Player:
 		
 		# We don't yet know how to check for a winner, if there is an unequal number of caravans.
 		assert(player is Player)
-		assert(player.caravans.size() == num_caravans)
+		assert(player.caravans.size() == num_caravans, ("player.caravans.size() %d, num_caravans %d" % [player.caravans.size(), num_caravans]))
 		assert(player.game_rules.caravan_count == num_caravans)
 		
 		num_caravans_won[player] = 0
@@ -233,11 +234,31 @@ func restart() -> void:
 	var scene_resource: PackedScene = load("res://TableTop.tscn")
 	var caravan_game: GameManager = scene_resource.instantiate()
 
+	if self.restore_hook:
+		self.restore_hook.call(caravan_game)
+		
+	var self_index: int = self.get_index()
+
 	# Step 4: Set the modified scene as the new current scene
 	self.get_tree().get_root().add_child(caravan_game)  # Add it to the tree
 	self.get_tree().current_scene = caravan_game  # Make it the active scene
+	self.queue_free()
+	#self.get_tree().get_root().remove_child(self)
+	self.get_tree().get_root().move_child(caravan_game, self_index)
 	
-	self.get_tree().get_root().remove_child(self)
+	CaravanUtils.delay(caravan_game.start, 1, caravan_game)
+
+
+func start() -> void:
+
+	# No need to advance turn, we are waiting forthe player.
+	# TODO Kevin: This is probably a bit spaghetti
+	for player in self.players:
+		if player is HumanPlayer:
+			assert(player.is_current_player)
+			return
+
+	self.advance_turn(self.starting_player)
 
 
 func advance_turn(old_player: Player) -> void:

@@ -1,10 +1,33 @@
 extends Control
 
 
+func background_restore_hook(game_manager: GameManager):
+
+	game_manager.restore_hook = background_restore_hook
+	game_manager.auto_restart = true
+
+	var human_replacement = game_manager.find_child("Players", false).get_child(0)
+	human_replacement.set_script(BotPlayer)
+	game_manager.starting_player = human_replacement  # Default starting player
+	assert(human_replacement in game_manager.players)
+	human_replacement.is_current_player = true
+	human_replacement.reverse_caravans = true
+
+	for player in game_manager.find_child("Players", false).get_children():
+		assert(player is BotPlayer)
+		player.min_delay = 0.5
+		player.max_delay = 1
+
+	human_replacement.init()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
 	$"MarginContainer/VBoxContainer/Play".grab_focus()
+	
+	background_restore_hook($TableTop)
+
+	CaravanUtils.delay($TableTop.start, 1, $TableTop)
 
 
 func _on_play_pressed() -> void:

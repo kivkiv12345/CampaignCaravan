@@ -42,7 +42,7 @@ func _on_restart_button_pressed() -> void:
 func _on_main_menu_button_pressed() -> void:
 	assert(self.game_manager)
 	# Step 1: Load and instantiate the scene
-	var scene_resource: PackedScene = preload("res://Scenes/MainMenu.tscn")
+	var scene_resource: PackedScene = load("res://Scenes/MainMenu.tscn")
 	var main_menu = scene_resource.instantiate()
 
 	#self.get_tree().change_scene_to_file("res://Scenes/MainMenu.tscn")

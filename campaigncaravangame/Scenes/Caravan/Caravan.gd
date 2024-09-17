@@ -45,7 +45,7 @@ func _fix_card_spacing() -> void:
 ## Called by Jacks and Jokers
 ## Help from: https://chatgpt.com
 func remove_card(number_card: PlayedNumericCardSlot) -> void:
-	assert(number_card in $PlayedCards.get_children())
+	assert(number_card in $PlayedCards.get_children())  # TODO Kevin: This can fail
 
 	# Move affected card to CardsToRemove node, so we can recalculate caravan value immediately
 	assert($CardsToRemove != null)
@@ -86,8 +86,11 @@ func remove_card(number_card: PlayedNumericCardSlot) -> void:
 		)
 
 	# Check if there's an ongoing tween (e.g., when bot plays a jack)
+	#if ongoing_tween and not ongoing_tween.is_running():
 	if ongoing_tween:
+		ongoing_tween.stop()
 		ongoing_tween.tween_callback(_animate_card_removal)  # Wait for the face card animation to finish
+		ongoing_tween.play()
 	else:
 		_animate_card_removal.call()  # Animate immediately if no ongoing face card animation
 
