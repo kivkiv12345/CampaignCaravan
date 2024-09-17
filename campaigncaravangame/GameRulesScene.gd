@@ -29,7 +29,8 @@ func to_game_rules() -> GameRules:
 	#if .text != "":
 		#number_card_max_faces = int()
 
-	#game_rules.hand_size = 
+	if $HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit.text != "":
+		game_rules.hand_size = int($HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit.text)
 
 	if $HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit.text != "":
 		game_rules.deck_min_size = int($HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit.text)
@@ -69,7 +70,7 @@ func from_game_rules(game_rules: GameRules) -> void:
 	#if .text != "":
 		#number_card_max_faces = int()
 
-	#game_rules.hand_size = 
+	$HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit.text = String.num_int64(game_rules.hand_size)
 
 	$HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit.text = String.num_int64(game_rules.deck_min_size)
 	$HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit.text = String.num_int64(game_rules.deck_max_size)

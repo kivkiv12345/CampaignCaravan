@@ -83,8 +83,18 @@ layout_mode = 2
 tooltip_text = "Maximum number of numeric cards that can be played in a caravan"
 text = "20"
 
-[node name="HBoxContainer4" type="HBoxContainer" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="HandSizeHBoxContainer" type="HBoxContainer" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Amount of cards kept in the hand"
+
+[node name="HandSizeLabel" type="Label" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer"]
+layout_mode = 2
+text = "Hand Size "
+
+[node name="HandSizeLineEdit" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer" instance=ExtResource("1_wh0lf")]
+layout_mode = 2
+tooltip_text = "Amount of cards kept in the hand (game starts with an additional card for each caravan)"
+text = "5"
 
 [node name="Control" type="Control" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
@@ -297,6 +307,7 @@ size_flags_horizontal = 3
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer/MaxValueLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/QueenChangeSuitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/QueenChangeDirectionButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton" to="." method="_on_button_pressed"]
