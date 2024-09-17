@@ -60,6 +60,11 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+cache/0/26/0/ascent = 0.0
+cache/0/26/0/descent = 0.0
+cache/0/26/0/underline_position = 0.0
+cache/0/26/0/underline_thickness = 0.0
+cache/0/26/0/scale = 1.0
 
 [resource]
 default_font = SubResource("FontFile_vr77e")
@@ -92,3 +97,4 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_7k8m5")
 RichTextLabel/colors/default_color = Color(1, 0.713228, 0.244945, 1)
 TooltipLabel/fonts/font = ExtResource("1_1axl7")
 TooltipPanel/fonts/title_font = ExtResource("1_1axl7")
+RichTextLabel/fonts/normal_font = ExtResource("1_1axl7")
