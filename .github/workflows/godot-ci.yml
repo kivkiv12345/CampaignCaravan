@@ -27,8 +27,8 @@ jobs:
         run: |
           mkdir -v -p build/windows
           cd $PROJECT_PATH
-          godot --headless --verbose --editor --quit-after 10
-          godot --headless --verbose --import --clean--export-debug "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+          godot --import --path="." --import --headless --import --verbose --import --editor --import --quit-after 10
+          godot --path="." --import --headless --import --verbose --import --export-debug "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -53,8 +53,8 @@ jobs:
         run: |
           mkdir -v -p build/linux
           cd $PROJECT_PATH
-          godot --headless --verbose --editor --quit-after 10
-          godot --headless --verbose --import --clean --export-debug "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+          godot --import --path="." --import --headless --import --verbose --import --editor --import --quit-after 10
+          godot --path="." --import --headless --import --verbose --import --export-debug "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -82,8 +82,8 @@ jobs:
         run: |
           mkdir -v -p build/web
           cd $PROJECT_PATH
-          godot --headless --verbose --editor --quit-after 10
-          godot --headless --verbose --import --clean--export-debug "HTML5" ../build/web/index.html
+          godot --import --path="." --import --headless --import --verbose --import --editor --import --quit-after 10
+          godot --path="." --import --headless --import --verbose --import --export-debug "HTML5" ../build/web/index.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
