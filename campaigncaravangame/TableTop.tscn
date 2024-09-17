@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=13 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
+[ext_resource type="Texture2D" uid="uid://qp0tlfcrely1" path="res://tabletop_textures/IMG_20240917_070156_972.jpg" id="2_3j8h7"]
 [ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="2_b4anq"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
@@ -22,6 +23,18 @@ grow_vertical = 2
 script = ExtResource("1_uwe67")
 players = [NodePath("Players/Player"), NodePath("Players/BotPlayer")]
 starting_player = NodePath("Players/Player")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.998
+anchor_bottom = 0.998
+offset_right = 0.303955
+offset_bottom = 0.295959
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_3j8h7")
+expand_mode = 1
 
 [node name="Players" type="Control" parent="."]
 layout_mode = 1
