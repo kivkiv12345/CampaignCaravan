@@ -29,7 +29,7 @@ theme_override_constants/margin_top = 2
 
 [node name="CaravanLabel" type="Label" parent="HBoxContainer/CaravanVBoxContainer/CaravanMarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "Caravan"
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/CaravanVBoxContainer"]
@@ -113,7 +113,7 @@ theme_override_constants/margin_top = 2
 
 [node name="CardLabel" type="Label" parent="HBoxContainer/CardVBoxContainer/CardMarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "Card
 "
 
@@ -197,7 +197,7 @@ tooltip_text = "Maximum number of face cards, that can be played on a number car
 
 [node name="MaxFacesLabel" type="Label" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer"]
 layout_mode = 2
-text = "Number Card, Max Faces"
+text = "Number Card, Max Faces "
 
 [node name="MaxFacesLineEdit" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer" instance=ExtResource("1_wh0lf")]
 layout_mode = 2
@@ -219,7 +219,7 @@ theme_override_constants/margin_top = 2
 
 [node name="DeckLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "Deck
 "
 

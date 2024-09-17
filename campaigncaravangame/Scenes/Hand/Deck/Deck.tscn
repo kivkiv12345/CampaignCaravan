@@ -15,8 +15,8 @@ script = ExtResource("1_b825u")
 
 [node name="Base_TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 95.0
-offset_bottom = 130.0
+offset_right = 130.0
+offset_bottom = 178.0
 expand_mode = 1
 stretch_mode = 4
 

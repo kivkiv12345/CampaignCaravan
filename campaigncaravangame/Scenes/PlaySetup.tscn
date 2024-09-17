@@ -64,7 +64,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
 [node name="CopyDown" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
-custom_minimum_size = Vector2(100, 30)
+custom_minimum_size = Vector2(140, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -75,11 +75,11 @@ from = NodePath("../../../../MarginContainer/EnemySettings")
 to = NodePath("../../../../MarginContainer3/OurSettings")
 
 [node name="Spacer3" type="Control" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 
 [node name="CopyUp" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
-custom_minimum_size = Vector2(100, 30)
+custom_minimum_size = Vector2(140, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -102,6 +102,11 @@ theme_override_constants/margin_right = 10
 
 [node name="OurSettings" parent="VBoxContainer/MarginContainer3" instance=ExtResource("2_eppx3")]
 layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
 
 [node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 75)
@@ -143,6 +148,11 @@ text = "Play"
 [node name="Spacer2" type="Control" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.05
 
 [connection signal="gamerules_changed" from="VBoxContainer/MarginContainer/EnemySettings" to="." method="_on_gamerules_changed"]
 [connection signal="gamerules_changed" from="VBoxContainer/MarginContainer3/OurSettings" to="." method="_on_gamerules_changed"]

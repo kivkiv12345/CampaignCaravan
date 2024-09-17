@@ -38,10 +38,10 @@ expand_mode = 1
 
 [node name="Players" type="Control" parent="."]
 layout_mode = 1
-anchor_left = 0.622
+anchor_left = 0.001
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -1.54407
+offset_left = 1190.78
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_b4anq")
@@ -49,16 +49,15 @@ theme = ExtResource("2_b4anq")
 [node name="Player" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.176
-anchor_top = 0.5
+anchor_left = -1.639
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -94.912
-offset_top = 164.0
+offset_left = 1225.14
+offset_top = 704.0
 offset_right = -455.0
 offset_bottom = -160.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 script = ExtResource("3_ys5fo")
 game_manager = NodePath("../..")
 caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
@@ -79,9 +78,9 @@ offset_bottom = -6.0
 
 [node name="Caravan2" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = -453.0
+offset_left = -631.177
 offset_top = -107.0
-offset_right = -358.0
+offset_right = -536.177
 offset_bottom = 23.0
 player = NodePath("..")
 
@@ -92,9 +91,9 @@ offset_bottom = -6.0
 
 [node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = -613.0
+offset_left = -974.177
 offset_top = -107.0
-offset_right = -518.0
+offset_right = -879.177
 offset_bottom = 23.0
 player = NodePath("..")
 
@@ -128,23 +127,23 @@ layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = -632.0
-offset_top = -50.0
-offset_right = -200.0
-offset_bottom = -9.0
+offset_left = -761.789
+offset_top = -47.0
+offset_right = -329.789
+offset_bottom = -6.0
 grow_horizontal = 1
 grow_vertical = 1
 
 [node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.167
+anchor_left = -1.637
 anchor_right = 1.0
-anchor_bottom = 0.46
-offset_left = 95.021
-offset_top = 161.0
-offset_right = -269.0
-offset_bottom = -137.08
+anchor_bottom = 1.0
+offset_left = 1615.9
+offset_top = 215.0
+offset_right = -60.1767
+offset_bottom = -666.28
 rotation = 3.14159
 script = ExtResource("7_ao5mc")
 min_delay = 0.0
@@ -155,9 +154,9 @@ caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 [node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = 395.0
-offset_top = -97.0001
+offset_top = -295.999
 offset_right = 490.0
-offset_bottom = 32.9999
+offset_bottom = -165.999
 player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan3" instance=ExtResource("6_5qcvu")]
@@ -168,10 +167,10 @@ offset_bottom = -3.0
 
 [node name="Caravan2" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = 553.0
-offset_top = -97.0001
-offset_right = 648.0
-offset_bottom = 32.9999
+offset_left = 731.177
+offset_top = -295.999
+offset_right = 826.177
+offset_bottom = -165.999
 player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan2" instance=ExtResource("6_5qcvu")]
@@ -182,10 +181,10 @@ offset_bottom = -3.0
 
 [node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
-offset_left = 713.0
-offset_top = -97.0001
-offset_right = 808.0
-offset_bottom = 32.9999
+offset_left = 1074.18
+offset_top = -295.998
+offset_right = 1169.18
+offset_bottom = -165.998
 player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan1" instance=ExtResource("6_5qcvu")]
@@ -207,13 +206,14 @@ offset_bottom = 1.59863e-05
 
 [node name="WinLoseLabel" parent="Players/BotPlayer" instance=ExtResource("9_wpiup")]
 layout_mode = 1
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 395.0
-offset_top = -31.999
-offset_right = 827.0
-offset_bottom = 14.001
+anchor_left = 1.633
+anchor_top = -0.161
+anchor_right = 3.42
+anchor_bottom = 0.07
+offset_left = 124.28
+offset_top = -187.005
+offset_right = 124.142
+offset_bottom = -186.909
 grow_horizontal = 1
 grow_vertical = 1
 text = "[center]DUNNO[/center]"

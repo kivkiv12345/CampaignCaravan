@@ -4,15 +4,18 @@
 
 [node name="FaceCardSlot" type="TextureRect" groups=["CardSlots", "FaceCardSlots", "OpenCardSlots"]]
 visible = false
-offset_right = 95.0
-offset_bottom = 130.0
+offset_right = 130.0
+offset_bottom = 178.0
 expand_mode = 1
 stretch_mode = 5
 script = ExtResource("1_xpbkp")
 
 [node name="Panel" type="Panel" parent="."]
 show_behind_parent = true
-layout_mode = 0
-offset_right = 95.0
-offset_bottom = 130.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2

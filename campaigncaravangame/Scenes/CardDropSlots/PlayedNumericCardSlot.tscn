@@ -5,19 +5,28 @@
 [ext_resource type="Script" path="res://Scenes/CardDropSlots/PlayedNumericCardSlot.gd" id="2_ektr1"]
 
 [node name="PlayedNumericCardSlot" groups=["NumericCardSlots"] instance=ExtResource("1_7d5t2")]
+anchors_preset = 0
+offset_right = 130.0
+offset_bottom = 178.0
 script = ExtResource("2_ektr1")
 
 [node name="PlayedFaceCards" type="TextureRect" parent="." index="1"]
-layout_mode = 0
-offset_right = 95.0
-offset_bottom = 130.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
 expand_mode = 1
 stretch_mode = 4
 
 [node name="OpenFaceCardSlot" parent="." index="2" node_paths=PackedStringArray("number_card") instance=ExtResource("2_7hgwb")]
-layout_mode = 0
-offset_left = 44.0
-offset_right = 139.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.338
+anchor_right = 1.338
+anchor_bottom = 1.0
+offset_left = 0.0599976
+offset_right = 0.0599976
+offset_bottom = 0.0
 number_card = NodePath("..")
 
 [connection signal="child_entered_tree" from="PlayedFaceCards" to="." method="_register_facecard_to_numbercard"]

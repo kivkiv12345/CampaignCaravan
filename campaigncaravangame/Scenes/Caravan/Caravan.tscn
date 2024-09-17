@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bylepqm1t8qb6" path="res://Scenes/CardDropSlots/OpenNumericCardSlot.tscn" id="2_itpdk"]
 
 [node name="Caravan" type="TextureRect" groups=["Caravans"]]
-offset_right = 95.0
-offset_bottom = 130.0
+offset_right = 130.0
+offset_bottom = 178.0
 expand_mode = 1
 stretch_mode = 4
 script = ExtResource("1_judbn")
@@ -27,6 +27,7 @@ stretch_mode = 4
 [node name="OpenNumericCardSlot" parent="." instance=ExtResource("2_itpdk")]
 visible = false
 layout_mode = 0
+anchors_preset = 0
 
 [connection signal="child_entered_tree" from="CardsToRemove" to="." method="_register_cardslot_to_caravan"]
 [connection signal="child_entered_tree" from="PlayedCards" to="." method="_register_cardslot_to_caravan"]

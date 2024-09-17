@@ -27,7 +27,7 @@ func fix_card_spacing(_node: Node) -> void:
 		return
 
 	# Constants for card spacing
-	const min_spacing: int = 22  # Ensure enough space to see both suit and rank of the card
+	const min_spacing: int = 30  # Ensure enough space to see both suit and rank of the card
 	const max_spacing: int = min_spacing * 3  # We also need a maximum constraint, but this is not as importatnt as the minimum
 	
 	# Calculate dynamic spacing. Spacing decreases as more cards are in hand.
