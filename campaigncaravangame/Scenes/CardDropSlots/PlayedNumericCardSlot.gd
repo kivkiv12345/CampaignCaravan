@@ -97,6 +97,23 @@ func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	hand_card.hand.player.end_turn()
 
 
+func _facecard_matches_suit(hand_card: CardHandSlot) -> bool:
+
+	# Exempt queens from this rule,
+	#	as that makes it a lot more interesting that they can change the suit.
+	if hand_card.card.rank == Card.Rank.QUEEN:
+		return true
+
+	# Also jokers, since they don't really have a suit
+	if hand_card.card.rank == Card.Rank.JOKER:
+		return true
+
+	if hand_card.card.suit != self.get_effective_suit():
+		return false
+
+	return true
+
+
 func can_play_face_card(hand_card: CardHandSlot) -> bool:
 	
 	if self.caravan.player.has_lost:
@@ -113,12 +130,25 @@ func can_play_face_card(hand_card: CardHandSlot) -> bool:
 	elif self in self.caravan.find_child("CardsToRemove", false).get_children():
 		return false
 
+	if not hand_card.card.is_face_card():
+		return false
+
 	# TODO Kevin: In case of differnt rulesets,
 	#	should we follow the rules of: hand_card.hand.player or self.caravan.player ?
 	if $PlayedFaceCards.get_child_count() >= hand_card.hand.player.game_rules.number_card_max_faces:
 		return false
-	
-	return hand_card.card.is_face_card()
+
+
+	if hand_card.hand.player.game_rules.number_card_require_face_match_suit:
+
+		# TODO Kevin: Should we have an option for whether queens must match suit here?
+		#	Using self.get_effective_suit() over self.suit doesn't really matter if we dont.
+
+		if not self._facecard_matches_suit(hand_card):
+			return false
+
+	return true
+
 
 func try_play_face_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	if not self.can_play_face_card(hand_card):

@@ -184,7 +184,6 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ButtonCheckboxMCM"
-disabled = true
 toggle_mode = true
 text = "Require Face Card Match Suit"
 icon = ExtResource("2_xmr2c")
