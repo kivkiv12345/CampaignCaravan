@@ -137,11 +137,56 @@ func can_discard_card(hand_card: CardHandSlot) -> bool:
 		
 	return true
 
-func _discard_card(hand_card: CardHandSlot) -> void:
-	assert(hand_card in $Cards.get_children())
-	assert(self == hand_card.hand)
+func _animate_card_removal(hand_card: CardHandSlot) -> void:
+	
+	# Store the original z-index before moving the card,
+	#	so we can correctly render cards in the middle of caravans when animating their removal.
+	var original_z_index = hand_card.get_z_index()
+	var original_global_position = hand_card.global_position
 	
 	$Cards.remove_child(hand_card)
+	$CardsToRemove.add_child(hand_card)
+	
+	# Restore its z-index to maintain its drawing order,
+	#	which will have been borked when we moved number_card to $CardsToRemove
+	hand_card.set_z_index(original_z_index)
+	hand_card.global_position = original_global_position
+
+	## Source: https://chatgpt.com
+	## Function to create and animate the card off-screen
+	var _tween_card_removal = func ():
+		# Get the viewport size to determine how far off-screen the card should move
+		var viewport_rect: Rect2 = get_viewport().get_visible_rect()
+		var offscreen_distance: float = viewport_rect.size.y  # Move down by the height of the viewport
+		
+		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		var target_position: Vector2 = hand_card.position + Vector2(0, offscreen_distance)
+		
+		# Animate the card
+		tween.tween_property(hand_card, "position", target_position, 1)
+		
+		# Use a callback to remove the card after the animation completes
+		tween.tween_callback(func():
+
+			# Fix card spacing immediately so that the gameplay is not slowed down
+			self.fix_card_spacing(null)
+
+			hand_card.queue_free()
+		)
+
+	# NOTE: This is where we would check for an ongoing tween,
+	#	but this is probably not necessary when dicarding cards.
+	_tween_card_removal.call()  # Animate immediately if no ongoing face card animation
+
+func _discard_card(hand_card: CardHandSlot, animate: bool = true) -> void:
+	assert(hand_card in $Cards.get_children(), "We don't have this card in our hand")
+	assert(self == hand_card.hand, "Cannot discard cards of other players")
+	
+	if animate:
+		self._animate_card_removal(hand_card)
+	else:
+		$Cards.remove_child(hand_card)
+	
 	self.try_fill_hand()
 	
 	if self.get_cards().size() == 0:
@@ -149,12 +194,12 @@ func _discard_card(hand_card: CardHandSlot) -> void:
 	else:
 		hand_card.hand.player.end_turn()
 
-func try_discard_card(hand_card: CardHandSlot) -> bool:
+func try_discard_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
 	
 	if not self.can_discard_card(hand_card):
 		return false
 		
-	self._discard_card(hand_card)
+	self._discard_card(hand_card, animate)
 	return true
 
 func _on_card_played(_dropslot: CardSlot, played_from: CardHandSlot) -> void:

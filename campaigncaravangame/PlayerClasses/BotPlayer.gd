@@ -82,7 +82,7 @@ func perform_turn() -> void:
 				return
 	
 	# We didn't have any cards to play, so we must discard something.
-	if self.hand.try_discard_card(self.hand.get_lowest_value_card()):
+	if self.hand.try_discard_card(self.hand.get_lowest_value_card(), true):
 		print("FFF")
 		return  # We ended our turn by discarding a card
 		

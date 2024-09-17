@@ -27,5 +27,14 @@ offset_bottom = 130.0
 expand_mode = 1
 stretch_mode = 4
 
+[node name="CardsToRemove" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.72
+anchor_bottom = 1.0
+offset_right = -0.0400085
+expand_mode = 1
+stretch_mode = 4
+
 [connection signal="child_entered_tree" from="Cards" to="." method="fix_card_spacing"]
 [connection signal="child_exiting_tree" from="Cards" to="." method="fix_card_spacing"]
