@@ -4,6 +4,9 @@ extends PanelContainer
 class_name GameRulesScene
 
 
+signal gamerules_changed(game_rules: GameRules)
+
+
 func to_game_rules() -> GameRules:
 	var game_rules = GameRules.new()
 	
@@ -77,3 +80,13 @@ func from_game_rules(game_rules: GameRules) -> void:
 
 
 	$HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit.text = String.num_int64(game_rules.deck_seed)
+
+
+## The signal call order is important here,
+##	this must be called after the LineEdit has been sanitized.
+##  Luckily the call order seems correct.
+func _on_line_edit_text_changed(_new_text: String) -> void:
+	self.gamerules_changed.emit(self.to_game_rules())
+
+func _on_button_pressed() -> void:
+	self.gamerules_changed.emit(self.to_game_rules())

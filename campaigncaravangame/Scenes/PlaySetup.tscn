@@ -142,5 +142,7 @@ text = "Play"
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
+[connection signal="gamerules_changed" from="VBoxContainer/MarginContainer/EnemySettings" to="." method="_on_gamerules_changed"]
+[connection signal="gamerules_changed" from="VBoxContainer/MarginContainer3/OurSettings" to="." method="_on_gamerules_changed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

@@ -3,6 +3,7 @@ extends LineEdit
 
 ## A bit of help from: https://chatgpt.com
 func _on_text_changed(new_text: String) -> void:
+
 	# Store the current caret position
 	var caret_pos = self.caret_column
 	

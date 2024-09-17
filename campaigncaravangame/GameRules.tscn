@@ -293,3 +293,16 @@ layout_mode = 2
 [node name="Spacer" type="Control" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer/MaxValueLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/QueenChangeSuitButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/QueenChangeDirectionButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/FaceMatchSuitButton" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/UniqueCardsHBoxContainer2/UniqueCardsButton" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit" to="." method="_on_line_edit_text_changed"]

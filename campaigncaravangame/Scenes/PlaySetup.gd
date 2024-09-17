@@ -29,6 +29,9 @@ func _on_play_button_pressed() -> void:
 		else:
 			player.game_rules = $VBoxContainer/MarginContainer3/OurSettings.to_game_rules()
 
+		if player.game_rules.check_errors().size() != 0:
+			return  # We cannot allow the game to start with these rules
+
 	# Step 3: Optionally remove the current scene if you want to replace it
 	var current_scene = self.get_tree().current_scene
 	if current_scene:
@@ -38,3 +41,19 @@ func _on_play_button_pressed() -> void:
 	# Step 4: Set the modified scene as the new current scene
 	self.get_tree().root.add_child(caravan_game)  # Add it to the tree
 	self.get_tree().current_scene = caravan_game  # Make it the active scene
+
+
+## Disable the play button, if an invalid configuration is detected.
+func _on_gamerules_changed(_game_rules: GameRules) -> void:
+	
+	var play_button: Button = $VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton
+	
+	if $VBoxContainer/MarginContainer/EnemySettings.to_game_rules().check_errors().size() > 0:
+		play_button.disabled = true
+		return
+	
+	if $VBoxContainer/MarginContainer3/OurSettings.to_game_rules().check_errors().size() > 0:
+		play_button.disabled = true
+		return
+		
+	play_button.disabled = false

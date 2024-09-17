@@ -30,6 +30,41 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 @export var custom_deck: Deck = null
 
 
+## Inverts inverted ranges, i.e min cards being larger than max cards
+func fix_ranges() -> void:
+
+	if self.deck_min_size > self.deck_max_size:
+		var swap = self.deck_min_size
+		self.deck_min_size = self.deck_max_size
+		self.deck_max_size = swap
+
+	if self.caravan_min_value > self.caravan_max_value:
+		var swap = self.caravan_min_value
+		self.caravan_min_value = self.caravan_max_value
+		self.caravan_max_value = swap
+
+
+enum InvalidConfig { POSSIBLE_EMPTY_DECK, EMPTY_HAND, NO_CARAVAN_CARDS, }
+
+
+func check_errors() -> Array[InvalidConfig]:
+
+	self.fix_ranges()
+
+	var errors: Array[InvalidConfig] = []
+
+	if self.deck_min_size == 0 or self.deck_max_size == 0:
+		errors.append(InvalidConfig.POSSIBLE_EMPTY_DECK)
+
+	if self.hand_size == 0:
+		errors.append(InvalidConfig.EMPTY_HAND)
+
+	if self.caravan_max_cards == 0:
+		# This error won't crash the game, but it does make it impossible to play.
+		errors.append(InvalidConfig.NO_CARAVAN_CARDS)
+
+	return errors
+
 
 ## Useful to disallow playing with different rules between players, not that this is a requirement
 func same_rules(game_rules: GameRules) -> bool:
