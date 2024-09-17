@@ -76,10 +76,18 @@ func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 			# Playing a joker on an ace removes all other cards of the same suit
 			if self.card.rank == Card.Rank.ACE:
 				if number_card.get_effective_suit() == self.card.suit:
-					number_card.caravan.remove_card(number_card)
+
+					# Check if this card is already being removed
+					if number_card not in number_card.caravan.find_child("CardsToRemove", false).get_children():
+						number_card.caravan.remove_card(number_card)
+
 			else:  # Otherwise it removes all other cards of the same rank
 				if number_card.card.rank == self.card.rank:
-					number_card.caravan.remove_card(number_card)
+
+					# Check if this card is already being removed
+					if number_card not in number_card.caravan.find_child("CardsToRemove", false).get_children():
+						number_card.caravan.remove_card(number_card)
+
 	elif played_card.card.rank == Card.Rank.KING:
 		self.caravan.emit_value_changed(before_value)
 		#self.number_card.caravan.on_value_changed.emit(self, before_value, self.get_value())
@@ -98,9 +106,11 @@ func can_play_face_card(hand_card: CardHandSlot) -> bool:
 		return false  # Players that have lost can only spectate
 
 	# This is pretty spaghetti,
-	#	but it prevents an assertion where face cards are played on number cards that are being removed.
+	#	but it helps prevent an assertion where face cards are played on number cards that are being removed.
 	#	How that's possible I dont rightly know.
 	if self not in self.caravan.find_child("PlayedCards", false).get_children():
+		return false
+	elif self in self.caravan.find_child("CardsToRemove", false).get_children():
 		return false
 
 	# TODO Kevin: In case of differnt rulesets,

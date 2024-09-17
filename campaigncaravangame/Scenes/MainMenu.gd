@@ -27,7 +27,7 @@ func _ready() -> void:
 	
 	background_restore_hook($TableTop)
 
-	CaravanUtils.delay($TableTop.start, 1, $TableTop)
+	CaravanUtils.delay($TableTop.start, 0.5, $TableTop)
 
 
 func _on_play_pressed() -> void:
