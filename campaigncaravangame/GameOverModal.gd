@@ -25,10 +25,13 @@ func _input(event: InputEvent) -> void:
 
 
 func make_visible_and_focus() -> void:
-	
+
+	if OS.get_name() == "Web":
+		$VBoxContainer/MarginContainer4/QuitButton.hide()
+
 	if not self.visible:
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_messagewindow.wav"), 0, 0, randf_range(0.98, 1.05))
-	
+
 	self.visible = true
 	if get_viewport().gui_get_focus_owner() == null:
 		$VBoxContainer/MarginContainer2/RestartButton.grab_focus()

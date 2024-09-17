@@ -24,10 +24,13 @@ func background_restore_hook(game_manager: GameManager):
 func _ready() -> void:
 	randomize()
 	$"MarginContainer/VBoxContainer/Play".grab_focus()
-	
+
 	background_restore_hook($TableTop)
 
 	CaravanUtils.delay($TableTop.start, 0.5, $TableTop)
+
+	if OS.get_name() == "Web":
+		$MarginContainer/VBoxContainer/Exit.hide()
 
 
 func _on_play_pressed() -> void:
