@@ -200,23 +200,31 @@ func celebrate_winner(winning_player: Player):
 		return
 	self.game_over_man = true
 	
+	var num_enemy_players = 0
 	for player in self.players:
+		if player.is_enemy_player:
+			num_enemy_players += 1
 		if player != winning_player:
 			player.lose()
-	
-	if winning_player.is_enemy_player:  # We lost
-		_random_caps_down_sound()
-		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_bad.wav"), 0, 0, randf_range(0.98, 1.05))
-	else:  # We won, yay!
-		_random_caps_up_sound()
-		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_good.wav"), 0, 0, randf_range(0.98, 1.05))
+			
+	var has_human_player: bool = self.players.size() != num_enemy_players
+			
+	if has_human_player:
+		if winning_player.is_enemy_player:  # We lost
+			_random_caps_down_sound()
+			SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_bad.wav"), 0, 0, randf_range(0.98, 1.05))
+		else:  # We won, yay!
+			_random_caps_up_sound()
+			SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_good.wav"), 0, 0, randf_range(0.98, 1.05))
+			
+			var sold_all_caravans: bool = true
+			for caravan in winning_player.caravans:
+				if self.get_caravan_sold_status(caravan) != Caravan.SoldStatus.SOLD:
+					sold_all_caravans = false
 
-		if not self.auto_restart:
-			if randi_range(0, 1) == 1:  # 50% chance of playing the level up sound
+			if sold_all_caravans:
 				CaravanUtils.delay(_level_up_sound, 1.8, self)
 
-		# TODO Kevin: Could be pretty fun with a random change of level up sound here
-		#SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_experienceup.wav"), 0, 0, randf_range(0.98, 1.05))
 	print("Player %s has won!" % winning_player.name)
 	winning_player.win()
 
