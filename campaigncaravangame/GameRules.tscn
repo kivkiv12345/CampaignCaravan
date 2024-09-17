@@ -192,6 +192,19 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
 
+[node name="MaxFacesHBoxContainer" type="HBoxContainer" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Maximum number of face cards, that can be played on a number card"
+
+[node name="MaxFacesLabel" type="Label" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer"]
+layout_mode = 2
+text = "Number Card, Max Faces"
+
+[node name="MaxFacesLineEdit" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer" instance=ExtResource("1_wh0lf")]
+layout_mode = 2
+tooltip_text = "Maximum number of face cards, that can be played on a number card"
+text = "6"
+
 [node name="Control" type="Control" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -312,6 +325,7 @@ size_flags_horizontal = 3
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/QueenChangeDirectionButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/FaceMatchSuitButton" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer/MaxFacesLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton" to="." method="_on_button_pressed"]

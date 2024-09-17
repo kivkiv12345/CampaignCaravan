@@ -25,9 +25,9 @@ func to_game_rules() -> GameRules:
 
 	game_rules.number_card_allow_faces_first_round = $HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton.is_pressed()
 	game_rules.number_card_require_face_match_suit = $HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/FaceMatchSuitButton.is_pressed()
-	#game_rules.number_card_max_faces = 0
-	#if .text != "":
-		#number_card_max_faces = int()
+
+	if $HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer/MaxFacesLineEdit.text != "":
+		game_rules.number_card_max_faces = int($HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer/MaxFacesLineEdit.text)
 
 	if $HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit.text != "":
 		game_rules.hand_size = int($HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit.text)
