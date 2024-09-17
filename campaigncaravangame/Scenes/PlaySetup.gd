@@ -13,17 +13,17 @@ func _on_back_button_pressed() -> void:
 
 ## With late init help from: https://chatgpt.com
 func _on_play_button_pressed() -> void:
-	
+
 	# Step 1: Load and instantiate the scene
 	var scene_resource: PackedScene = load("res://TableTop.tscn")
 	var caravan_game: GameManager = scene_resource.instantiate()
-	
+
 	# Step 2: Modify the scene instance before adding it to the tree
 	var players: Control = caravan_game.get_node("Players")
-	
+
 	for player in players.get_children():
 		assert(player is Player)
-		
+
 		if player.is_enemy_player:
 			player.game_rules = $VBoxContainer/MarginContainer/EnemySettings.to_game_rules()
 		else:

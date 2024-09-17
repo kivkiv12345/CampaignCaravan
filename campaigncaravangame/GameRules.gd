@@ -21,17 +21,15 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 # TODO Kevin: Can we represent rules about decks here?
 @export var deck_min_size: int = 30  # Minimum starting number of cards allowed in the deck
 @export var deck_max_size: int = 108  # Maximum starting number of cards allowed in the deck
-@export var deck_shuffle: bool = false  # TODO Kevin: Implement, Shuffle deck before starting game
+@export var deck_shuffle: bool = true  # Shuffle deck before starting game
 @export var deck_require_unique_cards: bool = true  # TODO Kevin: Implement, Prevent filling a deck of only: 10's, 6's and  kings?
 
 # TODO Kevin: This setting may not continue to live here.
 #	It's not used to determine of 2 GameRules are equal.
 @export var deck_seed: int = 0
+@export var custom_deck: Deck = null
 
 
-func _init() -> void:
-	if self.deck_seed == 0:
-		self.deck_seed = randi()
 
 ## Useful to disallow playing with different rules between players, not that this is a requirement
 func same_rules(game_rules: GameRules) -> bool:

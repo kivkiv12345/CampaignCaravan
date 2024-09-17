@@ -56,7 +56,23 @@ func init() -> void:
 			self.caravans.append(child)
 			child.player = self
 
-	$Deck.fill_deck(Deck.new(self.game_rules.deck_min_size, self.game_rules.deck_max_size, self.game_rules.deck_seed))
+	var deck_seed: int = self.game_rules.deck_seed
+	if deck_seed == 0:
+		deck_seed = randi()
+
+	var deck: Deck = game_rules.custom_deck
+
+	# No custom deck, generate a random one.
+	if deck == null:
+		deck = Deck.new(self.game_rules.deck_min_size, self.game_rules.deck_max_size, deck_seed)
+
+	$Deck.fill_deck(deck)
+
+	# TODO Kevin: Quick play shows that we may actually do some shuffling,
+	#	even when this game rule is false.
+	if game_rules.deck_shuffle:
+		$Deck.unseeded_shuffle()
+
 	$Hand.fill_initial_hand()
 
 

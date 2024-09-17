@@ -126,6 +126,10 @@ func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: 
 
 
 func shuffle(_seed: int = 0) -> void:
+
+	if _seed == 0:
+		_seed = randi()
+
 	var rng = RandomNumberGenerator.new()
 	rng.seed = _seed
 

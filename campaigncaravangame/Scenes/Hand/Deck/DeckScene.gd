@@ -41,6 +41,29 @@ func fill_deck(_deck: Deck) -> void:
 func get_deck_size() -> int:
 	return $Cards.get_child_count()
 
+static func _random_cardfold_sound():
+
+	const card_sounds = [
+		preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_01.ogg"),
+		preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_02.ogg"),
+		preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_03.ogg"),
+		preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_04.ogg"),
+		preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_05.ogg"),
+	]
+	var rand_index:int = randi() % card_sounds.size()
+	SoundManager.playback.play_stream(card_sounds[rand_index], 0, 0, randf_range(0.98, 1.05))
+
+func unseeded_shuffle() -> void:
+
+	_random_cardfold_sound()
+
+	self.deck.shuffle()
+
+	# Shuffle the cards using the seeded RNG
+	for i in range($Cards.get_child_count()):
+		var j = randi_range(0, $Cards.get_child_count() - 1)
+		$Cards.move_child($Cards.get_child(i), j)
+
 
 func get_card() -> Card:
 	var cards: Array[Node] = $Cards.get_children()

@@ -58,9 +58,7 @@ func get_cards() -> Array[CardHandSlot]:
 enum _TryDrawCard {SUCCESS, NO_MORE_CARDS, HAND_FULL}
 
 static func _random_cardflip_sound():
-	# TODO Kevin: It feels a bit weird not having sounds during the
-	#	first few rounds when no new cards are drawn.
-	#	So maybe we should just play these anyway?
+
 	const card_sounds = [
 		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_01.wav"),
 		preload("res://FalloutNVUISounds/the_gambler/cardflip/fol_gmble_cardflip_02.wav"),
@@ -91,7 +89,6 @@ func _draw_card_from_deck() -> _TryDrawCard:
 	#hand_card_slot.position += Vector2(base_shift+(shift_per_card*$Cards.get_child_count()), 0)
 	
 	$Cards.add_child(hand_card_slot)  # Automatically fixes spacing through signal
-	_random_cardflip_sound()
 	
 	return _TryDrawCard.SUCCESS
 
@@ -164,6 +161,8 @@ func _on_card_played(_dropslot: CardSlot, played_from: CardHandSlot) -> void:
 
 	assert(played_from in $Cards.get_children())
 	$Cards.remove_child(played_from)
+	
+	_random_cardflip_sound()
 
 	if $Cards.get_child_count() < self.player.game_rules.hand_size:
 		self.try_fill_hand()
@@ -179,6 +178,6 @@ func fill_initial_hand() -> void:
 		self._draw_card_from_deck()
 
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	if self.deck != null:
-		self.fill_initial_hand()
+#func _ready() -> void:
+	#if self.deck != null:
+		#self.fill_initial_hand()

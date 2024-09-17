@@ -226,13 +226,14 @@ static func _level_up_sound() -> void:
 
 
 func restart() -> void:
-
-	# TODO Kevin: Account for game settings.
-	#	Maybe store a game of fresly started games, we can restore?
 	
 	# Step 1: Load and instantiate the scene
 	var scene_resource: PackedScene = load("res://TableTop.tscn")
 	var caravan_game: GameManager = scene_resource.instantiate()
+	
+	# Copy game rules
+	for i in range(self.players.size()):
+		caravan_game.players[i].game_rules = self.players[i].game_rules
 
 	if self.restore_hook:
 		self.restore_hook.call(caravan_game)
