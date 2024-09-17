@@ -27,14 +27,7 @@ func _ready() -> void:
 	assert(self.game_manager != null)
 
 
-var _inited: bool = false
 func init() -> void:
-
-	# TODO Kevin: Maybe assert instead, in the future
-	if self._inited:
-		return  # Already initlialized
-
-	self._inited = true
 
 	if self.hand == null:
 		self.hand = $Hand

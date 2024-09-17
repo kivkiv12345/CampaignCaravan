@@ -19,7 +19,10 @@ func _ready() -> void:
 
 func fill_deck(_deck: Deck) -> void:
 	self.deck = _deck
-	
+
+	for card in $Cards.get_children():
+		$Cards.remove_child(card)
+
 	for card in _deck.cards:
 		
 		# Use $Base_TextureRect as an 'abstract' (invisible) TextureRect that we can inherit attributes from.
