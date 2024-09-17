@@ -20,8 +20,9 @@ func _on_play_pressed() -> void:
 	self.queue_free()
 
 	# Step 4: Set the modified scene as the new current scene
-	self.get_tree().current_scene = caravan_game  # Make it the active scene
+	
 	self.get_tree().root.add_child(caravan_game)  # Add it to the tree
+	self.get_tree().current_scene = caravan_game  # Make it the active scene
 
 
 func _on_deck_pressed() -> void:

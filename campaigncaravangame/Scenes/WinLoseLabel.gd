@@ -16,12 +16,12 @@ func _ready() -> void:
 
 
 func _on_player_lost(_player: Player) -> void:
-	self.self_modulate = Color.RED
+	self.set_modulate(Color.RED)
 	self.text = "[center]LOSER[/center]"
 	self.visible = true
 
 
 func _on_player_won(_player: Player) -> void:
-	self.self_modulate = Color.GREEN
+	self.set_modulate(Color.GREEN)
 	self.text = "[center]WINNER[/center]"
 	self.visible = true

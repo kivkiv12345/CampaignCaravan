@@ -48,7 +48,7 @@ func to_game_rules() -> GameRules:
 func from_game_rules(game_rules: GameRules) -> void:
 
 	
-	$HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit.text = String.num_int64(game_rules.caravan_max_value)
+	$HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer/MaxValueLineEdit.text = String.num_int64(game_rules.caravan_max_value)
 	
 	$HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit.text = String.num_int64(game_rules.caravan_min_value)
 	$HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit.text = String.num_int64(game_rules.caravan_max_cards)

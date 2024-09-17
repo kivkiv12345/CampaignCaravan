@@ -45,5 +45,7 @@ func _on_numericcard_mouse_entered() -> void:
 		return
 	
 	assert(self.card && self.card.is_numeric_card())
+	print(self.caravan.get_value() + self.card.rank)
+	print(self.caravan.player.game_rules.caravan_max_value)
 	if (self.caravan.get_value() + self.card.rank) > self.caravan.player.game_rules.caravan_max_value:
-		self.self_modulate = Color.ORANGE_RED
+		self.set_modulate(Color.ORANGE_RED)

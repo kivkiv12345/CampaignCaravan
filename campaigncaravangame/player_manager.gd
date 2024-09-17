@@ -225,7 +225,19 @@ static func _level_up_sound() -> void:
 
 
 func restart() -> void:
-	assert(false)
+
+	# TODO Kevin: Account for game settings.
+	#	Maybe store a game of fresly started games, we can restore?
+	
+	# Step 1: Load and instantiate the scene
+	var scene_resource: PackedScene = load("res://TableTop.tscn")
+	var caravan_game: GameManager = scene_resource.instantiate()
+
+	# Step 4: Set the modified scene as the new current scene
+	self.get_tree().get_root().add_child(caravan_game)  # Add it to the tree
+	self.get_tree().current_scene = caravan_game  # Make it the active scene
+	
+	self.get_tree().get_root().remove_child(self)
 
 
 func advance_turn(old_player: Player) -> void:

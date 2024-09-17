@@ -49,4 +49,4 @@ func _on_facecard_mouse_entered() -> void:
 		return
 
 	if (self.caravan.get_value() + (self.number_card.get_value())) > self.caravan.player.game_rules.caravan_max_value:
-		self.self_modulate = Color.ORANGE_RED
+		self.set_modulate(Color.ORANGE_RED)
