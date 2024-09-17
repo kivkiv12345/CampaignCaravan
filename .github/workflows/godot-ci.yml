@@ -1,7 +1,11 @@
 # Sourced from: https://github.com/marketplace/actions/godot-ci
 
 name: "godot-ci export"
-on: push
+on:
+  push:
+    branches:
+      - main
+      - master
 
 env:
   GODOT_VERSION: 4.3
