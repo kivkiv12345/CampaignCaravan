@@ -67,6 +67,10 @@ func unseeded_shuffle() -> void:
 
 func get_card() -> Card:
 	var cards: Array[Node] = $Cards.get_children()
+	
+	if cards.is_empty():
+		return null
+	
 	$Cards.remove_child(cards.back())
 	var card: Card = self.deck.cards.pop_back()
 	self.deck_size_changed.emit(self)
