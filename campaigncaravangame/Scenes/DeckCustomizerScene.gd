@@ -1,4 +1,4 @@
-extends VBoxContainer
+extends HBoxContainer
 
 
 signal deck_customizer_save()
