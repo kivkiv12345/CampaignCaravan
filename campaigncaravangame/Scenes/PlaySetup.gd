@@ -46,14 +46,14 @@ func _on_play_button_pressed() -> void:
 ## Disable the play button, if an invalid configuration is detected.
 func _on_gamerules_changed(_game_rules: GameRules) -> void:
 	
-	var play_button: Button = $VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton
-	
-	if $VBoxContainer/MarginContainer/EnemySettings.to_game_rules().check_errors().size() > 0:
+	var play_button: Button = %PlayButton
+
+	if %EnemySettings.has_errors():
 		play_button.disabled = true
 		return
-	
-	if $VBoxContainer/MarginContainer3/OurSettings.to_game_rules().check_errors().size() > 0:
+
+	if %OurSettings.has_errors():
 		play_button.disabled = true
 		return
-		
+
 	play_button.disabled = false

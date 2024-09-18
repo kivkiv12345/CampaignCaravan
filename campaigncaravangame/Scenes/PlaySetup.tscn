@@ -42,6 +42,7 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
 [node name="EnemySettings" parent="VBoxContainer/MarginContainer" instance=ExtResource("2_eppx3")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
@@ -101,6 +102,7 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 
 [node name="OurSettings" parent="VBoxContainer/MarginContainer3" instance=ExtResource("2_eppx3")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer"]
@@ -134,6 +136,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
 [node name="PlayButton" type="Button" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 30)
 layout_mode = 2
 size_flags_horizontal = 4

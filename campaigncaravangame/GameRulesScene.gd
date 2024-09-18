@@ -7,6 +7,10 @@ class_name GameRulesScene
 signal gamerules_changed(game_rules: GameRules)
 
 
+@onready var use_custom_deck_button: Button = %CustomizeDeckButton
+@onready var custom_deck_optionbutton: OptionButton = %CustomDeckOptionButton
+
+
 func to_game_rules() -> GameRules:
 	var game_rules = GameRules.new()
 	
@@ -47,6 +51,20 @@ func to_game_rules() -> GameRules:
 	
 	
 	return game_rules
+
+
+## Extends GameRule.check_errors(),
+##	but also checking if custom deck is selected with actually selecting a deck.
+func has_errors() -> bool:
+	
+	if self.to_game_rules().check_errors().size() > 0:
+		return true
+	
+	if self.use_custom_deck_button.is_pressed():
+		if self.custom_deck_optionbutton.get_selected_id() == 0:  # No custom deck selected
+			return true
+			
+	return false
 
 
 func from_game_rules(game_rules: GameRules) -> void:
@@ -94,4 +112,14 @@ func _on_button_pressed() -> void:
 
 
 func _on_customize_deck_button_pressed() -> void:
-	pass # Replace with function body.
+
+	if %CustomizeDeckButton.is_pressed():
+		%SeededDeckOptionsHBoxContainer.hide()
+		%CustomDeckOptionsHBoxContainer.show()
+	else:
+		%SeededDeckOptionsHBoxContainer.show()
+		%CustomDeckOptionsHBoxContainer.hide()
+
+
+func _on_custom_deck_item_selected(_index: int) -> void:
+	self.gamerules_changed.emit(self.to_game_rules())
