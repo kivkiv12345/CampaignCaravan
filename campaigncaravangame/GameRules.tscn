@@ -53,6 +53,7 @@ layout_mode = 2
 text = "Max Value "
 
 [node name="MaxValueLineEdit" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxValueHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum value to sell a caravan (inclusive)"
 text = "26"
@@ -66,6 +67,7 @@ layout_mode = 2
 text = "Min Value "
 
 [node name="MinValueLineEdit" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Minimum value to sell a caravan (inclusive)"
 text = "21"
@@ -79,6 +81,7 @@ layout_mode = 2
 text = "Max Cards "
 
 [node name="MaxCardsLineEdit" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum number of numeric cards that can be played in a caravan"
 text = "20"
@@ -92,6 +95,7 @@ layout_mode = 2
 text = "Hand Size "
 
 [node name="HandSizeLineEdit" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Amount of cards kept in the hand (game starts with an additional card for each caravan)"
 text = "5"
@@ -133,6 +137,7 @@ size_flags_horizontal = 3
 layout_mode = 2
 
 [node name="QueenChangeSuitButton" type="Button" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Whether playing a queen changes the direction of the caravan it's played on."
@@ -149,6 +154,7 @@ script = ExtResource("3_2cbb5")
 layout_mode = 2
 
 [node name="QueenChangeDirectionButton" type="Button" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Whether playing a queen changes the suit of its number card."
@@ -165,6 +171,7 @@ script = ExtResource("3_2cbb5")
 layout_mode = 2
 
 [node name="FaceCardFirstRoundButton" type="Button" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ButtonCheckboxMCM"
@@ -181,6 +188,7 @@ script = ExtResource("3_2cbb5")
 layout_mode = 2
 
 [node name="FaceMatchSuitButton" type="Button" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_type_variation = &"ButtonCheckboxMCM"
@@ -200,6 +208,7 @@ layout_mode = 2
 text = "Number Card, Max Faces"
 
 [node name="MaxFacesLineEdit" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum number of face cards, that can be played on a number card"
 text = "6"
@@ -217,11 +226,37 @@ layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 2
 
-[node name="DeckLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer"]
+layout_mode = 2
+
+[node name="DeckLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
-text = "Deck
-"
+text = "Deck"
+
+[node name="Spacer2" type="Control" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CustomizeDeckButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Shuffle deck before starting game"
+theme_type_variation = &"ButtonCheckboxMCM"
+disabled = true
+toggle_mode = true
+text = " Customize"
+icon = ExtResource("2_xmr2c")
+alignment = 0
+icon_alignment = 2
+script = ExtResource("3_2cbb5")
+
+[node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/DeckVBoxContainer3"]
 layout_mode = 2
@@ -243,7 +278,8 @@ tooltip_text = "Minimum starting number of cards allowed in the deck"
 layout_mode = 2
 text = "Min Cards "
 
-[node name="MinCardsLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
+[node name="DeckMinCardsLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Minimum starting number of cards allowed in the deck"
 text = "30"
@@ -256,7 +292,8 @@ tooltip_text = "Maximum starting number of cards allowed in the deck"
 layout_mode = 2
 text = "Max Cards "
 
-[node name="MaxCardsLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
+[node name="DeckMaxCardsLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum starting number of cards allowed in the deck"
 text = "108"
@@ -266,6 +303,7 @@ layout_mode = 2
 tooltip_text = "Shuffle deck before starting game"
 
 [node name="ShuffleButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/ShuffleHBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Shuffle deck before starting game"
@@ -283,6 +321,7 @@ layout_mode = 2
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
 
 [node name="UniqueCardsButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/UniqueCardsHBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
@@ -305,6 +344,7 @@ layout_mode = 2
 text = "Deck Seed "
 
 [node name="DeckSeedLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2" instance=ExtResource("1_wh0lf")]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Seed for randomized deck, leave blank (or 0) for random"
 
@@ -325,8 +365,10 @@ size_flags_horizontal = 3
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/FaceMatchSuitButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer/MaxFacesLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/MinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_customize_deck_button_pressed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/DeckMinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/DeckMaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/UniqueCardsHBoxContainer2/UniqueCardsButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/HBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit" to="." method="_on_line_edit_text_changed"]

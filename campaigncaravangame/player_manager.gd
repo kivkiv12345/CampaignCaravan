@@ -252,7 +252,6 @@ func restart() -> void:
 	self.get_parent().add_child(caravan_game)  # Add it to the tree
 	#self.get_tree().current_scene = caravan_game  # Make it the active scene
 	self.queue_free()
-	#self.get_tree().get_root().remove_child(self)
 	self.get_parent().move_child(caravan_game, self_index)
 	
 	CaravanUtils.delay(caravan_game.start, 1, caravan_game)
