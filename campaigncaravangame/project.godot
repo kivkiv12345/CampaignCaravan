@@ -24,11 +24,16 @@ general/default_playback_type.web=0
 
 TextureManager="*res://TextureManager.gd"
 SoundManager="*res://FalloutNVUISounds/SoundManager.gd"
+SqlManager="*res://SQLManager.gd"
 
 [display]
 
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-sqlite/plugin.cfg")
 
 [global_group]
 
