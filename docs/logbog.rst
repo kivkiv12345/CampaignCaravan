@@ -184,3 +184,11 @@ Primært understået:
 - Fikset GitHub CI Action
 - Mini tutorial på main menu, i form at 2 bots som spiller mod hinanden
 - Flere indstillinger til tilpassede spilleregler
+
+
+18/9-2024 (Onsdag Uge #3)
+------------------
+Fokus i dag har fortsat været forberedelse på databasen,
+hermed har jeg oprettet brugerfladen til at redigere kortdæk.
+Dog nåede jeg at bruge aftenen på at tjekke at SQLite udvidelsen af Godot faktisk fungerer,
+og at jeg derfor kan undgå at skulle oprette et WebAPI.
