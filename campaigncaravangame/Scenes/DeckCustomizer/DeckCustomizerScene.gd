@@ -8,10 +8,10 @@ signal deck_customizer_back()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	%BaseCardTextureButton.visible = false
+	%BaseCardPickerTextureButton.visible = false
 	
 	for card in Deck.base_deck:
-		var card_texturebutton: TextureButton = %BaseCardTextureButton.duplicate()
+		var card_texturebutton: DeckCustomizerCardButton = %BaseCardPickerTextureButton.duplicate()
 		card_texturebutton.texture_normal = TextureManager.get_card_texture(card.suit, card.rank)
 		card_texturebutton.visible = true
 		#%CardScrollContainer.add_child(card_texturerect)
@@ -35,3 +35,20 @@ func _on_revoke_texture_preview(texture: Texture2D) -> void:
 	if %CardViewerTextureRect.texture != texture:
 		return  # Somebody has already replaced the texture we are trying to revoke.
 	%CardViewerTextureRect.texture = null
+
+
+func _on_card_picker_picker_clicked(button: DeckCustomizerCardPickerButton) -> void:
+	
+	# See if the card is already in our chosen deck
+	for deck_card in %CardsInDeckVBoxContainer.get_children():
+		assert(deck_card is DeckCardWithCounter)
+		
+		if deck_card.card == button.card:
+			deck_card.set_card_count(deck_card.get_card_count()+1)
+			return
+			
+	# Card was not in out chosen deck, add it.
+	
+	var new_deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/deck_card_with_counter.tscn").instantiate()  #%BaseDeckCardTextureButton.duplicate()
+	new_deck_card.card = button.card
+	%CardsInDeckVBoxContainer.add_child(new_deck_card)

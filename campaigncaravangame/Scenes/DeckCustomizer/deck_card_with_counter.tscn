@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://be61cae8g46uc"]
+
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_rhhvx"]
+[ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCardWithCounter.gd" id="2_o242e"]
+
+[node name="BaseDeckCardTextureButton" type="TextureButton"]
+custom_minimum_size = Vector2(100, 150)
+anchors_preset = -1
+anchor_right = 0.087
+anchor_bottom = 0.231
+offset_right = -100.224
+offset_bottom = -149.688
+texture_normal = ExtResource("1_rhhvx")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("2_o242e")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.43
+anchor_top = 0.747
+anchor_right = 0.83
+anchor_bottom = 0.9
+offset_top = -0.0500031
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="CardCountRichTextLabel" type="RichTextLabel" parent="PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+bbcode_enabled = true
+text = "[center]x100[/center]"
+scroll_active = false
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_pressed_dec_count"]
