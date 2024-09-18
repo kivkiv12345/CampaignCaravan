@@ -61,17 +61,17 @@ func _on_gamerules_changed(_game_rules: GameRules) -> void:
 
 func _on_manage_decks_button_pressed(_game_rules_scene: GameRulesScene) -> void:
 	
-	%DeckCustomizerVBoxContainer.show()
+	%DeckCustomizer.show()
 	%PlayerSettingsVBoxContainer.hide()
 
 
 func _on_deck_customizer_save() -> void:
 	
-	%DeckCustomizerVBoxContainer.hide()
+	%DeckCustomizer.hide()
 	%PlayerSettingsVBoxContainer.show()
 
 
 func _on_deck_customizer_back() -> void:
 	
-	%DeckCustomizerVBoxContainer.hide()
+	%DeckCustomizer.hide()
 	%PlayerSettingsVBoxContainer.show()

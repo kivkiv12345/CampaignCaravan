@@ -22,7 +22,9 @@ func _enter_tree() -> void:
 
 
 func _on_node_added(node:Node) -> void:
-	if node is Button:
+	
+	if node is Button or node is TextureButton:
+
 		if node.disabled:
 			# TODO Kevin: We very much want to connect the signal, even if the button is disabled.
 			#	But we can't check if the button is diabled in the signal.

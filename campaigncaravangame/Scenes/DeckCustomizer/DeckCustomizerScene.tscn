@@ -1,0 +1,284 @@
+[gd_scene load_steps=8 format=3 uid="uid://rieeogfqbs4x"]
+
+[ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCustomizerScene.gd" id="1_fqnb8"]
+[ext_resource type="Texture2D" uid="uid://dsmek6qhvw8t6" path="res://MCMChecked.png" id="2_dvgst"]
+[ext_resource type="PackedScene" uid="uid://be61cae8g46uc" path="res://Scenes/DeckCustomizer/deck_card_with_counter.tscn" id="2_rdww3"]
+[ext_resource type="Script" path="res://Scenes/FalloutCheckboxMCM.gd" id="3_65iu1"]
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="3_nddh2"]
+[ext_resource type="PackedScene" uid="uid://dkoucvdjgnyc1" path="res://Scenes/DeckCustomizer/CustomDeckScene.tscn" id="4_0wp4e"]
+[ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCustomizerCardPickerButton.gd" id="4_20b4v"]
+
+[node name="DeckCustomizerVBoxContainer" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_fqnb8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.5
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.22
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="DeckOptionsInnerMargin" type="MarginContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin"]
+layout_mode = 2
+
+[node name="CaravanLabel" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Deck Customizer"
+
+[node name="UniqueCardsButton" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Whether this deck can be created from 2 normal card decks (no more than 2 of any card)."
+theme_type_variation = &"ButtonCheckboxMCM"
+disabled = true
+toggle_mode = true
+button_pressed = true
+text = "Contains Only Unique Cards"
+icon = ExtResource("2_dvgst")
+alignment = 0
+icon_alignment = 2
+script = ExtResource("3_65iu1")
+
+[node name="MaxValueHBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+layout_mode = 2
+tooltip_text = "Maximum value to sell a caravan (inclusive)"
+
+[node name="DeckNameLabel" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer/MaxValueHBoxContainer"]
+layout_mode = 2
+text = "Deck Name"
+
+[node name="DeckNameLineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer/MaxValueHBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.01
+
+[node name="SaveNewDeckButton" type="Button" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "Save the current deck. A new deck will be created if one with entered name doesn't exist."
+text = "Save Deck"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.7
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/MarginContainer/ScrollContainer/VBoxContainer/MarginContainer" instance=ExtResource("4_0wp4e")]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="BaseDeckCardTextureButton" parent="VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer" instance=ExtResource("2_rdww3")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CardsInDeckVBoxContainer" type="VBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CardScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+horizontal_scroll_mode = 2
+vertical_scroll_mode = 0
+scroll_deadzone = 3
+
+[node name="CardScrollHBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer/CardScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BaseCardPickerTextureButton" type="TextureButton" parent="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("3_nddh2")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("4_20b4v")
+
+[node name="BackSaveMarginContainer" type="MarginContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.19
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/BackSaveMarginContainer"]
+layout_mode = 2
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayOrBackButtons" type="PanelContainer" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="CustomizerBackButton" type="Button" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Back"
+
+[node name="Spacer3" type="Control" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="CustomizerSaveButton" type="Button" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(75, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Save"
+
+[node name="Spacer2" type="Control" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="VBoxContainer/BackSaveMarginContainer/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CardViewerOuterMarginContainer" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CardViewerPanelContainer" type="PanelContainer" parent="HBoxContainer/CardViewerOuterMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CardViewerInnerMarginContainer" type="MarginContainer" parent="HBoxContainer/CardViewerOuterMarginContainer/CardViewerPanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CardViewerTextureRect" type="TextureRect" parent="HBoxContainer/CardViewerOuterMarginContainer/CardViewerPanelContainer/CardViewerInnerMarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[connection signal="card_count_changed" from="VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/BaseDeckCardTextureButton" to="." method="_on_deck_card_card_count_changed"]
+[connection signal="desire_texture_preview" from="VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/BaseDeckCardTextureButton" to="." method="_on_desire_texture_preview"]
+[connection signal="revoke_texture_preview" from="VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/BaseDeckCardTextureButton" to="." method="_on_revoke_texture_preview"]
+[connection signal="button_down" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_button_down"]
+[connection signal="button_up" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_button_up"]
+[connection signal="card_picker_clicked" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="." method="_on_card_picker_picker_clicked"]
+[connection signal="desire_texture_preview" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="." method="_on_desire_texture_preview"]
+[connection signal="mouse_entered" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_pressed"]
+[connection signal="revoke_texture_preview" from="VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="." method="_on_revoke_texture_preview"]
+[connection signal="pressed" from="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer/CustomizerBackButton" to="." method="_on_customizer_back_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer/CustomizerSaveButton" to="." method="_on_customizer_save_button_pressed"]

@@ -73,7 +73,30 @@ func _on_card_picker_picker_clicked(button: DeckCustomizerCardPickerButton) -> v
 		if deck_card_index > new_card_index:
 			break
 	
-	print(card_move_index)
 	%CardsInDeckVBoxContainer.move_child(new_deck_card, card_move_index)
 	
 	# TODO Kevin: Scroll to added card.
+
+
+var uniquecards_violators: Array[DeckCardWithCounter] = []
+func _on_deck_card_card_count_changed(deck_card_with_counter: DeckCardWithCounter) -> void:
+	
+	if deck_card_with_counter.get_card_count() > 2:
+		if deck_card_with_counter not in self.uniquecards_violators:
+			self.uniquecards_violators.append(deck_card_with_counter)
+	else:
+		if deck_card_with_counter in self.uniquecards_violators:
+			self.uniquecards_violators.erase(deck_card_with_counter)
+
+	if self.uniquecards_violators.size() > 0:
+		#%UniqueCardsButton.set_pressed(false)
+		#%UniqueCardsButton.disabled = false
+		%UniqueCardsButton.button_pressed = false
+		%UniqueCardsButton._update_checkbox_icon()
+		#%UniqueCardsButton.tooltip = "This deck has more than 2 of some card"
+	else:
+		#%UniqueCardsButton.disabled = false
+		#%UniqueCardsButton.set_pressed(true)
+		%UniqueCardsButton.button_pressed = true
+		%UniqueCardsButton._update_checkbox_icon()
+		#%UniqueCardsButton.tooltip = "This deck doesn't have more than 2 of any card"
