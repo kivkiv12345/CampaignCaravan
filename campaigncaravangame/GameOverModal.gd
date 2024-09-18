@@ -57,6 +57,7 @@ func _on_main_menu_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
+	assert(OS.get_name() != "Web")
 	# Give time for the button sound to play
 	CaravanUtils.delay(self.get_tree().quit, 0.16, self)
 

@@ -9,7 +9,8 @@ const Suit := Card.Suit
 const Rank := Card.Rank
 
 
-var _base_deck: Array[Card] = [
+static var base_deck: Array[Card] = [
+
 	# Aces
 	Card.new(Suit.CLOVER, Rank.ACE),
 	Card.new(Suit.DIAMOND, Rank.ACE),
@@ -106,12 +107,12 @@ func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: 
 	self.cards = []
 
 	@warning_ignore( "integer_division" )
-	var num_decks: int = max_size/self._base_deck.size()
-	if max_size % self._base_deck.size():  # Simulate ceil()
+	var num_decks: int = max_size/Deck.base_deck.size()
+	if max_size % Deck.base_deck.size():  # Simulate ceil()
 		num_decks += 1
 
 	for __ in range(num_decks):
-		self.cards += self._base_deck.duplicate()
+		self.cards += Deck.base_deck.duplicate()
 
 
 	self.shuffle(_seed)

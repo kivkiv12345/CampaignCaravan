@@ -25,9 +25,9 @@ func _on_play_button_pressed() -> void:
 		assert(player is Player)
 
 		if player.is_enemy_player:
-			player.game_rules = $VBoxContainer/MarginContainer/EnemySettings.to_game_rules()
+			player.game_rules = %EnemySettings.to_game_rules()
 		else:
-			player.game_rules = $VBoxContainer/MarginContainer3/OurSettings.to_game_rules()
+			player.game_rules = %OurSettings.to_game_rules()
 
 		if player.game_rules.check_errors().size() != 0:
 			return  # We cannot allow the game to start with these rules
@@ -57,3 +57,21 @@ func _on_gamerules_changed(_game_rules: GameRules) -> void:
 		return
 
 	play_button.disabled = false
+
+
+func _on_manage_decks_button_pressed(_game_rules_scene: GameRulesScene) -> void:
+	
+	%DeckCustomizerVBoxContainer.show()
+	%PlayerSettingsVBoxContainer.hide()
+
+
+func _on_deck_customizer_save() -> void:
+	
+	%DeckCustomizerVBoxContainer.hide()
+	%PlayerSettingsVBoxContainer.show()
+
+
+func _on_deck_customizer_back() -> void:
+	
+	%DeckCustomizerVBoxContainer.hide()
+	%PlayerSettingsVBoxContainer.show()

@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://qd31t5ytmrft"]
+[gd_scene load_steps=8 format=3 uid="uid://qd31t5ytmrft"]
 
 [ext_resource type="Script" path="res://Scenes/PlaySetup.gd" id="1_o7p1v"]
 [ext_resource type="PackedScene" uid="uid://dic6t3g08dh4e" path="res://GameRules.tscn" id="2_eppx3"]
 [ext_resource type="Texture2D" uid="uid://basi4vqxwx8rc" path="res://Wallpapers/CardWallpaper.jpg" id="2_gto4p"]
 [ext_resource type="Script" path="res://Scenes/CopySettingsButton.gd" id="4_fqbnv"]
+[ext_resource type="Script" path="res://Scenes/DeckCustomizerScene.gd" id="5_4bw0w"]
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="5_cdk0t"]
+[ext_resource type="Script" path="res://Scenes/card_customizer_texture_button.gd" id="7_rnudf"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -26,7 +29,8 @@ grow_vertical = 2
 texture = ExtResource("2_gto4p")
 expand_mode = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="PlayerSettingsVBoxContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,18 +38,18 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PlayerSettingsVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="EnemySettings" parent="VBoxContainer/MarginContainer" instance=ExtResource("2_eppx3")]
+[node name="EnemySettings" parent="PlayerSettingsVBoxContainer/MarginContainer" instance=ExtResource("2_eppx3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="PlayerSettingsVBoxContainer"]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -53,18 +57,18 @@ size_flags_stretch_ratio = 0.33
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 5
 
-[node name="SyncButtons" type="PanelContainer" parent="VBoxContainer/MarginContainer2"]
+[node name="SyncButtons" type="PanelContainer" parent="PlayerSettingsVBoxContainer/MarginContainer2"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer2/SyncButtons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons"]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
+[node name="Spacer" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="CopyDown" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
+[node name="CopyDown" type="Button" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -75,11 +79,11 @@ script = ExtResource("4_fqbnv")
 from = NodePath("../../../../MarginContainer/EnemySettings")
 to = NodePath("../../../../MarginContainer3/OurSettings")
 
-[node name="Spacer3" type="Control" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
+[node name="Spacer3" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="CopyUp" type="Button" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
+[node name="CopyUp" type="Button" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons/HBoxContainer" node_paths=PackedStringArray("from", "to")]
 custom_minimum_size = Vector2(100, 30)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -90,52 +94,52 @@ script = ExtResource("4_fqbnv")
 from = NodePath("../../../../MarginContainer3/OurSettings")
 to = NodePath("../../../../MarginContainer/EnemySettings")
 
-[node name="Spacer2" type="Control" parent="VBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer2/SyncButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="MarginContainer3" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer3" type="MarginContainer" parent="PlayerSettingsVBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 10
 
-[node name="OurSettings" parent="VBoxContainer/MarginContainer3" instance=ExtResource("2_eppx3")]
+[node name="OurSettings" parent="PlayerSettingsVBoxContainer/MarginContainer3" instance=ExtResource("2_eppx3")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer4" type="MarginContainer" parent="VBoxContainer"]
+[node name="MarginContainer4" type="MarginContainer" parent="PlayerSettingsVBoxContainer"]
 custom_minimum_size = Vector2(0, 75)
 layout_mode = 2
 size_flags_stretch_ratio = 0.5
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="PlayOrBackButtons" type="PanelContainer" parent="VBoxContainer/MarginContainer4"]
+[node name="PlayOrBackButtons" type="PanelContainer" parent="PlayerSettingsVBoxContainer/MarginContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons"]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+[node name="Spacer" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+[node name="BackButton" type="Button" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 30)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Back"
 
-[node name="Spacer3" type="Control" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+[node name="Spacer3" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+[node name="PlayButton" type="Button" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 30)
 layout_mode = 2
@@ -143,11 +147,148 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 text = "Play"
 
-[node name="Spacer2" type="Control" parent="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
+[node name="Spacer2" type="Control" parent="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[connection signal="gamerules_changed" from="VBoxContainer/MarginContainer/EnemySettings" to="." method="_on_gamerules_changed"]
-[connection signal="gamerules_changed" from="VBoxContainer/MarginContainer3/OurSettings" to="." method="_on_gamerules_changed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[node name="DeckCustomizerVBoxContainer" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_4bw0w")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeckCustomizerVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.6
+
+[node name="Control" type="Control" parent="DeckCustomizerVBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="DeckCustomizerVBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="DeckCustomizerVBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="DeckCustomizerVBoxContainer/HBoxContainer/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CardViewerTextureRect" type="TextureRect" parent="DeckCustomizerVBoxContainer/HBoxContainer/MarginContainer/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="DeckCustomizerVBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 25
+
+[node name="Panel" type="Panel" parent="DeckCustomizerVBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="CardScrollContainer" type="ScrollContainer" parent="DeckCustomizerVBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+follow_focus = true
+vertical_scroll_mode = 0
+
+[node name="CardScrollHBoxContainer" type="HBoxContainer" parent="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="BaseCardTextureButton" type="TextureButton" parent="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("5_cdk0t")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("7_rnudf")
+
+[node name="BackSaveMarginContainer" type="MarginContainer" parent="DeckCustomizerVBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.19
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PlayOrBackButtons" type="PanelContainer" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons"]
+layout_mode = 2
+
+[node name="Spacer" type="Control" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="CustomizerBackButton" type="Button" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Back"
+
+[node name="Spacer3" type="Control" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="CustomizerSaveButton" type="Button" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(75, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Play"
+
+[node name="Spacer2" type="Control" parent="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[connection signal="gamerules_changed" from="PlayerSettingsVBoxContainer/MarginContainer/EnemySettings" to="." method="_on_gamerules_changed"]
+[connection signal="manage_decks_button_pressed" from="PlayerSettingsVBoxContainer/MarginContainer/EnemySettings" to="." method="_on_manage_decks_button_pressed"]
+[connection signal="gamerules_changed" from="PlayerSettingsVBoxContainer/MarginContainer3/OurSettings" to="." method="_on_gamerules_changed"]
+[connection signal="manage_decks_button_pressed" from="PlayerSettingsVBoxContainer/MarginContainer3/OurSettings" to="." method="_on_manage_decks_button_pressed"]
+[connection signal="pressed" from="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="deck_customizer_back" from="DeckCustomizerVBoxContainer" to="." method="_on_deck_customizer_back"]
+[connection signal="deck_customizer_save" from="DeckCustomizerVBoxContainer" to="." method="_on_deck_customizer_save"]
+[connection signal="button_down" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" method="_on_button_down"]
+[connection signal="button_up" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" method="_on_button_up"]
+[connection signal="desire_texture_preview" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer" method="_on_desire_texture_preview"]
+[connection signal="mouse_entered" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" method="_on_pressed"]
+[connection signal="revoke_texture_preview" from="DeckCustomizerVBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardTextureButton" to="DeckCustomizerVBoxContainer" method="_on_revoke_texture_preview"]
+[connection signal="pressed" from="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer/CustomizerBackButton" to="DeckCustomizerVBoxContainer" method="_on_customizer_back_button_pressed"]
+[connection signal="pressed" from="DeckCustomizerVBoxContainer/BackSaveMarginContainer/PlayOrBackButtons/HBoxContainer/CustomizerSaveButton" to="DeckCustomizerVBoxContainer" method="_on_customizer_save_button_pressed"]

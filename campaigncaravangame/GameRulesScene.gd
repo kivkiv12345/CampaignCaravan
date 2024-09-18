@@ -5,6 +5,7 @@ class_name GameRulesScene
 
 
 signal gamerules_changed(game_rules: GameRules)
+signal manage_decks_button_pressed(game_rules_scene: GameRulesScene)
 
 
 @onready var use_custom_deck_button: Button = %CustomizeDeckButton
@@ -123,3 +124,7 @@ func _on_customize_deck_button_pressed() -> void:
 
 func _on_custom_deck_item_selected(_index: int) -> void:
 	self.gamerules_changed.emit(self.to_game_rules())
+
+
+func _on_manage_decks_button_pressed() -> void:
+	self.manage_decks_button_pressed.emit(self)
