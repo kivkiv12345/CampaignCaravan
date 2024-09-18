@@ -194,18 +194,19 @@ theme_override_constants/margin_top = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
+follow_focus = true
 horizontal_scroll_mode = 0
 vertical_scroll_mode = 2
+
+[node name="BaseDeckCardTextureButton" parent="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer" instance=ExtResource("6_21w8k")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="CardsInDeckVBoxContainer" type="VBoxContainer" parent="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-
-[node name="BaseDeckCardTextureButton" parent="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/CardsInDeckVBoxContainer" instance=ExtResource("6_21w8k")]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="DeckCustomizerVBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -337,11 +338,15 @@ stretch_mode = 5
 [connection signal="pressed" from="PlayerSettingsVBoxContainer/MarginContainer4/PlayOrBackButtons/HBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="deck_customizer_back" from="DeckCustomizerVBoxContainer" to="." method="_on_deck_customizer_back"]
 [connection signal="deck_customizer_save" from="DeckCustomizerVBoxContainer" to="." method="_on_deck_customizer_save"]
+[connection signal="desire_texture_preview" from="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/BaseDeckCardTextureButton" to="DeckCustomizerVBoxContainer" method="_on_desire_texture_preview"]
+[connection signal="revoke_texture_preview" from="DeckCustomizerVBoxContainer/VBoxContainer/HBoxContainer/MarginContainer2/ScrollContainer/BaseDeckCardTextureButton" to="DeckCustomizerVBoxContainer" method="_on_revoke_texture_preview"]
 [connection signal="button_down" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_button_down"]
 [connection signal="button_up" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_button_up"]
 [connection signal="card_picker_clicked" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer" method="_on_card_picker_picker_clicked"]
+[connection signal="desire_texture_preview" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer" method="_on_desire_texture_preview"]
 [connection signal="mouse_entered" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_mouse_exited"]
 [connection signal="pressed" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" method="_on_pressed"]
+[connection signal="revoke_texture_preview" from="DeckCustomizerVBoxContainer/VBoxContainer/MarginContainer/CardScrollContainer/CardScrollHBoxContainer/BaseCardPickerTextureButton" to="DeckCustomizerVBoxContainer" method="_on_revoke_texture_preview"]
 [connection signal="pressed" from="DeckCustomizerVBoxContainer/VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer/CustomizerBackButton" to="DeckCustomizerVBoxContainer" method="_on_customizer_back_button_pressed"]
 [connection signal="pressed" from="DeckCustomizerVBoxContainer/VBoxContainer/BackSaveMarginContainer/HBoxContainer/PlayOrBackButtons/HBoxContainer/CustomizerSaveButton" to="DeckCustomizerVBoxContainer" method="_on_customizer_save_button_pressed"]

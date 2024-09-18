@@ -20,6 +20,19 @@ func _init(_suit: Suit, _rank: Rank):
 	self.card_texture = TextureManager.get_card_texture(_suit, _rank)
 
 
+func get_index() -> int:
+	
+	var card_index: int = -1
+	for card_vector in TextureManager.texture_paths:
+		card_index += 1
+		
+		if card_vector == Vector2i(self.suit, self.rank):
+			return card_index
+
+	assert(false)
+	return card_index
+
+
 func is_face_card() -> bool:
 	return self.rank in [Rank.JACK, Rank.QUEEN, Rank.KING, Rank.JOKER]
 	
