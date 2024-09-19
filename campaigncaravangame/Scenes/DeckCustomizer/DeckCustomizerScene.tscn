@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://rieeogfqbs4x"]
 
 [ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCustomizerScene.gd" id="1_fqnb8"]
-[ext_resource type="Texture2D" uid="uid://dsmek6qhvw8t6" path="res://MCMChecked.png" id="2_dvgst"]
+[ext_resource type="Texture2D" uid="uid://3ele67nxp6er" path="res://MCMChecked.png" id="2_dvgst"]
 [ext_resource type="Script" path="res://Scenes/FalloutCheckboxMCM.gd" id="3_65iu1"]
-[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="3_nddh2"]
+[ext_resource type="Texture2D" uid="uid://qvfec2vciw6u" path="res://CardTextures/2_clover_alexus.jpeg" id="3_nddh2"]
 [ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCustomizerCardPickerButton.gd" id="4_20b4v"]
 
 [node name="DeckCustomizerVBoxContainer" type="HBoxContainer"]

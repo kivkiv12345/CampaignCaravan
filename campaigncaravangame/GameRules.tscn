@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://GameRulesScene.gd" id="1_phn6n"]
 [ext_resource type="PackedScene" uid="uid://c7qdk4crw0kvf" path="res://IntLineEdit.tscn" id="1_wh0lf"]
-[ext_resource type="Texture2D" uid="uid://bkd703ivppc5y" path="res://MCMUnchecked.png" id="2_xmr2c"]
+[ext_resource type="Texture2D" uid="uid://djmcmigp6fek7" path="res://MCMUnchecked.png" id="2_xmr2c"]
 [ext_resource type="Script" path="res://Scenes/FalloutCheckboxMCM.gd" id="3_2cbb5"]
-[ext_resource type="Texture2D" uid="uid://dsmek6qhvw8t6" path="res://MCMChecked.png" id="4_bnw7l"]
+[ext_resource type="Texture2D" uid="uid://3ele67nxp6er" path="res://MCMChecked.png" id="4_bnw7l"]
 
 [node name="GameSettings" type="PanelContainer"]
 anchors_preset = -1
@@ -425,11 +425,12 @@ text = "Custom Deck"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
-selected = 0
-allow_reselect = true
 item_count = 2
+allow_reselect = true
 popup/item_0/text = "None"
+popup/item_0/id = 0
 popup/item_0/disabled = true
+popup/item_1/text = ""
 popup/item_1/id = 1
 popup/item_1/separator = true
 

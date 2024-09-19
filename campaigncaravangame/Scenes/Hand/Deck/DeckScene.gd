@@ -58,7 +58,7 @@ static func _random_cardfold_sound():
 
 func unseeded_shuffle() -> void:
 
-	_random_cardfold_sound()
+	DeckScene._random_cardfold_sound()
 
 	self.deck.shuffle()
 

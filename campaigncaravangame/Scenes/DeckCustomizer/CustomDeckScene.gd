@@ -21,7 +21,7 @@ func set_deck_name(deck_name: String) -> void:
 
 
 func get_deck_name() -> String:
-	return sanitize_deck_name(%DeckSelectButton.text)
+	return CustomDeckScene.sanitize_deck_name(%DeckSelectButton.text)
 
 
 func _on_delete_deck_button_pressed() -> void:
@@ -92,7 +92,7 @@ static func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter
 	success = SqlManager.db.query_with_bindings(query_string, param_bindings)
 	assert(success)
 	
-	var deck_cards: Array[DeckCardWithCounter]
+	var deck_cards: Array[DeckCardWithCounter] = []
 	for query_deck_card in SqlManager.db.query_result:
 		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()
 		deck_card.card = Card.new(query_deck_card["suit"], query_deck_card["rank"])

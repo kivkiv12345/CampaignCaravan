@@ -10,7 +10,7 @@ func _ready() -> void:
 
 func _can_drop_data(_pos: Vector2, data: Variant) -> bool:
 	
-	if data is not DraggedCard:
+	if not data is DraggedCard:
 		return false  # Under no circumstances can we drop something which is not a card.
 	
 	var drag_item: DraggedCard = data as DraggedCard

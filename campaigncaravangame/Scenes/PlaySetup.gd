@@ -23,10 +23,14 @@ func _on_play_button_pressed() -> void:
 
 	for player in players.get_children():
 		assert(player is Player)
+		
+		if player is HumanPlayer:
+			player.is_enemy_player = false
 
 		if player.is_enemy_player:
 			player.game_rules = %EnemySettings.to_game_rules()
 		else:
+			print(%OurSettings.to_game_rules().custom_deck_name)
 			player.game_rules = %OurSettings.to_game_rules()
 
 		if player.game_rules.check_errors().size() != 0:
