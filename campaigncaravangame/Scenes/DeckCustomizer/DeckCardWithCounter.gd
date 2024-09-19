@@ -35,10 +35,6 @@ func set_card_count(count: int) -> void:
 		
 	self._num_cards = count
 
-	if self._num_cards <= 0:
-		self.queue_free()
-		return
-
 	%CardCountRichTextLabel.text = "[center]"
 
 	if String.num_int64(self._num_cards).length() <= 3:
@@ -47,6 +43,11 @@ func set_card_count(count: int) -> void:
 	%CardCountRichTextLabel.text += String.num_int64(self._num_cards)
 	%CardCountRichTextLabel.text += "[/center]"
 	
+	if self._num_cards <= 0:
+		# Remove self from tree before signal, to update save button correctly.
+		self.get_parent().remove_child(self)
+		self.queue_free()
+		
 	if should_emit:
 		self.card_count_changed.emit(self)
 

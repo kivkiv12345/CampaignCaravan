@@ -70,6 +70,22 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_65iu1")
 
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
+layout_mode = 2
+
+[node name="NumberOfCardsNameLabel" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "How many cards are in the selected deck"
+mouse_filter = 1
+text = "Number of Cards:"
+
+[node name="NumberOfCardsValueLabel" type="Label" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
 [node name="MaxValueHBoxContainer" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer/DeckOptionsInnerMargin/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Maximum value to sell a caravan (inclusive)"
@@ -92,7 +108,7 @@ size_flags_stretch_ratio = 0.01
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
-tooltip_text = "Save the current deck. A new deck will be created if one with entered name doesn't exist."
+tooltip_text = "Save the current deck. A new deck will be created if one with entered the name doesn't exist."
 text = "Save Deck"
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/HBoxContainer/MarginContainer/PanelContainer/VBoxContainer"]

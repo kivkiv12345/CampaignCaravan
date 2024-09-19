@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://be61cae8g46uc"]
 
-[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_rhhvx"]
-[ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCardWithCounter.gd" id="2_o242e"]
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_xqdmo"]
+[ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCardWithCounter.gd" id="2_kk4wd"]
 
 [node name="BaseDeckCardTextureButton" type="TextureButton"]
 custom_minimum_size = Vector2(100, 150)
@@ -10,10 +10,10 @@ anchor_right = 0.087
 anchor_bottom = 0.231
 offset_right = -100.224
 offset_bottom = -149.688
-texture_normal = ExtResource("1_rhhvx")
+texture_normal = ExtResource("1_xqdmo")
 ignore_texture_size = true
 stretch_mode = 5
-script = ExtResource("2_o242e")
+script = ExtResource("2_kk4wd")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1

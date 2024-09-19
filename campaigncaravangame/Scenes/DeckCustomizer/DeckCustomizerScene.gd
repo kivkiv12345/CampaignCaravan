@@ -85,7 +85,7 @@ func _on_card_picker_picker_clicked(button: DeckCustomizerCardPickerButton) -> v
 	#var new_deck_card: DeckCardWithCounter = %BaseDeckCardTextureButton.duplicate()
 	#new_deck_card.visible = true  # We have likely hid the base
 
-	var new_deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/deck_card_with_counter.tscn").instantiate()  #%BaseDeckCardTextureButton.duplicate()
+	var new_deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()  #%BaseDeckCardTextureButton.duplicate()
 
 	new_deck_card.card = button.card
 
@@ -99,22 +99,92 @@ func _on_deck_card_card_count_changed(deck_card_with_counter: DeckCardWithCounte
 		if deck_card_with_counter not in self.uniquecards_violators:
 			self.uniquecards_violators.append(deck_card_with_counter)
 	else:
-		if deck_card_with_counter in self.uniquecards_violators:
-			self.uniquecards_violators.erase(deck_card_with_counter)
+		for violator in self.uniquecards_violators:
+			# Nasty bug here, sometimes (with enough fervent clicking on cards)
+			#	the card can be removed from the scene tree while staying in our violator array.
+			#	In any case, let's clean those up, while we're at it.
+			if violator.get_card_count() <= 2 or not violator.is_inside_tree():
+				self.uniquecards_violators.erase(violator)
+
+	var num_cards_total: int = 0
+	for deck_cards in %CardsInDeckVBoxContainer.get_children():
+		assert(deck_cards is DeckCardWithCounter)
+		
+		num_cards_total += deck_cards.get_card_count()
+		
+	%NumberOfCardsValueLabel.text = String.num_int64(num_cards_total)
+
 
 	if self.uniquecards_violators.size() > 0:
-		#%UniqueCardsButton.set_pressed(false)
-		#%UniqueCardsButton.disabled = false
 		%UniqueCardsButton.button_pressed = false
 		%UniqueCardsButton._update_checkbox_icon()
 		#%UniqueCardsButton.tooltip = "This deck has more than 2 of some card"
 	else:
-		#%UniqueCardsButton.disabled = false
-		#%UniqueCardsButton.set_pressed(true)
 		%UniqueCardsButton.button_pressed = true
 		%UniqueCardsButton._update_checkbox_icon()
 		#%UniqueCardsButton.tooltip = "This deck doesn't have more than 2 of any card"
+	
+	self.update_save_button_enabled_state()
 
+
+func update_save_button_enabled_state() -> void:
+	
+	var entered_deck_name: String = CustomDeckScene.sanitize_deck_name(%DeckNameLineEdit.text)
+	
+	# Check that the name is valid enough to be saved.
+	if entered_deck_name.length() == 0:
+		%SaveDeckButton.disabled = true
+		return
+	
+	if %CardsInDeckVBoxContainer.get_child_count() == 0:
+		%SaveDeckButton.disabled = true
+		return
+		
+	# Use empty name, because then it will always be different if no selected deck is found.
+	var selected_deck_name: String = ""
+	for custom_deck in %CustomDecksVBoxContainer.get_children():
+		assert(custom_deck is CustomDeckScene)
+		
+		if custom_deck.is_selected():
+			selected_deck_name = custom_deck.get_deck_name()
+			break
+	
+	#var card_count_changed: bool = true
+	if entered_deck_name == selected_deck_name:
+		if self.compare_saved_cache(self._build_saved_cache()):
+			#card_count_changed = false
+			%SaveDeckButton.disabled = true
+			return
+
+	%SaveDeckButton.disabled = false
+
+
+var saved_deck_cache: Dictionary = {}
+func compare_saved_cache(compare_dict) -> bool:
+	
+	if self.saved_deck_cache.size() != compare_dict.size():
+		return false
+
+	for card_vector in self.saved_deck_cache:
+		var card_count: int = self.saved_deck_cache[card_vector]
+
+		if card_vector not in compare_dict:
+			return false
+
+		if compare_dict[card_vector] != card_count:
+			return false
+	
+	return true
+
+
+func _build_saved_cache() -> Dictionary:
+	var deck_cache: Dictionary = {}
+	for deck_cards in %CardsInDeckVBoxContainer.get_children():
+		assert(deck_cards is DeckCardWithCounter)
+		
+		deck_cache[Vector2i(deck_cards.card.suit, deck_cards.card.rank)] = deck_cards.get_card_count()
+		
+	return deck_cache
 
 func _on_save_deck_button_pressed() -> void:
 
@@ -123,15 +193,15 @@ func _on_save_deck_button_pressed() -> void:
 	
 	SqlManager.ensure_database()
 	var existing_decks: Array = SqlManager.db.select_rows("Decks", "name = '" + deck_name + "'", ["id"])
+	assert(existing_decks.size() <= 1)  # It shouldn't be possible to have multiple decks with the same name
 	
 	# Reuse variable, to avoid warning
-	var insert_result: bool = true
+	var insert_success: bool = true
 	
-	assert(existing_decks.size() <= 1)  # It shouldn't be possible to have multiple decks with the same name
 	var saved_new: bool = false
 	if existing_decks.size() == 0:  # A deck with this name doesn't exist.
-		insert_result = SqlManager.db.insert_row("Decks", {"name": deck_name})
-		assert(insert_result == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
+		insert_success = SqlManager.db.insert_row("Decks", {"name": deck_name})
+		assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 		
 		# Now we need to get the primary key
 		existing_decks = SqlManager.db.select_rows("Decks", "name = '" + deck_name + "'", ["id"])
@@ -152,14 +222,27 @@ func _on_save_deck_button_pressed() -> void:
 	# Just delete all the existing cards, and insert new ones, because we're lazy.
 	SqlManager.db.delete_rows("DeckCards", "deck = '" + String.num_int64(existing_decks[0]["id"]) + "'")
 
-	insert_result = SqlManager.db.insert_rows("DeckCards", deckcard_data)
-	assert(insert_result == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
+	insert_success = SqlManager.db.insert_rows("DeckCards", deckcard_data)
+	assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 	
 	if saved_new:
 		var new_custom_deck: CustomDeckScene = preload("res://Scenes/DeckCustomizer/CustomDeckScene.tscn").instantiate()
 		new_custom_deck.set_deck_name(deck_name)
 		
 		self.insert_custom_deck_alph(new_custom_deck)
+	
+	
+	for custom_deck in %CustomDecksVBoxContainer.get_children():
+		assert(custom_deck is CustomDeckScene)
+		
+		if custom_deck.get_deck_name() == deck_name:
+			custom_deck.set_selected(true)
+		else:
+			custom_deck.set_selected(false)
+	
+	# Update the cache of saved cards, so we can compare for changes.
+	self.saved_deck_cache = self._build_saved_cache()
+	self.update_save_button_enabled_state()
 
 
 func _on_deck_card_with_counter_entered_tree(node: Node) -> void:
@@ -183,25 +266,42 @@ func insert_custom_deck_alph(deck_to_insert: CustomDeckScene) -> void:
 
 
 
-func _on_custom_deck_selected(custom_deck: CustomDeckScene):
+func _on_custom_deck_selected(selected_deck: CustomDeckScene) -> void:
 	
-	%DeckNameLineEdit.text = custom_deck.get_deck_name()
-	%DeckNameLineEdit.text_changed.emit(custom_deck.get_deck_name())
-	
+	%DeckNameLineEdit.text = selected_deck.get_deck_name()
+	%DeckNameLineEdit.text_changed.emit(selected_deck.get_deck_name())
+
+	for custom_deck in %CustomDecksVBoxContainer.get_children():
+		assert(custom_deck is CustomDeckScene)
+		
+		if custom_deck == selected_deck:
+			custom_deck.set_selected(true)
+		else:
+			custom_deck.set_selected(false)
+
 	for deck_cards in %CardsInDeckVBoxContainer.get_children():
 		%CardsInDeckVBoxContainer.remove_child(deck_cards)
 		
-	for deck_cards in CustomDeckScene.query_deck_cards(custom_deck.get_deck_name()):
+	for deck_cards in CustomDeckScene.query_deck_cards(selected_deck.get_deck_name()):
 		self.insert_deck_card_ordered(deck_cards)
+		
+	# Update the cache of saved cards, so we can compare for changes.
+	self.saved_deck_cache = self._build_saved_cache()
+	self.update_save_button_enabled_state()
+
+
+func _on_custom_deck_deleted(deleted_deck: CustomDeckScene) -> void:
+	
+	if deleted_deck.get_deck_name() == CustomDeckScene.sanitize_deck_name(%DeckNameLineEdit.text):
+		self.saved_deck_cache = {}
+		self.update_save_button_enabled_state()
 
 
 func _on_custom_deck_entered_tree(node: Node) -> void:
 	assert(node is CustomDeckScene)
 	node.custom_deck_selected.connect(self._on_custom_deck_selected)
+	node.custom_deck_deleted.connect(self._on_custom_deck_deleted)
 
 
-func _on_deck_name_changed(new_text: String) -> void:
-	if CustomDeckScene.sanitize_deck_name(new_text).length() == 0:
-		%SaveDeckButton.disabled = true
-	else:
-		%SaveDeckButton.disabled = false
+func _on_deck_name_changed(_new_text: String) -> void:
+	self.update_save_button_enabled_state()

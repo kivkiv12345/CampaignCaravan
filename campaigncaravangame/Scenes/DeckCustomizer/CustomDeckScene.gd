@@ -38,14 +38,21 @@ func _on_delete_deck_button_pressed() -> void:
 	var deck_delete_result: bool = SqlManager.db.delete_rows("Decks", "id = '" + String.num_int64(existing_decks[0]["id"]) + "'")
 	assert(deck_delete_result == true)
 	
+	self.get_parent().remove_child(self)
+	self.queue_free()
+	
 	self.custom_deck_deleted.emit(self)
 
-	self.queue_free()
 
-
-func _on_deck_select_button_button_down() -> void:
+func _on_deck_select_button_pressed() -> void:
 	self.custom_deck_selected.emit(self)
 
+
+func set_selected(selected: bool) -> void:
+	%DeckSelectButton.button_pressed = selected
+
+func is_selected() -> bool:
+	return %DeckSelectButton.is_pressed()
 
 
 static func query_custom_decks() -> Array[CustomDeckScene]:
@@ -77,7 +84,7 @@ static func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter
 	
 	var deck_cards: Array[DeckCardWithCounter]
 	for query_deck_card in SqlManager.db.query_result:
-		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/deck_card_with_counter.tscn").instantiate()
+		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()
 		deck_card.card = Card.new(query_deck_card["suit"], query_deck_card["rank"])
 		deck_card.set_card_count(query_deck_card["count"])
 		deck_cards.append(deck_card)

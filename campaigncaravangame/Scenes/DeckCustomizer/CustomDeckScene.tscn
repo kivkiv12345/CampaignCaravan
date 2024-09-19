@@ -23,7 +23,7 @@ custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-tooltip_text = "Prepare a game with customized decks and game rules."
+tooltip_text = "Select this deck for inspection and editing"
 toggle_mode = true
 text = "Deck Name"
 alignment = 0
@@ -31,9 +31,9 @@ alignment = 0
 [node name="DeleteDeckButton" type="Button" parent="HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Prepare a game with customized decks and game rules."
+tooltip_text = "Delete this deck"
 text = "Delete"
 alignment = 2
 
-[connection signal="button_down" from="HBoxContainer/DeckSelectButton" to="." method="_on_deck_select_button_button_down"]
+[connection signal="pressed" from="HBoxContainer/DeckSelectButton" to="." method="_on_deck_select_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeleteDeckButton" to="." method="_on_delete_deck_button_pressed"]

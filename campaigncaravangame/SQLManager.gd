@@ -24,7 +24,7 @@ func ensure_database() -> void:
 	#	That way players can still go back to old versions of the game and keep their data.
 	db.path = "res://data_v1.db"
 
-	db.verbosity_level = SQLite.VerbosityLevel.VERY_VERBOSE
+	db.verbosity_level = SQLite.VerbosityLevel.NORMAL
 	db.foreign_keys = true
 	db.open_db()  # .db file will be created here, if it doesn't exist.
 
