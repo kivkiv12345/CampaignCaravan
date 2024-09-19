@@ -195,7 +195,13 @@ func _on_save_deck_button_pressed() -> void:
 	var deck_name: String = CustomDeckScene.sanitize_deck_name(%DeckNameLineEdit.text)
 	
 	SqlManager.ensure_database()
-	var existing_decks: Array = SqlManager.db.select_rows("Decks", "name = '" + deck_name + "'", ["id"])
+	
+	var success: bool = true
+	
+	SqlManager.db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
+	assert(success)
+	
+	var existing_decks: Array = SqlManager.db.query_result
 	assert(existing_decks.size() <= 1)  # It shouldn't be possible to have multiple decks with the same name
 	
 	# Reuse variable, to avoid warning
@@ -207,7 +213,10 @@ func _on_save_deck_button_pressed() -> void:
 		assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 		
 		# Now we need to get the primary key
-		existing_decks = SqlManager.db.select_rows("Decks", "name = '" + deck_name + "'", ["id"])
+		SqlManager.db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
+		assert(success)
+		
+		existing_decks = SqlManager.db.query_result
 		assert(existing_decks.size() == 1)
 		saved_new = true
 	
@@ -223,7 +232,8 @@ func _on_save_deck_button_pressed() -> void:
 		deckcard_data.append({"deck": existing_decks[0]["id"], "card": card.get_index()+1, "count": deck_cards.get_card_count()})
 
 	# Just delete all the existing cards, and insert new ones, because we're lazy.
-	SqlManager.db.delete_rows("DeckCards", "deck = '" + String.num_int64(existing_decks[0]["id"]) + "'")
+	success = SqlManager.db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
+	assert(success)
 
 	insert_success = SqlManager.db.insert_rows("DeckCards", deckcard_data)
 	assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
@@ -261,6 +271,7 @@ func insert_custom_deck_alph(deck_to_insert: CustomDeckScene) -> void:
 		assert(custom_deck is CustomDeckScene)
 		insert_index += 1
 	
+		# TODO Kevin: This doesn't seem very alphabetical
 		if custom_deck.get_deck_name() > deck_to_insert.get_deck_name():
 			break
 	

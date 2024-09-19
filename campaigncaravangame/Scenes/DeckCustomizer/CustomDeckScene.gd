@@ -27,16 +27,21 @@ func get_deck_name() -> String:
 func _on_delete_deck_button_pressed() -> void:
 	
 	SqlManager.ensure_database()
-	var existing_decks: Array = SqlManager.db.select_rows("Decks", "name = '" + self.get_deck_name() + "'", ["id"])
+
+	var success: bool = true
+	success = SqlManager.db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [self.get_deck_name(),])
+	assert(success)
+
+	var existing_decks: Array[Dictionary] = SqlManager.db.query_result
 	assert(existing_decks.size() == 1)
-	
+
 	# First delete all the cards, to avoid any constraints.
-	var card_delete_result: bool = SqlManager.db.delete_rows("DeckCards", "deck = '" + String.num_int64(existing_decks[0]["id"]) + "'")
-	assert(card_delete_result == true)
-	
+	success = SqlManager.db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
+	assert(success)
+
 	# And now we can delete the deck itself
-	var deck_delete_result: bool = SqlManager.db.delete_rows("Decks", "id = '" + String.num_int64(existing_decks[0]["id"]) + "'")
-	assert(deck_delete_result == true)
+	success = SqlManager.db.query_with_bindings("DELETE FROM Decks WHERE id = ?", [existing_decks[0]["id"],])
+	assert(success)
 	
 	self.get_parent().remove_child(self)
 	self.queue_free()
@@ -72,14 +77,19 @@ static func query_custom_decks() -> Array[CustomDeckScene]:
 static func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 	SqlManager.ensure_database()
 	
+	var success: bool = true
+
 	# Get the ID of the deck
-	var existing_decks: Array = SqlManager.db.select_rows("Decks", "name = '" + for_deck_name + "'", ["id"])
+	success = SqlManager.db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [for_deck_name,])
+	assert(success)
+
+	var existing_decks: Array[Dictionary] = SqlManager.db.query_result
 	assert(existing_decks.size() == 1)
 	
 	var query_string : String = "SELECT count, suit, rank FROM DeckCards JOIN Cards ON Cards.id = DeckCards.card WHERE deck = ?;"
 	var param_bindings : Array = [existing_decks[0]["id"]]
 	
-	var success: bool = SqlManager.db.query_with_bindings(query_string, param_bindings)
+	success = SqlManager.db.query_with_bindings(query_string, param_bindings)
 	assert(success)
 	
 	var deck_cards: Array[DeckCardWithCounter]
