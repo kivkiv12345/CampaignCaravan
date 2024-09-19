@@ -71,13 +71,21 @@ func insert_deck_card_ordered(insert_deck_card: DeckCardWithCounter) -> void:
 
 
 func _on_card_picker_picker_clicked(button: DeckCustomizerCardPickerButton) -> void:
+	
+	var delta: int = 1
+	if Input.is_action_pressed("MultiplierModifier"):
+		delta *= 5
+		
+	if Input.is_action_pressed("NegatorModifier"):
+		delta *= -1
 
 	# See if the card is already in our chosen deck
 	for deck_card in %CardsInDeckVBoxContainer.get_children():
 		assert(deck_card is DeckCardWithCounter)
 
 		if deck_card.card.compare(button.card):
-			deck_card.set_card_count(deck_card.get_card_count()+1)
+			
+			deck_card.set_card_count(deck_card.get_card_count()+delta)
 			# TODO Kevin: Scroll to modified card
 			return
 
@@ -91,6 +99,8 @@ func _on_card_picker_picker_clicked(button: DeckCustomizerCardPickerButton) -> v
 	var new_deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()  #%BaseDeckCardTextureButton.duplicate()
 
 	new_deck_card.card = button.card
+	
+	new_deck_card.set_card_count(delta)
 
 	self.insert_deck_card_ordered(new_deck_card)
 

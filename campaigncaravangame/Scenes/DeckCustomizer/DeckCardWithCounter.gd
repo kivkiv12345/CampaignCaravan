@@ -29,6 +29,9 @@ func get_card_count() -> int:
 
 func set_card_count(count: int) -> void:
 	
+	if count < 0:
+		count = 0
+	
 	var should_emit: bool = true
 	if self._num_cards == count:
 		should_emit = false
@@ -52,4 +55,12 @@ func set_card_count(count: int) -> void:
 		self.card_count_changed.emit(self)
 
 func _on_pressed_dec_count() -> void:
-	self.set_card_count(self._num_cards-1)
+	
+	var delta: int = -1
+	if Input.is_action_pressed("MultiplierModifier"):
+		delta *= 5
+		
+	if Input.is_action_pressed("NegatorModifier"):
+		delta *= -1
+	
+	self.set_card_count(self._num_cards+delta)
