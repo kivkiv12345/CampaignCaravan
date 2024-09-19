@@ -45,6 +45,32 @@ func notify_opponent_caravans(caravan: Caravan) -> void:
 		if opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value, opponent_caravan.player.game_rules.caravan_max_value+1):
 			opponent_caravan.update_sold_status(SoldStatus.SOLD)
 
+## Returns a list of cards that will be removed, if a joker is played on the provided face card slot
+func get_joker_affected_cards(face_slot: OpenFaceCardSlot) -> Array[PlayedNumericCardSlot]:
+
+	var affected_cards: Array[PlayedNumericCardSlot] = []
+
+	var to_play_on_card: Card = face_slot.number_card.card
+
+	for number_card in self.get_tree().get_nodes_in_group("NumericCardSlots"):
+		assert(number_card is CaravanCardSlot)
+
+		if not number_card is PlayedNumericCardSlot:
+			continue
+
+		if number_card == face_slot.number_card:
+			continue
+
+		if to_play_on_card.rank == Card.Rank.ACE:
+			if number_card.get_effective_suit() == face_slot.number_card.get_effective_suit():
+				affected_cards.append(number_card)
+		else:
+			if number_card.card.rank == to_play_on_card.rank:
+				affected_cards.append(number_card)
+
+	return affected_cards
+
+
 ## Check if the provided caravan is sold.
 ## This entails checking if the caravan is:
 ##	over/under-burdened, underbidding or tied with the opponent

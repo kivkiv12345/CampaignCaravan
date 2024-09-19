@@ -33,17 +33,30 @@ func try_play_card(hand_card: CardHandSlot, _animate: bool = true) -> bool:
 	return self.number_card.try_play_face_card(hand_card)
 
 
+func _unset_joker_color(number_cards: Array[PlayedNumericCardSlot]):
+	for _number_card in number_cards:
+		_number_card.set_modulate(Color.WHITE)
+
+
 func _on_facecard_mouse_entered() -> void:
 
 	# We have self._on_mouse_entered return a bool, indicating whether a card has snapped to us.
 	if !self._on_mouse_entered():
 		return
+		
+	assert(self.card && self.card.is_face_card())
+	
+	if self.card.rank == Card.Rank.JOKER:
+		var affected_cards: Array[PlayedNumericCardSlot] = self.caravan.player.game_manager.get_joker_affected_cards(self)
+		for _number_card in self.caravan.player.game_manager.get_joker_affected_cards(self):
+			_number_card.set_modulate(Color.YELLOW)
+			
+		self.mouse_exited.connect(self._unset_joker_color.bind(affected_cards), ConnectFlags.CONNECT_ONE_SHOT)
 
-	# TODO Kevin: How should we color the preview on enemy carvans?
+
+	# TODO Kevin: How should we color the preview of kings on enemy carvans?
 	if self.caravan.player.is_enemy_player:
 		return
-
-	assert(self.card && self.card.is_face_card())
 
 	if self.card.rank != Card.Rank.KING:
 		return
