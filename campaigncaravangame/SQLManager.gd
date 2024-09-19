@@ -32,9 +32,8 @@ func ensure_database() -> void:
 	var tables: Dictionary = {
 		"Decks": {
 			"id": {"data_type":"int", "primary_key": true, "not_null": true, "auto_increment": true},
-			"name": {"data_type":"text", "not_null": true},
+			"name": {"data_type":"text", "not_null": true, "unique": true},
 		},
-		
 		
 		"Cards": {
 			"id": {"data_type":"int", "primary_key": true, "not_null": true, "auto_increment": true},
@@ -47,7 +46,14 @@ func ensure_database() -> void:
 		"DeckCards": {
 			"id": {"data_type":"int", "primary_key": true, "not_null": true, "auto_increment": true},
 			
-			# TODO Kevin: Ideally we would have this be unique_together
+			# Normal columns
+			"count": {"data_type":"int", "not_null": true},  # How many of this card is in this deck
+			
+			# NOTE: Ideally we would have these be unique_together,
+			#	or a composite key.
+			#	Evidently, the SQLite driver we use only supports one column being primary key,
+			#	as well SQLite itself probably.
+			# Foreign Keys
 			"deck": {"data_type": "int", "foreign_key": "Decks.id", "not_null": true},
 			"card": {"data_type": "int", "foreign_key": "Cards.id", "not_null": true},
 		},
@@ -60,15 +66,28 @@ func ensure_database() -> void:
 		# Check if the table already exists or not.
 		db.query_with_bindings("SELECT name FROM sqlite_master WHERE type='table' AND name=?;", [table_name])
 		if db.query_result.is_empty():
-			# Database doesn't exist, let's create it.
+			# Table doesn't exist, let's create it.
 			db.create_table(table_name, table_data)
 	
+	var existing_cards: Array = db.select_rows("Cards", "", ["*"])
 	
-	# TODO Kevin: Check how much card is already in the database
-	return
-	
-	# Insert all the cards
-	var card_data: Array[Dictionary] = []
+	var card_array: Array[Card] = []
 	for card_vector in TextureManager.texture_paths:
-		card_data.append({"suit": card_vector.x, "rank": card_vector.y})
-	db.insert_rows("Cards", card_data)
+		card_array.append(Card.new(card_vector.x, card_vector.y))
+	
+	
+	if existing_cards.size() > 0:
+		# Check that the Cards table hasn't been tampered with
+		assert(existing_cards.size() == card_array.size())
+		
+		var pk: int = 0
+		for row in existing_cards:
+			pk += 1
+			assert(row["id"] == pk)
+			assert(row["suit"] == card_array[pk-1].suit)
+			assert(row["rank"] == card_array[pk-1].rank)
+	else:  # Insert all the cards
+		var card_data: Array[Dictionary] = []
+		for card_vector in TextureManager.texture_paths:
+			card_data.append({"suit": card_vector.x, "rank": card_vector.y})
+		db.insert_rows("Cards", card_data)

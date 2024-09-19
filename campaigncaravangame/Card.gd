@@ -33,6 +33,13 @@ func get_index() -> int:
 	return card_index
 
 
+## Returns true if suit and rank are equal
+func compare(other_card: Card) -> bool:
+	if self.suit == other_card.suit and self.rank == other_card.rank:
+		return true
+	return false
+
+
 func is_face_card() -> bool:
 	return self.rank in [Rank.JACK, Rank.QUEEN, Rank.KING, Rank.JOKER]
 	
