@@ -1,7 +1,10 @@
 extends HBoxContainer
 
 
-signal deck_customizer_save()
+class_name DeckCustomizer
+
+
+#signal deck_customizer_save()
 signal deck_customizer_back()
 
 
@@ -30,8 +33,8 @@ func _on_customizer_back_button_pressed() -> void:
 	self.deck_customizer_back.emit()
 
 
-func _on_customizer_save_button_pressed() -> void:
-	self.deck_customizer_save.emit()
+#func _on_customizer_save_button_pressed() -> void:
+	#self.deck_customizer_save.emit()
 
 
 
@@ -249,7 +252,7 @@ func _on_deck_card_with_counter_entered_tree(node: Node) -> void:
 	assert(node is DeckCardWithCounter)
 	node.card_count_changed.connect(self._on_deck_card_card_count_changed)
 	node.desire_texture_preview.connect(self._on_desire_texture_preview)
-	node.revoke_texture_preview.connect(self._on_revoke_texture_preview)
+	#node.revoke_texture_preview.connect(self._on_revoke_texture_preview)
 
 
 func insert_custom_deck_alph(deck_to_insert: CustomDeckScene) -> void:
@@ -305,3 +308,13 @@ func _on_custom_deck_entered_tree(node: Node) -> void:
 
 func _on_deck_name_changed(_new_text: String) -> void:
 	self.update_save_button_enabled_state()
+
+
+## Returns the decks that are shown in the customizer,
+## with querying the database. They should already be synced anyway.
+func get_custom_decks() -> Array[CustomDeckScene]:
+	var custom_decks: Array[CustomDeckScene] = []
+	for custom_deck in %CustomDecksVBoxContainer.get_children():
+		assert(custom_deck is CustomDeckScene)
+		custom_decks.append(custom_deck)
+	return custom_decks

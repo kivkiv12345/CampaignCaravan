@@ -97,25 +97,32 @@ static var base_deck: Array[Card] = [
 
 var cards: Array[Card] = []
 
-func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: int = 0) -> void:
-	# Ensure valid size bounds
-	#assert(min_size >= MIN_SIZE and max_size <= MAX_SIZE and min_size <= max_size,
-		#"Error: Invalid deck size range. Must be between %d and %d, with min_size <= max_size." % [MIN_SIZE, MAX_SIZE])
+static func from_custom_deck_name(custom_deck_name: String) -> Deck:
+	
+	var _self = Deck.new()
+		
+	for deck_cards in CustomDeckScene.query_deck_cards(custom_deck_name):
+		
+		for __ in range(deck_cards.get_card_count()):
+			_self.cards.append(deck_cards.card)
+			
+	return _self
 
+static func from_bounds_and_seed(min_size: int, max_size: int, _seed: int = 0) -> Deck:
 
+	var _self = Deck.new()
+	
 	# Duplicate the base deck to create a potential full deck
-	self.cards = []
-
 	@warning_ignore( "integer_division" )
 	var num_decks: int = max_size/Deck.base_deck.size()
 	if max_size % Deck.base_deck.size():  # Simulate ceil()
 		num_decks += 1
 
 	for __ in range(num_decks):
-		self.cards += Deck.base_deck.duplicate()
+		_self.cards += Deck.base_deck.duplicate()
 
 
-	self.shuffle(_seed)
+	_self.shuffle(_seed)
 
 	var rng = RandomNumberGenerator.new()
 	rng.seed = _seed
@@ -123,7 +130,9 @@ func _init(min_size: int = self.MIN_SIZE, max_size: int = self.MAX_SIZE, _seed: 
 	# Determine a random size within the provided bounds
 	var deck_size = rng.randi_range(min_size, max_size)
 
-	self.cards.resize(deck_size)
+	_self.cards.resize(deck_size)
+	
+	return _self
 
 
 func shuffle(_seed: int = 0) -> void:

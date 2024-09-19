@@ -412,29 +412,26 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
 
-[node name="DeckConformsUniqueCardsHBoxContainer3" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
+[node name="CustomDeckOptionHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
 
-[node name="HandSizeLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer3"]
+[node name="HandSizeLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
 layout_mode = 2
 text = "Custom Deck"
 
-[node name="CustomDeckOptionButton" type="OptionButton" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer3"]
+[node name="BaseCustomDeckOptionButton" type="OptionButton" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 selected = 0
 allow_reselect = true
-item_count = 4
+item_count = 2
 popup/item_0/text = "None"
 popup/item_0/disabled = true
 popup/item_1/id = 1
 popup/item_1/separator = true
-popup/item_2/text = "Nobark"
-popup/item_2/id = 2
-popup/item_3/text = "Ringo"
-popup/item_3/id = 3
 
 [node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
@@ -452,7 +449,7 @@ size_flags_horizontal = 3
 [node name="ManageDecksButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer2/CenterContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-tooltip_text = "Prepare a game with customized decks and game rules."
+tooltip_text = "Customize a deck to your liking"
 text = "Manage Decks"
 
 [node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer"]
@@ -482,5 +479,5 @@ size_flags_horizontal = 3
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer/IgnoreLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/ShuffleHBoxContainer/CustomDeckShuffleButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer/DeckConformsUniqueCardsButton" to="." method="_on_button_pressed"]
-[connection signal="item_selected" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer3/CustomDeckOptionButton" to="." method="_on_custom_deck_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer/BaseCustomDeckOptionButton" to="." method="_on_custom_deck_item_selected"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer2/CenterContainer/ManageDecksButton" to="." method="_on_manage_decks_button_pressed"]

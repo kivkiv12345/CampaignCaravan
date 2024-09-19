@@ -5,7 +5,7 @@ class_name DeckCustomizerCardButton
 
 
 signal desire_texture_preview(texture: Texture2D)
-signal revoke_texture_preview(texture: Texture2D)
+#signal revoke_texture_preview(texture: Texture2D)
 
 
 var card: Card = null

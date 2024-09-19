@@ -27,7 +27,8 @@ const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the futu
 # TODO Kevin: This setting may not continue to live here.
 #	It's not used to determine of 2 GameRules are equal.
 @export var deck_seed: int = 0
-@export var custom_deck: Deck = null
+#@export var custom_deck: Deck = null
+@export var custom_deck_name: String = ""
 
 
 ## Inverts inverted ranges, i.e min cards being larger than max cards

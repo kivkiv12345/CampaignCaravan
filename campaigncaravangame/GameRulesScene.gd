@@ -9,7 +9,11 @@ signal manage_decks_button_pressed(game_rules_scene: GameRulesScene)
 
 
 @onready var use_custom_deck_button: Button = %CustomizeDeckButton
-@onready var custom_deck_optionbutton: OptionButton = %CustomDeckOptionButton
+var custom_deck_optionbutton: OptionButton = null
+
+
+func _ready() -> void:
+	self.set_custom_deck_options(CustomDeckScene.query_custom_decks())
 
 
 func to_game_rules() -> GameRules:
@@ -50,12 +54,16 @@ func to_game_rules() -> GameRules:
 	if %DeckSeedLineEdit.text != "":
 		game_rules.deck_seed = int(%DeckSeedLineEdit.text)
 	
+	if %CustomizeDeckButton.is_pressed():
+		var selected_id: int = self.custom_deck_optionbutton.get_selected_id()
+		if selected_id > 1:
+			game_rules.custom_deck_name = self.custom_deck_optionbutton.get_item_text(self.custom_deck_optionbutton.get_item_index(selected_id))
 	
 	return game_rules
 
 
 ## Extends GameRule.check_errors(),
-##	but also checking if custom deck is selected with actually selecting a deck.
+##	by also checking if custom deck is selected without actually selecting a deck.
 func has_errors() -> bool:
 	
 	if self.to_game_rules().check_errors().size() > 0:
@@ -100,7 +108,13 @@ func from_game_rules(game_rules: GameRules) -> void:
 
 
 	%DeckSeedLineEdit.text = String.num_int64(game_rules.deck_seed)
-
+	
+	for idx in range(self.custom_deck_optionbutton.item_count):
+		if self.custom_deck_optionbutton.get_item_text(idx) == game_rules.custom_deck_name:
+			self.custom_deck_optionbutton.select(idx)
+			break
+	
+	
 
 ## The signal call order is important here,
 ##	this must be called after the LineEdit has been sanitized.
@@ -128,3 +142,21 @@ func _on_custom_deck_item_selected(_index: int) -> void:
 
 func _on_manage_decks_button_pressed() -> void:
 	self.manage_decks_button_pressed.emit(self)
+
+
+func set_custom_deck_options(custom_decks: Array[CustomDeckScene]) -> void:
+	
+	# Have we already added custom options?
+	if %CustomDeckOptionHBoxContainer.get_child_count() > 2:
+		# Pop back
+		%CustomDeckOptionHBoxContainer.remove_child(%CustomDeckOptionHBoxContainer.get_child(%CustomDeckOptionHBoxContainer.get_child_count()-1))
+		
+	self.custom_deck_optionbutton = %BaseCustomDeckOptionButton.duplicate()
+	
+	for custom_deck in custom_decks:
+		self.custom_deck_optionbutton.add_item(custom_deck.get_deck_name())
+	
+	%BaseCustomDeckOptionButton.visible = false
+	self.custom_deck_optionbutton.visible = true
+	%CustomDeckOptionHBoxContainer.add_child(self.custom_deck_optionbutton)
+	

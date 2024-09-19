@@ -65,13 +65,19 @@ func _on_manage_decks_button_pressed(_game_rules_scene: GameRulesScene) -> void:
 	%PlayerSettingsVBoxContainer.hide()
 
 
-func _on_deck_customizer_save() -> void:
-	
-	%DeckCustomizer.hide()
-	%PlayerSettingsVBoxContainer.show()
+#func _on_deck_customizer_save() -> void:
+	#
+	#%DeckCustomizer.hide()
+	#%PlayerSettingsVBoxContainer.show()
 
 
 func _on_deck_customizer_back() -> void:
+	
+	var deck_customizer: DeckCustomizer = %DeckCustomizer
+	var custom_decks: Array[CustomDeckScene] = deck_customizer.get_custom_decks()
+	
+	%EnemySettings.set_custom_deck_options(custom_decks)
+	%OurSettings.set_custom_deck_options(custom_decks)
 	
 	%DeckCustomizer.hide()
 	%PlayerSettingsVBoxContainer.show()

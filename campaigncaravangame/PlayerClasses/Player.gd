@@ -60,11 +60,14 @@ func init() -> void:
 	if deck_seed == 0:
 		deck_seed = randi()
 
-	var deck: Deck = game_rules.custom_deck
+	var deck: Deck = null
+
+	if self.game_rules.custom_deck_name != "":
+		deck = Deck.from_custom_deck_name(self.game_rules.custom_deck_name)
 
 	# No custom deck, generate a random one.
 	if deck == null:
-		deck = Deck.new(self.game_rules.deck_min_size, self.game_rules.deck_max_size, deck_seed)
+		deck = Deck.from_bounds_and_seed(self.game_rules.deck_min_size, self.game_rules.deck_max_size, deck_seed)
 
 	$Deck.fill_deck(deck)
 
