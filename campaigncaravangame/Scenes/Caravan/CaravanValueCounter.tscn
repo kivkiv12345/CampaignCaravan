@@ -3,11 +3,15 @@
 [ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="1_74p6p"]
 [ext_resource type="Script" path="res://Scenes/Caravan/CaravanValueCounter.gd" id="1_eqqb4"]
 
-[node name="CaravanValueCounter" type="RichTextLabel"]
-offset_top = 1.0
-offset_right = 30.0
-offset_bottom = 31.0
+[node name="CaravanValueCounter" type="PanelContainer"]
+offset_right = 31.0
+offset_bottom = 33.0
+script = ExtResource("1_eqqb4")
+
+[node name="CaravanValueCounterText" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
 theme = ExtResource("1_74p6p")
+theme_override_font_sizes/normal_font_size = 25
 text = "0"
 scroll_active = false
-script = ExtResource("1_eqqb4")

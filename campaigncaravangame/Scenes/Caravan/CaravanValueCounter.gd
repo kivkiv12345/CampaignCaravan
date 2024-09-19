@@ -1,10 +1,10 @@
-extends RichTextLabel
+extends PanelContainer
 
 class_name CaravanValueCounter
 
 @export var caravan: Caravan = null
 @export var fix_rotation: bool = true  # Allow control over whether to correct rotation
-@onready var default_color: Color = self.get_theme_color("default_color")
+@onready var default_color: Color = %CaravanValueCounterText.get_theme_color("default_color")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 	self.caravan.on_value_changed.connect(self._update_shown_value)
 	self.caravan.new_sold_status.connect(self._update_sold_status)
-	self.text = String.num_int64(self.caravan.get_value())
+	%CaravanValueCounterText.text = String.num_int64(self.caravan.get_value())
 	if self.fix_rotation:
 		self.pivot_offset = Vector2(self.size.x, self.size.y) / 2.0
 		self.rotation = -self.get_global_transform_with_canvas().get_rotation()
@@ -26,13 +26,13 @@ func _update_sold_status(_caravan: Caravan, sold_status: Caravan.SoldStatus) -> 
 	
 	match sold_status:
 		SoldStatus.OVERBURDENED:
-			self.add_theme_color_override("default_color", Color.RED)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.RED)
 		SoldStatus.TIED:
-			self.add_theme_color_override("default_color", Color.BLUE)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.BLUE)
 		SoldStatus.SOLD:
-			self.add_theme_color_override("default_color", Color.GREEN)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.GREEN)
 		_:  # Default
-			self.add_theme_color_override("default_color", self.default_color)
+			%CaravanValueCounterText.add_theme_color_override("default_color", self.default_color)
 
 
 func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> void:
@@ -41,15 +41,15 @@ func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> 
 	
 	match _caravan.player.game_manager.get_caravan_sold_status(_caravan):
 		SoldStatus.OVERBURDENED:
-			self.add_theme_color_override("default_color", Color.RED)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.RED)
 		SoldStatus.TIED:
-			self.add_theme_color_override("default_color", Color.BLUE)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.BLUE)
 		SoldStatus.SOLD:
-			self.add_theme_color_override("default_color", Color.GREEN)
+			%CaravanValueCounterText.add_theme_color_override("default_color", Color.GREEN)
 		_:  # Default
-			self.add_theme_color_override("default_color", self.default_color)
+			%CaravanValueCounterText.add_theme_color_override("default_color", self.default_color)
 
-	self.text = String.num_int64(new_value)
+	%CaravanValueCounterText.text = String.num_int64(new_value)
 
 
 # TODO Kevin: Make like a _on_pending_value_change() signal handler,
