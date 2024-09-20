@@ -5,7 +5,6 @@ Krav kategorier
 Tabellen herunder fortæller hvilke kategorier de forskellige krav kan tilhøre, og dermed også hvilken funktion de tjener projektet.
 
 .. list-table::
-   :widths: 32 68 
    :header-rows: 1
 
    * - Kategori ID
@@ -41,7 +40,6 @@ Kravspecifikation
 ----------------------------------
 
 .. list-table::
-   :widths: 32 68 
    :header-rows: 1
 
    * - Krav ID

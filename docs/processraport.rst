@@ -1,4 +1,8 @@
 
+
+..
+    _:: Reading matetial for page index: https://stackoverflow.com/questions/44912601/restructuredtext-multilevel
+
 Læsevejledning
 ------------------------
 
@@ -218,6 +222,7 @@ For mig var én af Godot's store salgspunkter muligheden for at eksportere til H
 Jeg ser det som en kæmpe fordel at kunne hoste spillet som en server,
 og blot inkludere et link dertil i disse rapporter.
 
+
 **Alternativer**
 
 * Unity
@@ -248,7 +253,10 @@ Jeg har primært valgt Godot grundet min tidligere, dog begrænsede, erfaring p�
 Trods GDScript's begrænsninger synes jeg generelt godt om sproget, med en syntaks som er nem at forstå.
 Men min primære motivation bag valget af Godot, er dets letvægtige og open-source natur,
 samt muligheden for at eksportere til mine ønskede platforme.
-Jeg ønsker at se Godot brillere
+Jeg ønsker at se Godot brillere, og følger derfor somme tider op på dets udvikling.
+Her ser jeg et godt initiativ både inden for brug og udvikling deraf.
+Dog er Godot stadig mindre populært end alternativerne,
+og dette viser sig når fejlfinde et obskurt problem.
 
 
 Database
@@ -271,7 +279,7 @@ Til dette formål findes et par enkelte projekter,
 hvoraf det mest opdaterede kan findes her:
 https://github.com/2shady4u/godot-sqlite
 
-** Godot-SQLite **
+**Godot-SQLite**
 
 Repoet til godot-sqlite nævner at HTML5 er understøttet.
 Men en nærlæsning viser at det, indtil videre, kun er tilfældet med en ældre version af Godot.
@@ -292,7 +300,7 @@ om at databasen kan indlejres i webserveren i den nærmere fremtid.
 Som en midlertidig løsning, har jeg lavet en version af spillet uden mulighed for at tilpasse kortdæk.
 Denne version bruges derfor af HTML5 varianten af spillet.
 
-** Implementation i spillet **
+**Implementation i spillet**
 
 Til hver af spillets forsøg på at forspørge data fra databasen kaldes funktionen SqlManager.ensure_database().
 Første gang denne funktion kaldes, oprettes forbindelsen til databasen,
@@ -345,17 +353,53 @@ Følgende er et udkast af denne tabel (på baggrund af GameRules nuværende stru
 .. image:: ER_diagram_future.png
 
 
-Hosting
+Distribution og Hosting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Når det kommer til hosting, fortrækker jeg at gøre det "in house" (i mit teknikrum).
 Men kort tid inden projektets opstart hørte jeg for første gang om brugen af GitHub Pages til dette.
 
 GitHub Pages tillader hosting direkte fra et repository.
-Og med en Jekyll GitHub Action, kan hjemmesiden f.eks. holdes løbende opdateret med den ønskede branch.
+Typisk/traditionelt fungerer dette ved at man vælger en branch,
+er herefter serveres det nyeste commit på denne branch direkte til det valgte URL.
+URLet vil som standard være et underdomæne af GitHub,
+men er man ejer af et CNAME kan repoet serveres dér i stedet.
+Som alternativ til 'branch' servering,
+kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes serveres.
 
-GitHub Pages begrænser sig dog til statisk serveret indhold,
-og egner sig derfor ikke til den alemene webserver (asp.NET, Django, osv.) som gør brug af serversidet rendering.
+
+**Brug af GitHub Workflows**
+
+    Dette projekt benyttede sig i starten af Jekyll til automatisk udrulning af opdateringer.
+    Men den brugte (autogenerede) GitHub var ikke tilpasset til udgivelse af Linux og Windows versionen af spillet.
+    Derfor skiftede jeg senere til 'branch' udrulning, da jeg fandt et godt eksempel på et GitHub workflow til Godot.
+
+    Havde jeg haft mere tid, er det muligt at jeg vil have forsøgt at kombinere Jekyll med Godot workflowet.
+    Som det står an nu, har jeg forsøgt at minimere eksperimentationen af GitHub actions,
+    da Godot's terminal interface har vist sig at være forholdsvis ustabilt.
+
+    Når Godot skal gøre brug af ressourcer som billed- og lydfiler, opretter den en .import fil,
+    som indeholder metadata vedrørende (f.eks) komprimering af ressourcen.
+
+    Desværre virker oprettelsen (og den lejlighedsvise tilrettelse) af disse metafiler kun pålidelig gennem den grafiske brugerflade til Godot.
+    Dette har været den primære udfordring GitHub workflowet.
+
+    Derudover har godot-sqlite også besværet GitHub workflowet,
+    da det viser sig at kompilering af spillet, med godot-sqlite inkluderet, resulterer i en segmentationsfejl.
+    Dette sker ikke via brug af den grafiske brugerflade, og viste sig derfor først i GitHub workflowet.
+    Heldigvis har det vist sig at segmentationsfejlen sker efter spillet er kompileret og binæren produceret.
+    Desværre stopper dette GitHub fra at fuldføre workflowet, så derfor sletter artifakterne.
+    Dette problem løses enkeltvis ved brug af en kommando som forhindrer fejlkoden fra kompileringen:
+
+    .. code-block::
+        godot [options...] --export-debug "HTML5" ../build/... || echo ""
+
+    Her bruges **echo** som en kommandoen som altid lykkedes, når **godot --export-debug "HTML5" ../build/...** fejler
+
+
+
+GitHub Pages begrænser sig til statisk serveret indhold,
+og egner sig derfor ikke til den alemene webserver som gør brug af serversidet rendering (asp.NET, Django, osv.).
 
 Men heldigvis for dette projekt, kan Godot spil eksporteres som en HTML5 PWA (Progressive Web App).
 Forenklet sagt betyder dette at hjemmesiden serveres i sin helhed, med alt underindhold.

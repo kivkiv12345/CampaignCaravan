@@ -1,6 +1,6 @@
 
 2/9-2024 (Mandag Uge #1)
--------------------
+-------------------------------------
 Første halvdel af dagen gik på introduktionen til svendeprøven. Herefter gik tiden på at udarbejde case-beskrivlsen og problemformulering.
 Jeg havde stort set allerede besluttet mig for at lave Caravan (Trods det er ret anderledes fra min oprindelige forestilling om at lave noget low-level (med CSP fra lærepladsen)).
 Så det var bare et spørgsmål om at skrive problemformulering. Her så jeg det som en balancegang mellem at beskrive spillet, uden af gå i dybden med reglerne deraf.
@@ -15,7 +15,7 @@ Her har en gut været så venlig at indskanne kortene fra den officielle fysiske
 
 
 3/9-2024 (Tirsdag Uge #1)
-------------------
+------------------------------------
 Jeg startede dagen med at kigge på drag-and-drop funktionalitet i Godot.
 Min tanke er at kernefunkionaliten hurtigt kan udarbejdes,
 så jeg kan vinde tid til at få spillet til både at se og føles godt.
@@ -25,7 +25,7 @@ Jeg har ikke bestemt hvor vidt jeg vil fokusere på multiplayer vs AI (machine l
 
 
 4/9-2024 (Onsdag Uge #1)
-------------------
+------------------------------------
 Fokus i dag var funktionaliterne bag at trække kort fra sit dæk til sin hånd.
 Dækket's constructor metode er lige nu mest ment til test,
 hvor det genererer et tilfældigt dæk fra en given størrelse og seed.
@@ -34,7 +34,7 @@ især til senere hvor disse funktioner også skal kunne testes.
 
 
 5/9-2024 (Torsdag Uge #1)
-------------------
+------------------------------------
 Jeg vil starte dagen med at oprette signaler til når kort spilles.
 I første omgang skal de bruges til at trække nye kort fra spillerens dæk,
 da CardDropSlot noden ligger fjernt fra dæk noden, hvilket gør det svært for dem at snakke direkte.
@@ -46,7 +46,7 @@ FaceCardSlots er lignende, hvor nye slots skal oprettes til højre i stedet.
 
 
 6/9-2024 (Fredag Uge #1)
-------------------
+------------------------------------
 Jeg har efterhånden ændret hvordan OpenFaceCardSlot og OpenNumericCardSlot fungerer.
 Som det fungerer nu har Caravan.tscn 2 undernoder: PlayedCards (som fungerer som en liste af PlayedNumericCardSlots)
 og OpenNumericCardSlot. Hermed vedligeholder karavanen altid ét OpenNumericCardSlot, og flytter det løbende til at ligge i bunden af karavanen.
@@ -71,13 +71,13 @@ Men samtidig så jeg FaceCardSlot som værende en mere vigtigt klasse, til at in
 
 
 7/9-2024 - 8/9-2024 (Weekend Uge #1)
-------------------
+------------------------------------
 Weekend logbogen koster ekstra, men den kan tilgås gratis på:
 https://github.com/kivkiv12345/CampaignCaravan/commits/master/
 
 
 9/9-2024 (Mandag Uge #2)
-------------------
+------------------------------------
 I dag var planen at endelig færdiggøre tidsplanen, men først skulle kravspecifikationen færddiggøres.
 Mange af de manglende punkter dertil var åbenlåse, men alligevel havde jeg svært ved at nå de 12-15 krav jeg gerne ville op på.
 Efter at have skrevet, og tænkt, mig til en håndfuld punkter, besluttede jeg mig at overveje de sidste over et par linje kode (koden skulle nemlig også plejes).
@@ -87,7 +87,7 @@ men hvor vidt den er solgt afhænger meget af værdien på den overstående mods
 
 
 10/9-2024 (Tirsdag Uge #2)
-------------------
+------------------------------------
 Det er efterhånden flere dage jeg har frustreret mig over hvor bøvligt det kunne være at spille ansigtskort på store karavaner.
 Det skyldes den store mænge tætliggende nummerkort, som gjorde det svært at se hvor man faktisk var ved at lægge sit kort.
 Situationen var heller ikke afhjulpet af det faktum at de var svært at se den grønne markering på de åbne felter.
@@ -106,7 +106,7 @@ Men min næse har gennemgået størstedelen af en køkkenrulle, og dette faktum 
 
 
 11/9-2024 (Onsdag Uge #2)
-------------------
+------------------------------------
 Fokus i dag har eksklusivt været på procesrapporten.
 Generelt er jeg ret langsom til at skrive rapporter, og i dag har ikke været en undtagelse.
 Alligevel er jeg ret tilfreds med fremskridtet i dag.
@@ -127,7 +127,7 @@ Næsen skulle lige pustes igennem i morges, men efter det har den ikke været no
 
 
 12/9-2024 (Torsdag Uge #2)
-------------------
+------------------------------------
 I dag har fortsat handlet om procesrapporten,
 men derudover har jeg også eksperimenteret lidt med mine hostingmuligheder herhjemme.
 Jeg har en Raspberry PI 4, som jeg nu har koblet op i mit teknikrum.
@@ -140,7 +140,7 @@ I løbet af dagen har jeg haft stor success med brugen af GitHub Pages til hosti
 
 
 13/9-2024 (Fredag Uge #2)
-------------------
+------------------------------------
 I går fik jeg skrevet det meste af hvad jeg kunne, inden jeg fortsætter på koden.
 Så i dag er fokus på få indført en menu i spillet.
 
@@ -168,13 +168,13 @@ Men det er et problem til i morgen.
 
 
 16/9-2024 (Mandag Uge #3)
-------------------
+------------------------------------
 Fokus i dag har været at implementere menuen hvor spilleindstillingerne kan tilpasses,
 da jeg ser den som en forudsætning for menuen hvor kortdækket kan tilpasses, og dermed databasen.
 
 
 17/9-2024 (Tirsdag Uge #3)
-------------------
+------------------------------------
 Planen var at i dag skulle bruges på at oprette projektets database.
 Dog aftenen her har involveret undersøgelse hertil.
 Men støstedelen af dagen er gået på en række forbedringer,
@@ -187,8 +187,27 @@ Primært understået:
 
 
 18/9-2024 (Onsdag Uge #3)
-------------------
+------------------------------------
 Fokus i dag har fortsat været forberedelse på databasen,
 hermed har jeg oprettet brugerfladen til at redigere kortdæk.
 Dog nåede jeg at bruge aftenen på at tjekke at SQLite udvidelsen af Godot faktisk fungerer,
 og at jeg derfor kan undgå at skulle oprette et WebAPI.
+
+
+19/9-2024 (Torsdag Uge #3)
+------------------------------------
+Hensigten var at dagen skulle deles mellem at udrulle HTML5 versionen af spillet med godot-sqlite,
+og derefter fokusere på rapportskrivning.
+Desværre viste det sig at godot-sqlite er inkompatibel med Godot 4.3's HTML5 exports.
+Derefter backportede jeg også spillet til Godot 4.2.1,
+hvor godot-sqlite+HTML5 havde større sandsynlighed for at virke.
+Men desværre (igen) viste denne version sig for at være for ustabil,
+så det lykkedes mig ikke at få det til at virke.
+
+Herefter sluttede jeg dagen med at lave en version af spillet uden tilpasselige kortdæk,
+og dermed SQL databasen. Denne udgave bruges derfor til HTML5 udgaven af spillet.
+
+20/9-2024 (Fredag Uge #3)
+------------------------------------
+I dag har haft fuld fokus på rapporterne,
+hvor størstedelen af det skriftelige materiale har omhandlet min nydelige med WASM SQLite databasen.
