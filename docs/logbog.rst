@@ -207,6 +207,7 @@ så det lykkedes mig ikke at få det til at virke.
 Herefter sluttede jeg dagen med at lave en version af spillet uden tilpasselige kortdæk,
 og dermed SQL databasen. Denne udgave bruges derfor til HTML5 udgaven af spillet.
 
+
 20/9-2024 (Fredag Uge #3)
 ------------------------------------
 I dag har haft fuld fokus på rapporterne,

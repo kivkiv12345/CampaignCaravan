@@ -281,66 +281,66 @@ https://github.com/2shady4u/godot-sqlite
 
 **Godot-SQLite**
 
-Repoet til godot-sqlite nævner at HTML5 er understøttet.
-Men en nærlæsning viser at det, indtil videre, kun er tilfældet med en ældre version af Godot.
-Og selv dér er det ustabilt og browser afhængigt (Vivaldi nævnes som et pragteksemplar).
+    Repoet til godot-sqlite nævner at HTML5 er understøttet.
+    Men en nærlæsning viser at det, indtil videre, kun er tilfældet med en ældre version af Godot.
+    Og selv dér er det ustabilt og browser afhængigt (Vivaldi nævnes som et pragteksemplar).
 
-Ligeledes som jeg, har ejeren af godot-sqlite repoet udrullet et brug deraf til GitHub Pages:
-https://2shady4u.github.io/godot-sqlite/
+    Ligeledes som jeg, har ejeren af godot-sqlite repoet udrullet et brug deraf til GitHub Pages:
+    https://2shady4u.github.io/godot-sqlite/
 
-Denne side fejler på samme måde som min, nemlig med fejlbeskeden:
-"Uncaught (in promise) LinkError: imported function 'env._ZNSt3__29to_stringEx' signature mismatch" i (browser) konsollen.
-Her har det i det mindste været en lille trøst, at det ikke kun er mit projekt som lider af fejlen.
-Denne specifikke fejl er en regression fra den tidligere version af godot-sqlite.
+    Denne side fejler på samme måde som min, nemlig med fejlbeskeden:
+    "Uncaught (in promise) LinkError: imported function 'env._ZNSt3__29to_stringEx' signature mismatch" i (browser) konsollen.
+    Her har det i det mindste været en lille trøst, at det ikke kun er mit projekt som lider af fejlen.
+    Denne specifikke fejl er en regression fra den tidligere version af godot-sqlite.
 
 
-Godot-sqlite opdateres stadig jævnligt. Derfor har jeg endnu håb,
-om at databasen kan indlejres i webserveren i den nærmere fremtid.
+    Godot-sqlite opdateres stadig jævnligt. Derfor har jeg endnu håb,
+    om at databasen kan indlejres i webserveren i den nærmere fremtid.
 
-Som en midlertidig løsning, har jeg lavet en version af spillet uden mulighed for at tilpasse kortdæk.
-Denne version bruges derfor af HTML5 varianten af spillet.
+    Som en midlertidig løsning, har jeg lavet en version af spillet uden mulighed for at tilpasse kortdæk.
+    Denne version bruges derfor af HTML5 varianten af spillet.
 
 **Implementation i spillet**
 
-Til hver af spillets forsøg på at forspørge data fra databasen kaldes funktionen SqlManager.ensure_database().
-Første gang denne funktion kaldes, oprettes forbindelsen til databasen,
-og herefter oprettes de manglende tabeller (og fyldes med data, hvis nødvendigt).
-Dette har til formål at databasen ikke oprettes før brugeren nyder behov af den.
-Derudover sikrer det også at databasen automatisk oprettes igen, i tilfælde hvor den slettes.
+    Til hver af spillets forsøg på at forspørge data fra databasen kaldes funktionen SqlManager.ensure_database().
+    Første gang denne funktion kaldes, oprettes forbindelsen til databasen,
+    og herefter oprettes de manglende tabeller (og fyldes med data, hvis nødvendigt).
+    Dette har til formål at databasen ikke oprettes før brugeren nyder behov af den.
+    Derudover sikrer det også at databasen automatisk oprettes igen, i tilfælde hvor den slettes.
 
-En SQLite database lagres som en enkelt .db fil,
-og i tilfælde hvor den ikke allerede eksisterer, opretter godot-sqlite den for os.
-På nuværende tidspunkt navngives denne fil "data_v1.db".
-I tilfælde af at fremtidige versioner af spillet laver inkompatible ændringer til databasen, kan versionennummeret øges.
-Hermed behøver vi ikke at lave destruktive ændringer på brugerens tidligere spilledata.
-Hvilket tillader dem at nedgradere til ældre versioner af spillet, og fortsætte hvor de slap.
+    En SQLite database lagres som en enkelt .db fil,
+    og i tilfælde hvor den ikke allerede eksisterer, opretter godot-sqlite den for os.
+    På nuværende tidspunkt navngives denne fil "data_v1.db".
+    I tilfælde af at fremtidige versioner af spillet laver inkompatible ændringer til databasen, kan versionennummeret øges.
+    Hermed behøver vi ikke at lave destruktive ændringer på brugerens tidligere spilledata.
+    Hvilket tillader dem at nedgradere til ældre versioner af spillet, og fortsætte hvor de slap.
 
-Her vil det også være muligt at programmere migrering af data mellem versioner.
-Hvis "data_v4.db" ikke findes, på det tidspunkt hvor der forsøges at oprette forbindelse til den,
-kan vi sikkert antage at denne version af databasen er tom.
-Herefter kan vi søge baglens efter versionerede databasefiler (v3, v2, v1),
-og rekursivt migrere den fundne version til den efterfølgende, indtil vi når den nuværende/ønskede version.
+    Her vil det også være muligt at programmere migrering af data mellem versioner.
+    Hvis "data_v4.db" ikke findes, på det tidspunkt hvor der forsøges at oprette forbindelse til den,
+    kan vi sikkert antage at denne version af databasen er tom.
+    Herefter kan vi søge baglens efter versionerede databasefiler (v3, v2, v1),
+    og rekursivt migrere den fundne version til den efterfølgende, indtil vi når den nuværende/ønskede version.
 
-Spillets database er på nuværende tidspunkt ret lille, med følgende 3 tabeller: "Cards", "Decks" og "DeckCards".
+    Spillets database er på nuværende tidspunkt ret lille, med følgende 3 tabeller: "Cards", "Decks" og "DeckCards".
 
-.. image:: ER_diagram.png
+    .. image:: ER_diagram.png
 
-Tabellerne har følgene formål
+    Tabellerne har følgene formål
 
-- "Cards" repræsenterer de mulige valg af spillekort, og fyldes ved første kald af SqlManager.ensure_database().
+    - "Cards" repræsenterer de mulige valg af spillekort, og fyldes ved første kald af SqlManager.ensure_database().
 
-- "Decks" repræsenterer tilpassede kortdæk, gemt af brugeren. Denne tabel gemmer dog kun navnet.
+    - "Decks" repræsenterer tilpassede kortdæk, gemt af brugeren. Denne tabel gemmer dog kun navnet.
 
-- "DeckCards" er samlingstabellen, for mange-til-mange relation, mellem "Kort" og "Dæk".
-    Hvert spillekort kan eksistere i flere kortdæk.
-    Og selvfølgelig skal et kortdæk kunne have flere spillekort.
-    Samtidigt kan hvert kortdæk have flere instanser af samme spillekort.
-    Dette repræsenteres af kolonnen "count", som er valgt for det nære forhold til DeckCardWithCounter._num_cards.
-    Alternativt kunne mængden (af kort) repræsenteres af flere rækker af "DeckCards" (med samme kort og deck),
-    hvilket også ville forhindre potentiale tilfælde med inkonsekvent data hvor "count" kolonnen er 0.
-    Disse tilfælde håndteres dog pænt af spillet, og er derfor ikke et større problem.
-    Idealt set ville "DeckCards" benytte sig af en sammensat primær nøgle mellem kolonnerne "deck" og "card",
-    desværre specificerer godot-sqlite's dokumentation at tabeller kun må indeholde én primær nøgle.
+    - "DeckCards" er samlingstabellen, for mange-til-mange relation, mellem "Kort" og "Dæk".
+        Hvert spillekort kan eksistere i flere kortdæk.
+        Og selvfølgelig skal et dæk af spillekort kunne have flere spillekort.
+        Samtidigt kan hvert kortdæk have flere instanser af samme spillekort.
+        Dette repræsenteres af kolonnen "count", som er valgt for det nære forhold til DeckCardWithCounter._num_cards.
+        Alternativt kunne mængden (af kort) repræsenteres af flere rækker af "DeckCards" (med samme kort og deck),
+        hvilket også ville forhindre potentiale tilfælde med inkonsekvent data hvor "count" kolonnen er 0.
+        Disse tilfælde håndteres dog pænt af spillet, og er derfor ikke et større problem.
+        Idealt set ville "DeckCards" benytte sig af en sammensat primær nøgle mellem kolonnerne "deck" og "card",
+        desværre specificerer godot-sqlite's dokumentation at tabeller kun må indeholde én primær nøgle.
 
 
 Havde jeg haft omkring en uges ekstra tid,
