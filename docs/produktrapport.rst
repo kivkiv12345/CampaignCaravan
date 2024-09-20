@@ -4,7 +4,7 @@
 Karavane Spilleregler
 --------------
 Kortspillet Karavane spilles normalt mellem 2 modstandere,
-hvor de medbringer hver sit dæk af 30-108 normale spillekort.
+hvor hver medbringer et dæk af 30-108 normale spillekort.
 (Typisk kræves det at disse dæk sammensættes af kortene fundet i 2 normale sæt af spillekort.
 Hvilket forhindrer at spillere medbringer ene 10'ere, for eksempel).
 
@@ -78,3 +78,10 @@ Denne klasse kan instantieres forskelligt for de 2 spillere,
 og kan dermed udjævne færdighedsniveauforskelle mellem spillerne (tillade én spille 6 kort på hånden, for eksempel).
 
 .. image:: GameRules.png
+
+
+
+
+Database
+--------------
+https://2shady4u.github.io/godot-sqlite/
