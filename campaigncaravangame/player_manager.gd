@@ -15,20 +15,9 @@ var restore_hook: Callable
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	if self.players.size() == 0:
-		for player in %Players.get_children():
-			if player is Player:
-				self.players.append(player)
 
-	for player in self.players:
+	for player in players:
 		assert(player is Player)
-		
-		if player is HumanPlayer:
-			# TODO Kevin: This is not how we're supposed to determine this, what about multiplayer?
-			player.is_enemy_player = false
-		
-		player.game_manager = self
 		player.init()
 		if player not in self.players:
 			self.players.append(player)
@@ -202,7 +191,7 @@ func check_for_winner() -> Player:
 	if not index_sold.all(is_true):
 		return null  # There is still at least 1 caravan that has yet to be sold.
 		
-	var winning_player: Player = GameManager._get_unique_max_key(num_caravans_won)
+	var winning_player: Player = _get_unique_max_key(num_caravans_won)
 	
 	if winning_player == null:
 		# 2 or more players have sold an equal number of caravans.
@@ -248,10 +237,10 @@ func celebrate_winner(winning_player: Player):
 			
 	if has_human_player:
 		if winning_player.is_enemy_player:  # We lost
-			GameManager._random_caps_down_sound()
+			_random_caps_down_sound()
 			SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_bad.wav"), 0, 0, randf_range(0.98, 1.05))
 		else:  # We won, yay!
-			GameManager._random_caps_up_sound()
+			_random_caps_up_sound()
 			SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/reputation/ui_rep_good.wav"), 0, 0, randf_range(0.98, 1.05))
 			
 			var sold_all_caravans: bool = true
@@ -296,7 +285,7 @@ func restart() -> void:
 
 func start() -> void:
 
-	# No need to advance turn, we are waiting for the player.
+	# No need to advance turn, we are waiting forthe player.
 	# TODO Kevin: This is probably a bit spaghetti
 	for player in self.players:
 		if player is HumanPlayer:

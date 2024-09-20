@@ -2,7 +2,7 @@ extends Node
 
 class_name Player
 
-@onready var hand = $Hand
+@onready var hand: Hand = $Hand
 @export var game_manager: GameManager = null
 @export var game_rules: GameRules = GameRules.new()
 @export var caravans: Array[Caravan] = []
@@ -24,6 +24,8 @@ func _ready() -> void:
 	$Hand.player = self
 	$Hand.deck = $Deck
 
+	assert(self.game_manager != null)
+
 
 func init() -> void:
 
@@ -36,7 +38,6 @@ func init() -> void:
 
 	if self.game_manager == null:
 		self.game_manager = self.find_parent("TableTop")
-		assert(self.game_manager)
 
 	if self.caravans == null:
 		self.caravans = []
@@ -74,9 +75,6 @@ func init() -> void:
 	#	even when this game rule is false.
 	if game_rules.deck_shuffle:
 		$Deck.unseeded_shuffle()
-
-	print(self.game_rules.hand_size)
-	print(self.is_enemy_player)
 
 	$Hand.fill_initial_hand()
 

@@ -2,7 +2,7 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://buyjif8yrdbyi"
+uid="uid://crnftrw2o1g51"
 path="res://.godot/imported/monofonto_rg.otf-b5f35d50cc3788ee4ef9e9a4b5d2723e.fontdata"
 
 [deps]
@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/monofonto_rg.otf-b5f35d50cc3788ee4ef9e9a4b5d2
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48

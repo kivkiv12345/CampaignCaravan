@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=16 format=3 uid="uid://byjfx31cqk6qt"]
 
-[ext_resource type="FontFile" uid="uid://buyjif8yrdbyi" path="res://monofonto_rg.otf" id="1_1axl7"]
-[ext_resource type="Texture2D" uid="uid://djmcmigp6fek7" path="res://MCMUnchecked.png" id="2_fjnvf"]
+[ext_resource type="FontFile" uid="uid://crnftrw2o1g51" path="res://monofonto_rg.otf" id="1_1axl7"]
+[ext_resource type="Texture2D" uid="uid://bkd703ivppc5y" path="res://MCMUnchecked.png" id="2_fjnvf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_68v4r"]
 content_margin_left = 10.0
@@ -90,15 +90,11 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
-cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/16/0/kerning_overrides/26/0 = Vector2(0, 0)
 cache/0/26/0/ascent = 0.0
 cache/0/26/0/descent = 0.0
 cache/0/26/0/underline_position = 0.0
 cache/0/26/0/underline_thickness = 0.0
 cache/0/26/0/scale = 1.0
-cache/0/26/0/kerning_overrides/16/0 = Vector2(0, 0)
-cache/0/26/0/kerning_overrides/26/0 = Vector2(0, 0)
 
 [resource]
 default_font = SubResource("FontFile_vr77e")

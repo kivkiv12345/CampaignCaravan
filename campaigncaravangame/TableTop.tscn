@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
-[ext_resource type="Texture2D" uid="uid://cqv7p2qoyx6mt" path="res://tabletop_textures/IMG_20240917_070156_972.jpg" id="2_3j8h7"]
+[ext_resource type="Texture2D" uid="uid://qp0tlfcrely1" path="res://tabletop_textures/IMG_20240917_070156_972.jpg" id="2_3j8h7"]
 [ext_resource type="Theme" uid="uid://byjfx31cqk6qt" path="res://Scenes/FalloutNVAmberTheme.tres" id="2_b4anq"]
 [ext_resource type="PackedScene" uid="uid://caidjbr85fvy" path="res://PlayerClasses/Player.tscn" id="2_xjwne"]
 [ext_resource type="PackedScene" uid="uid://dbqy0gbujn78" path="res://Scenes/Caravan/Caravan.tscn" id="3_qnxvu"]
@@ -37,7 +37,6 @@ texture = ExtResource("2_3j8h7")
 expand_mode = 1
 
 [node name="Players" type="Control" parent="."]
-unique_name_in_owner = true
 layout_mode = 1
 anchor_left = 0.622
 anchor_right = 1.0
@@ -47,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_b4anq")
 
-[node name="Player" parent="Players" instance=ExtResource("2_xjwne")]
+[node name="Player" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.176
@@ -61,43 +60,43 @@ offset_bottom = -160.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("3_ys5fo")
+game_manager = NodePath("../..")
+caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
+is_enemy_player = false
 
-[node name="Caravan3" parent="Players/Player" instance=ExtResource("3_qnxvu")]
+[node name="Caravan3" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = -295.0
 offset_top = -107.0
 offset_right = -200.0
 offset_bottom = 23.0
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.176,"anchor_top":0.5,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":-94.912,"offset_top":164.0,"offset_right":-455.0,"offset_bottom":-160.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("3_ys5fo"),"game_manager":null,"game_rules":null,"caravans":Array[Resource("res://Scenes/Caravan/Caravan.gd")]([]),"is_enemy_player":true,"reverse_caravans":false)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/Player/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
 offset_top = -36.0
 offset_bottom = -6.0
 
-[node name="Caravan2" parent="Players/Player" instance=ExtResource("3_qnxvu")]
+[node name="Caravan2" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = -453.0
 offset_top = -107.0
 offset_right = -358.0
 offset_bottom = 23.0
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.176,"anchor_top":0.5,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":-94.912,"offset_top":164.0,"offset_right":-455.0,"offset_bottom":-160.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("3_ys5fo"),"game_manager":null,"game_rules":null,"caravans":Array[Resource("res://Scenes/Caravan/Caravan.gd")]([]),"is_enemy_player":true,"reverse_caravans":false)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/Player/Caravan2" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
 offset_top = -36.0
 offset_bottom = -6.0
 
-[node name="Caravan1" parent="Players/Player" instance=ExtResource("3_qnxvu")]
+[node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = -613.0
 offset_top = -107.0
 offset_right = -518.0
 offset_bottom = 23.0
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.176,"anchor_top":0.5,"anchor_right":1.0,"anchor_bottom":1.0,"offset_left":-94.912,"offset_top":164.0,"offset_right":-455.0,"offset_bottom":-160.0,"grow_horizontal":2,"grow_vertical":2,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("3_ys5fo"),"game_manager":null,"game_rules":null,"caravans":Array[Resource("res://Scenes/Caravan/Caravan.gd")]([]),"is_enemy_player":true,"reverse_caravans":false)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter2" parent="Players/Player/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
@@ -136,7 +135,7 @@ offset_bottom = -9.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="BotPlayer" parent="Players" instance=ExtResource("2_xjwne")]
+[node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.167
@@ -150,15 +149,16 @@ rotation = 3.14159
 script = ExtResource("7_ao5mc")
 min_delay = 0.0
 max_delay = 0.0
+game_manager = NodePath("../..")
+caravans = [NodePath("Caravan1"), NodePath("Caravan2"), NodePath("Caravan3")]
 
-[node name="Caravan3" parent="Players/BotPlayer" instance=ExtResource("3_qnxvu")]
+[node name="Caravan3" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = 395.0
 offset_top = -97.0001
 offset_right = 490.0
 offset_bottom = 32.9999
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.167,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":0.46,"offset_left":95.021,"offset_top":161.0,"offset_right":-269.0,"offset_bottom":-137.08,"grow_horizontal":1,"grow_vertical":1,"rotation":3.14159,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("7_ao5mc"),"min_delay":0.0,"max_delay":0.0)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan3" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
@@ -166,14 +166,13 @@ offset_left = 0.00012207
 offset_top = -33.0
 offset_bottom = -3.0
 
-[node name="Caravan2" parent="Players/BotPlayer" instance=ExtResource("3_qnxvu")]
+[node name="Caravan2" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = 553.0
 offset_top = -97.0001
 offset_right = 648.0
 offset_bottom = 32.9999
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.167,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":0.46,"offset_left":95.021,"offset_top":161.0,"offset_right":-269.0,"offset_bottom":-137.08,"grow_horizontal":1,"grow_vertical":1,"rotation":3.14159,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("7_ao5mc"),"min_delay":0.0,"max_delay":0.0)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan2" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
@@ -181,14 +180,13 @@ offset_left = 0.000106812
 offset_top = -33.0
 offset_bottom = -3.0
 
-[node name="Caravan1" parent="Players/BotPlayer" instance=ExtResource("3_qnxvu")]
+[node name="Caravan1" parent="Players/BotPlayer" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
 offset_left = 713.0
 offset_top = -97.0001
 offset_right = 808.0
 offset_bottom = 32.9999
-player = Object(Control,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":-1,"anchor_left":0.167,"anchor_top":0.0,"anchor_right":1.0,"anchor_bottom":0.46,"offset_left":95.021,"offset_top":161.0,"offset_right":-269.0,"offset_bottom":-137.08,"grow_horizontal":1,"grow_vertical":1,"rotation":3.14159,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":1,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":0,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","script":ExtResource("7_ao5mc"),"min_delay":0.0,"max_delay":0.0)
-
+player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/BotPlayer/Caravan1" instance=ExtResource("6_5qcvu")]
 layout_mode = 0
@@ -243,7 +241,5 @@ game_manager = NodePath("../..")
 [connection signal="deck_size_changed" from="Players/Player/Deck" to="Players/Player/Deck/DeckSizeCounter" method="_on_deck_deck_size_changed"]
 [connection signal="lost" from="Players/BotPlayer" to="." method="on_player_lost"]
 [connection signal="lost" from="Players/BotPlayer" to="Players/BotPlayer/WinLoseLabel" method="_on_player_lost"]
-[connection signal="lost" from="Players/BotPlayer" to="CenterContainer/GameOverModal" method="_on_player_lost"]
 [connection signal="turn_ended" from="Players/BotPlayer" to="." method="advance_turn"]
 [connection signal="won" from="Players/BotPlayer" to="Players/BotPlayer/WinLoseLabel" method="_on_player_won"]
-[connection signal="won" from="Players/BotPlayer" to="CenterContainer/GameOverModal" method="_on_player_won"]

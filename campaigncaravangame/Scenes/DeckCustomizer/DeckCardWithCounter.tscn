@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://be61cae8g46uc"]
 
-[ext_resource type="Texture2D" uid="uid://qvfec2vciw6u" path="res://CardTextures/2_clover_alexus.jpeg" id="1_xqdmo"]
+[ext_resource type="Texture2D" uid="uid://ic8ph5xc2ooh" path="res://CardTextures/2_clover_alexus.jpeg" id="1_xqdmo"]
 [ext_resource type="Script" path="res://Scenes/DeckCustomizer/DeckCardWithCounter.gd" id="2_kk4wd"]
 
 [node name="BaseDeckCardTextureButton" type="TextureButton"]

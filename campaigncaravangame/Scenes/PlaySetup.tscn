@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scenes/PlaySetup.gd" id="1_o7p1v"]
 [ext_resource type="PackedScene" uid="uid://dic6t3g08dh4e" path="res://GameRules.tscn" id="2_eppx3"]
-[ext_resource type="Texture2D" uid="uid://cpnd5jhjtveu7" path="res://Wallpapers/CardWallpaper.jpg" id="2_gto4p"]
+[ext_resource type="Texture2D" uid="uid://basi4vqxwx8rc" path="res://Wallpapers/CardWallpaper.jpg" id="2_gto4p"]
 [ext_resource type="Script" path="res://Scenes/CopySettingsButton.gd" id="4_fqbnv"]
 [ext_resource type="PackedScene" uid="uid://rieeogfqbs4x" path="res://Scenes/DeckCustomizer/DeckCustomizerScene.tscn" id="5_uj6a4"]
 

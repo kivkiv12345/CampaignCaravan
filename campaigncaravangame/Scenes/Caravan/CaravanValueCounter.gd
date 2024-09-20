@@ -14,7 +14,7 @@ func _ready() -> void:
 	
 	self.caravan.on_value_changed.connect(self._update_shown_value)
 	self.caravan.new_sold_status.connect(self._update_sold_status)
-	#self._update_shown_value(self.caravan, self.caravan.get_value(), self.caravan.get_value())
+	self._update_shown_value(self.caravan, self.caravan.get_value(), self.caravan.get_value())
 	if self.fix_rotation:
 		self.pivot_offset = Vector2(self.size.x, self.size.y) / 2.0
 		self.rotation = -self.get_global_transform_with_canvas().get_rotation()
@@ -36,7 +36,7 @@ func _update_sold_status(_caravan: Caravan, sold_status: Caravan.SoldStatus) -> 
 
 
 func _update_shown_value(_caravan: Caravan, _old_value: int, new_value: int) -> void:
-
+		
 	self._update_sold_status(_caravan, _caravan.player.game_manager.get_caravan_sold_status(_caravan))
 
 	%CaravanValueCounterText.text = "[center]"

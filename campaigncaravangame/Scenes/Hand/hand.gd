@@ -40,7 +40,7 @@ func fix_card_spacing(_node: Node) -> void:
 	for card in cards:
 		i += 1;
 		
-		if not card is CardHandSlot:
+		if card is not CardHandSlot:
 			continue
 
 		# TODO Kevin: I can't really get the spacing right, but this is fine for now... probably
@@ -207,7 +207,7 @@ func _on_card_played(_dropslot: CardSlot, played_from: CardHandSlot) -> void:
 	assert(played_from in $Cards.get_children())
 	$Cards.remove_child(played_from)
 	
-	Hand._random_cardflip_sound()
+	_random_cardflip_sound()
 
 	if $Cards.get_child_count() < self.player.game_rules.hand_size:
 		self.try_fill_hand()
