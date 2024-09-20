@@ -90,7 +90,7 @@ jobs:
           mkdir -v -p build/web
           cd $PROJECT_PATH
           ./disable_sqlite_extension.py
-          cp SQLManager dummy.gd.gdignore SQLManager.gd
+          cp SQLManager_dummy.gd.gdignore SQLManager.gd
           rm -r addons/godot-sqlite/
           godot --import --path="." --import --headless --import --verbose --import --editor --import --quit-after 10 || echo "Exporting through the terminal with GDExtension (GDSQLite) modules installed, seems prone to segfault. But it seems it manages to generate the export anyway, so we're just gonna eat the error code"
           godot --path="." --import --headless --import --verbose --import --export-debug "HTML5" ../build/web/index.html || echo "Exporting through the terminal with GDExtension (GDSQLite) modules installed, seems prone to segfault. But it seems it manages to generate the export anyway, so we're just gonna eat the error code"
