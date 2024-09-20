@@ -96,7 +96,7 @@ func ensure_database() -> void:
 func query_custom_decks() -> Array[CustomDeckScene]:
 	SqlManager.ensure_database()
 	
-	var decks_query_result: Array = SqlManager.self._db.select_rows("Decks", "", ["*"])
+	var decks_query_result: Array = self._db.select_rows("Decks", "", ["*"])
 	
 	var custom_decks: Array[CustomDeckScene] = []
 	for query_deck in decks_query_result:
@@ -113,20 +113,20 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 	var success: bool = true
 
 	# Get the ID of the deck
-	success = SqlManager.self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [for_deck_name,])
+	success = self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [for_deck_name,])
 	assert(success)
 
-	var existing_decks: Array[Dictionary] = SqlManager.self._db.query_result
+	var existing_decks: Array[Dictionary] = self._db.query_result
 	assert(existing_decks.size() == 1)
 	
 	var query_string : String = "SELECT count, suit, rank FROM DeckCards JOIN Cards ON Cards.id = DeckCards.card WHERE deck = ?;"
 	var param_bindings : Array = [existing_decks[0]["id"]]
 	
-	success = SqlManager.self._db.query_with_bindings(query_string, param_bindings)
+	success = self._db.query_with_bindings(query_string, param_bindings)
 	assert(success)
 	
 	var deck_cards: Array[DeckCardWithCounter]
-	for query_deck_card in SqlManager.self._db.query_result:
+	for query_deck_card in self._db.query_result:
 		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()
 		deck_card.card = Card.new(query_deck_card["suit"], query_deck_card["rank"])
 		deck_card.set_card_count(query_deck_card["count"])
@@ -140,10 +140,10 @@ func delete_custom_deck(deck_name: String) -> bool:
 	SqlManager.ensure_database()
 
 	var success: bool = true
-	success = SqlManager.self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name,])
+	success = self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name,])
 	assert(success)
 
-	var existing_decks: Array[Dictionary] = SqlManager.self._db.query_result
+	var existing_decks: Array[Dictionary] = self._db.query_result
 	
 	if existing_decks.size() == 0:
 		return false
@@ -151,11 +151,11 @@ func delete_custom_deck(deck_name: String) -> bool:
 	assert(existing_decks.size() == 1)
 
 	# First delete all the cards, to avoid any constraints.
-	success = SqlManager.self._db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
+	success = self._db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
 	assert(success)
 
 	# And now we can delete the deck itself
-	success = SqlManager.self._db.query_with_bindings("DELETE FROM Decks WHERE id = ?", [existing_decks[0]["id"],])
+	success = self._db.query_with_bindings("DELETE FROM Decks WHERE id = ?", [existing_decks[0]["id"],])
 	assert(success)
 
 	return true
@@ -170,10 +170,10 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 	
 	var success: bool = true
 	
-	SqlManager.self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
+	self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
 	assert(success)
 	
-	var existing_decks: Array = SqlManager.self._db.query_result
+	var existing_decks: Array = self._db.query_result
 	assert(existing_decks.size() <= 1)  # It shouldn't be possible to have multiple decks with the same name
 	
 	# Reuse variable, to avoid warning
@@ -181,14 +181,14 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 	
 	var saved_new: bool = false
 	if existing_decks.size() == 0:  # A deck with this name doesn't exist.
-		insert_success = SqlManager.self._db.insert_row("Decks", {"name": deck_name})
+		insert_success = self._db.insert_row("Decks", {"name": deck_name})
 		assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 		
 		# Now we need to get the primary key
-		SqlManager.self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
+		self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name])
 		assert(success)
 		
-		existing_decks = SqlManager.self._db.query_result
+		existing_decks = self._db.query_result
 		assert(existing_decks.size() == 1)
 		saved_new = true
 	
@@ -204,10 +204,10 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 		deckcard_data.append({"deck": existing_decks[0]["id"], "card": card.get_index()+1, "count": deck_cards.get_card_count()})
 
 	# Just delete all the existing cards, and insert new ones, because we're lazy.
-	success = SqlManager.self._db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
+	success = self._db.query_with_bindings("DELETE FROM DeckCards WHERE deck = ?", [existing_decks[0]["id"],])
 	assert(success)
 
-	insert_success = SqlManager.self._db.insert_rows("DeckCards", deckcard_data)
+	insert_success = self._db.insert_rows("DeckCards", deckcard_data)
 	assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 	
 	if saved_new:
