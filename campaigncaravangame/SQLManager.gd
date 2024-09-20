@@ -194,7 +194,7 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 	
 	
 	var deckcard_data: Array[Dictionary] = []
-	for deck_cards in %CardsInDeckVBoxContainer.get_children():
+	for deck_cards in deck_cards_arr:
 		assert(deck_cards is DeckCardWithCounter)
 		
 		var card_vector: Vector2i = TextureManager.get_card_from_texture(deck_cards.texture_normal)
