@@ -96,9 +96,8 @@ func from_game_rules(game_rules: GameRules) -> void:
 	%FaceCardFirstRoundButton.pressed.emit()
 	%FaceMatchSuitButton.button_pressed = game_rules.number_card_require_face_match_suit
 	%FaceMatchSuitButton.pressed.emit()
-	#game_rules.number_card_max_faces = 0
-	#if .text != "":
-		#number_card_max_faces = int()
+	
+	%MaxFacesLineEdit.text = String.num_int64(game_rules.number_card_max_faces)
 
 	%HandSizeLineEdit.text = String.num_int64(game_rules.hand_size)
 
