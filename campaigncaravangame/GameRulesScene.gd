@@ -13,7 +13,10 @@ var custom_deck_optionbutton: OptionButton = null
 
 
 func _ready() -> void:
-	self.set_custom_deck_options(CustomDeckScene.query_custom_decks())
+	if OS.get_name() == "Web":
+		%CustomizeDeckButton.visible = false
+	else:
+		self.set_custom_deck_options(SqlManager.query_custom_decks())
 
 
 func to_game_rules() -> GameRules:
