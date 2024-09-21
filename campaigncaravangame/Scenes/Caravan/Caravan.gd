@@ -15,9 +15,9 @@ var ongoing_tween: Tween = null
 enum SoldStatus {SOLD, UNDERBURDENED, OVERBURDENED, TIED, OUTBID}
 
 
-func _on_player_turn_ended(player: Player) -> void:
+func _on_player_turn_ended(_player: Player) -> void:
 	
-	if self.get_value() > player.game_rules.caravan_max_value:
+	if self.get_value() > _player.game_rules.caravan_max_value:
 		self.num_turns_overburdened += 1
 	else:
 		self.num_turns_overburdened = 0

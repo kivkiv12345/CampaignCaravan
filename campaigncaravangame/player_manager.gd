@@ -305,7 +305,6 @@ func advance_turn(old_player: Player) -> void:
 	self.turn_counter += 1
 	
 	#print(" ")
-	#print(self.turn_counter)
 	#for player in self.players:
 		#print(player.name, " ", player.is_current_player)
 	#print(" ")
@@ -316,6 +315,7 @@ func advance_turn(old_player: Player) -> void:
 	
 	var winning_player: Player = self.check_for_winner()
 	if winning_player:
+		print("Game ended on turn: ", self.turn_counter)
 		self.celebrate_winner(winning_player)
 
 		if self.auto_restart:

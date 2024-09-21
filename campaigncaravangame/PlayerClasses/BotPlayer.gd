@@ -20,6 +20,77 @@ func _seeded_shuffle(array: Array[Variant]) -> Array[Variant]:
 	return array
 
 
+## Does not account for Jokers
+func playing_card_loses_game(card_slot: CaravanCardSlot, hand_card: CardHandSlot) -> bool:
+
+	# Check if we would win the game for the opponent by playing this card
+	var equal_num_caravans: Dictionary = {}
+	for player in self.game_manager.players:
+		equal_num_caravans[player.caravans.size()] = null
+	assert(equal_num_caravans.size() == 1)
+
+	assert(self.game_manager.players.size() <= 2, "Logic to check for losing plays needs to be rewritten to support more than 2 players")
+	var opponent_player: Player = null
+	for player in self.game_manager.players:
+		if player != self:
+			opponent_player = player
+			break
+	assert(opponent_player != null)
+
+	const SoldStatus = Caravan.SoldStatus
+	var opponent_sold_indexes: Array[int] = []
+	# Now we now it's relativly safe to use index to compare caravans.
+	var idx: int = -1
+	for caravan in opponent_player.caravans:
+		idx += 1
+		var sold_status: SoldStatus = self.game_manager.get_caravan_sold_status(caravan)
+		if sold_status == SoldStatus.SOLD:
+			opponent_sold_indexes.append(idx)
+
+
+	# The opponent needs to sell more than 1 caravan to win.
+	#	So we assume playing this 1 card can't lose us the game.
+	# TODO Kevin: Joker may need some logic here.
+	if opponent_sold_indexes.size() < self.caravans.size()-1:
+		return false
+
+	# Find out which caravn needs to be sold before they win.
+	var unsold_idx: int = -1
+	for i in range(self.caravans.size()):
+		if not i in opponent_sold_indexes:
+			unsold_idx = i
+			break
+	assert(unsold_idx != -1)
+
+	# If our caravan, corresponding to the unsold opponent one, is sold, then we should have lost now.
+	var danger_caravan: Caravan = self.caravans[unsold_idx]
+
+	assert(self.game_manager.get_caravan_sold_status(danger_caravan) != SoldStatus.SOLD)
+
+
+	# TODO Kevin: It would be nice to have a method telling us what the value of a caravan will be, after playing a card.
+
+	var caravan_sold_range = range(self.game_rules.caravan_min_value, self.game_rules.caravan_max_value+1)
+	if hand_card.card.is_face_card():
+		assert(card_slot is OpenFaceCardSlot)
+		if hand_card.card.rank == Card.Rank.JACK:
+			if (danger_caravan.get_value() - card_slot.number_card.get_value()) in caravan_sold_range:
+				return true
+		if hand_card.card.rank == Card.Rank.KING:
+			if (danger_caravan.get_value() + card_slot.number_card.get_value()) in caravan_sold_range:
+				return true
+
+		# TODO Kevin: Joker may need some logic here.
+		return false
+				
+	if hand_card.card.is_numeric_card():
+		assert(card_slot is OpenNumericCardSlot)
+		if danger_caravan.get_value() + hand_card.card.rank in caravan_sold_range:
+			return true
+
+	return false  # No you're good, go ahead and play that card
+
+
 func perform_turn() -> void:
 	var cards: Array[CardHandSlot] = self._seeded_shuffle(self.hand.get_cards())
 	assert(cards.size())
@@ -60,7 +131,7 @@ func perform_turn() -> void:
 				
 				if hand_card.card.rank == Card.Rank.KING:
 					# Do not overburden ourselves with kings
-					if legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()*2) > self.game_rules.caravan_max_value:
+					if legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()) > self.game_rules.caravan_max_value:
 						continue  # Playing this king would overburden our caravan
 				# Make sure we don't accidentally 'fix' an enemy caravan
 				elif hand_card.card.rank == Card.Rank.JACK:
@@ -72,7 +143,7 @@ func perform_turn() -> void:
 			else:  # We are looking at an enemy caravan
 				# Make sure playing kings on the enemy actually hurts them
 				if hand_card.card.rank == Card.Rank.KING:
-					if (legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()*2)) <= self.game_rules.caravan_max_value:
+					if (legal_slot.caravan.get_value() + (legal_slot.number_card.get_value())) <= self.game_rules.caravan_max_value:
 						# TODO Kevin: There is a bug here, for some reason kings are played anyway.
 						print("DDD")
 						continue  # Playing this king would not overburden the enemy caravan
@@ -82,6 +153,11 @@ func perform_turn() -> void:
 					#	make sure to prioritize the most valuable cards in sold caravans.
 					if legal_slot.caravan.get_value() > self.game_rules.caravan_max_value:
 						continue  # Don't play jacks on overburdended enemy caravans
+
+
+			if self.playing_card_loses_game(legal_slot, hand_card):
+				#print("Oh baby")
+				continue
 
 
 			if legal_slot.try_play_card(hand_card):
