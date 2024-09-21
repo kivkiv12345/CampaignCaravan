@@ -6,6 +6,7 @@
 
 [node name="PlayedNumericCardSlot" groups=["NumericCardSlots"] instance=ExtResource("1_7d5t2")]
 script = ExtResource("2_ektr1")
+fix_rotation = false
 
 [node name="PlayedFaceCards" type="TextureRect" parent="." index="1"]
 layout_mode = 0
@@ -16,8 +17,8 @@ stretch_mode = 4
 
 [node name="OpenFaceCardSlot" parent="." index="2" node_paths=PackedStringArray("number_card") instance=ExtResource("2_7hgwb")]
 layout_mode = 0
-offset_left = 44.0
-offset_right = 139.0
+offset_left = 21.0
+offset_right = 116.0
 number_card = NodePath("..")
 
 [connection signal="child_entered_tree" from="PlayedFaceCards" to="." method="_register_facecard_to_numbercard"]

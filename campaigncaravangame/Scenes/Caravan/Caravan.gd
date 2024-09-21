@@ -118,7 +118,7 @@ func get_value() -> int:
 
 func _play_number_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	
-	var played_card: Node = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
+	var played_card: PlayedNumericCardSlot = preload("res://Scenes/CardDropSlots/PlayedNumericCardSlot.tscn").instantiate()
 	played_card.set_card(hand_card.card)
 	played_card.set_caravan(self)
 	

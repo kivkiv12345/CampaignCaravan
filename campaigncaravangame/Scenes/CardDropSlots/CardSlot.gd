@@ -5,7 +5,6 @@ extends TextureRect
 class_name CardSlot
 
 var card: Card = null
-@export var fix_rotation: bool = true  # Allow control over whether to correct rotation
 
 func _ready() -> void:
 	# We are connecting these signals in code,
@@ -13,10 +12,6 @@ func _ready() -> void:
 	self.mouse_entered.connect(self._on_mouse_entered)
 	self.mouse_exited.connect(self._on_mouse_exited)
 
-#func _ready() -> void:
-	#if self.fix_rotation:
-		#self.pivot_offset = Vector2i(-self.size.x, -self.size.y) / 2
-		#self.rotation = -self.get_global_transform_with_canvas().get_rotation()
 #
 #func _process(delta: float) -> void:
 	#if self.fix_rotation:

@@ -3,6 +3,18 @@ extends CaravanCardSlot
 class_name PlayedNumericCardSlot
 
 
+# TODO Kevin: Rotating the cards can cause the face cards to obscore the value.
+@export var fix_rotation: bool = false  # Allow control over whether to correct rotation
+
+
+func _ready() -> void:
+	super()
+
+	if self.fix_rotation:
+		self.pivot_offset = Vector2(self.size.x, self.size.y) / 2
+		self.rotation = -self.get_global_transform_with_canvas().get_rotation()
+
+
 # TODO Kevin: Maybe we should make played cards have a fading modulation.
 #	That way it would be easier to see which card the opponent just played
 
@@ -52,7 +64,7 @@ func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 	else:
 		played_card.position = $OpenFaceCardSlot.position
 
-	$OpenFaceCardSlot.position += Vector2(30, 0)
+	$OpenFaceCardSlot.position += Vector2(25, 0)
 	
 	hand_card._on_card_played(played_card)
 	

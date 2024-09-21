@@ -79,14 +79,28 @@ func init() -> void:
 	$Hand.fill_initial_hand()
 
 
-func get_legal_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]:
-	var legal_slots: Array[CaravanCardSlot] = []
+func get_legal_slots(hand_card: CardHandSlot) -> Array[CardSlot]:
+	var legal_slots: Array[CardSlot] = []
 	# It's more likely for our hand to be in the tree than us
 	for cardslot in self.hand.get_tree().get_nodes_in_group("OpenCardSlots"):
-		assert(cardslot is CaravanCardSlot)
+		assert(cardslot is CardSlot)
 		
 		if cardslot.can_play_card(hand_card):
 			legal_slots.append(cardslot)
+
+	return legal_slots
+
+func get_legal_caravan_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]:
+	var legal_slots: Array[CaravanCardSlot] = []
+	# It's more likely for our hand to be in the tree than us
+	for cardslot in self.get_legal_slots(hand_card):
+		
+		if cardslot is DiscardCardSlot:
+			continue
+		
+		assert(cardslot is CaravanCardSlot)
+
+		legal_slots.append(cardslot)
 
 	return legal_slots
 

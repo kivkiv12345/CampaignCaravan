@@ -34,7 +34,7 @@ func _init(_source: CardHandSlot, _card: Card, render_offset: Vector2 = Vector2.
 ## Source: https://dev.to/pdeveloper/godot-4x-drag-and-drop-5g13
 func _on_tree_exiting()->void:
 	for slot in self.get_tree().get_nodes_in_group("OpenCardSlots"):
-		assert(slot is CaravanCardSlot)
+		assert(slot is CardSlot)
 		slot.visible = false
 	# As per the source linked above, this is a good location to emit a signal.
 	# But for now it's probably better to message the destination directly.

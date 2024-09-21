@@ -30,7 +30,7 @@ func perform_turn() -> void:
 		if hand_card.card.rank == Card.Rank.QUEEN:
 			continue
 		
-		var legal_slots: Array[CaravanCardSlot] = self.get_legal_slots(hand_card)
+		var legal_slots: Array[CaravanCardSlot] = self.get_legal_caravan_slots(hand_card)
 		
 		if legal_slots.size() == 0:
 			continue  # Nowhere to play this card
@@ -89,7 +89,7 @@ func perform_turn() -> void:
 		if hand_card.card.rank != Card.Rank.QUEEN:
 			continue  # Don't play cards with didn't want to play in the for loop above.
 
-		var legal_slots: Array[CaravanCardSlot] = self.get_legal_slots(hand_card)
+		var legal_slots: Array[CaravanCardSlot] = self.get_legal_caravan_slots(hand_card)
 		
 		if legal_slots.size() == 0:
 			continue  # Nowhere to play this queen

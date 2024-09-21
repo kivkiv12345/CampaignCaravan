@@ -32,6 +32,11 @@ func _get_drag_data(at_position: Vector2):
 
 	if self.hand.player.has_lost:
 		return null  # Players that have lost can only spectate
+		
+	if not self in self.hand.get_cards():
+		# HandCardSlots pending removal are removed from our self.hand.$Cards.
+		#	and we are not allowed to play those, so that's why we check our hand.
+		return null
 
 	# Calculate the mouse offset relative to the original control.
 	var mouse_offset: Vector2 = at_position - self.global_position
