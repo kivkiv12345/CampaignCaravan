@@ -25,6 +25,18 @@ Case Beskrivelse
 
 
 Afgrænsning
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Allerede kort tid efter projektet startede,
+havde jeg besluttet mig, at det ikke var en nødvendighed med flere forskellige typer modstandere.
+Det har været min prioritet at lave et produkt som er klart til brug.
+Med andre ord har hensigten været at spillet selv er klart til drift direkte efter svendeprøven.
+Så polering har haft en hvis prioritet over omfang.
+Med hensyn til modstandere er det dog vigtigt for mig,
+at spillet er åben for udvidelse med flere typer i fremtiden.
+
+
+Afgrænsning
 ------------------------
 
 
@@ -81,9 +93,9 @@ og dermed sikre en samhørighed til klassens funktion.
 "Design Patterens" (i forhold til programmering) er en række typiske anvendte teknikker,
 hvor brugen deraf giver et fagsprog som gør det lettere at beskrive problemstillinger og løsninger dertil.
 Begræbet "Design Patterns" blev først introduceret af:
-'Erich Gamma <https://en.wikipedia.org/wiki/Erich_Gamma>', 'Richard Helm <https://en.wikipedia.org/wiki/Richard_Helm>',
-'Ralph Johnson <https://en.wikipedia.org/wiki/Ralph_Johnson_(computer_scientist)>' og 'John Vlissides <https://en.wikipedia.org/wiki/John_Vlissides>',
-i deres (1994) bog _"Design Patterns: Elements of Reusable Object-Oriented Software"_.
+`Erich Gamma <https://en.wikipedia.org/wiki/Erich_Gamma>`_, `Richard Helm <https://en.wikipedia.org/wiki/Richard_Helm>`_,
+`Ralph Johnson <https://en.wikipedia.org/wiki/Ralph_Johnson_(computer_scientist)>`_ og `John Vlissides <https://en.wikipedia.org/wiki/John_Vlissides>`_,
+i deres (1994) bog `Design Patterns: Elements of Reusable Object-Oriented Software <https://en.wikipedia.org/wiki/Design_Patterns>`_.
 Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/design-patterns
 
 * Observer Pattern
@@ -327,11 +339,11 @@ https://github.com/2shady4u/godot-sqlite
 
     Tabellerne har følgene formål
 
-    - "Cards" repræsenterer de mulige valg af spillekort, og fyldes ved første kald af SqlManager.ensure_database().
+    - **"Cards" repræsenterer de mulige valg af spillekort, og fyldes ved første kald af SqlManager.ensure_database().**
 
-    - "Decks" repræsenterer tilpassede kortdæk, gemt af brugeren. Denne tabel gemmer dog kun navnet.
+    - **"Decks" repræsenterer tilpassede kortdæk, gemt af brugeren. Denne tabel gemmer dog kun navnet.**
 
-    - "DeckCards" er samlingstabellen, for mange-til-mange relation, mellem "Kort" og "Dæk".
+    - **"DeckCards" er samlingstabellen, for mange-til-mange relation, mellem "Kort" og "Dæk".**
         Hvert spillekort kan eksistere i flere kortdæk.
         Og selvfølgelig skal et dæk af spillekort kunne have flere spillekort.
         Samtidigt kan hvert kortdæk have flere instanser af samme spillekort.
@@ -392,6 +404,7 @@ kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes se
     Dette problem løses enkeltvis ved brug af en kommando som forhindrer fejlkoden fra kompileringen:
 
     .. code-block::
+
         godot [options...] --export-debug "HTML5" ../build/... || echo ""
 
     Her bruges **echo** som en kommandoen som altid lykkedes, når **godot --export-debug "HTML5" ../build/...** fejler
@@ -421,37 +434,89 @@ Efterfølgende gik det også op for mig at de var således jeg oftest brugte den
 Jeg ser Caravan som et godt spil, når man har en smule tid man skal have brændt af.
 Og herved er det nemmest hvis ikke man behøver arrangere en runde med et andet menneske.
 
-Så allerede kort tid efter projektet startede,
-havde jeg besluttet mig, at det ikke var en nødvendighed med flere forskellige typer modstandere.
-Det har været min prioritet at lave et produkt som er klart til brug.
-Så polering har haft en hvis prioritet over omfang.
-Med hensyn til modstandere er det dog vigtigt for mig,
-at spillet er åben for udvidelse med flere typer i fremtiden.
-
+Som forklaret i afgrænsningen, har det ikke været en prioritet at implementere flere typer modstandere.
 På tidsplanen ses denne beslutning som en forskydelse af startdatoen på de påvirkede opgaver (K6 specialt).
 
 Konklusion
 ------------------------
 
+**Vejledning af Spilleregler i spillet**
+
+    Caravan har et ry blandt Fallout New Vegas' spillere om a være meget forvirrende og kompliceret.
+    I søgen om at gøre min udgave af kortspillet så forståligt som muligt,
+    har jeg været meget interesseret i årsagen bag forvirringen.
+
+    Derfor har jeg været specialt interesseret i førstehåndindtryk af begge udgaver af spillet.
+    Desværre har jeg ikke nået at observere førstehåndintryk af min udgave personligt,
+    men det lykkedes mig at finde en youtuber spille hendes første spil af udgaven i Fallout:
+
+    https://www.youtube.com/watch?v=yD_lWpDgcUQ&list=PLZIrkWszSEEM_ywEah_f8G4-oePaGweG1&t=1832s
+
+    Dette har givet mig en god forståelse af hvorfor den originale udgave er svær at forstå:
+
+    #. 
+        Fallout giver en overordnet, utilstrækkelig, forklaring af spillereglerne.
+        Herefter gives en note med den uddybede forklaring.
+        Men spilleren inviteres til deres første spil,
+        inden de har mulighed for at læse spillereglerne.
+
+    #. 
+        Accepterer spilleren invitationen til spillet,
+        bliver de præsenteret med brugerfladen til at konstruere deres kortdæk.
+        Dette er inden de har lært betydningen bag de forskellige kort.
+        Heldigvis er det nemt for brugeren at vælge alle, eller tilfældige, kort her,
+        men sandynligvis er denne brugerflade alligevel ikke betryggende for spilleren.
+
+    #. 
+        Herefter starter selveste spillet, og spilleren kan begynde at placere kort.
+        Når et kort løftes fra hånden, gives der ingen hentydning til hvor det er muligt at spille det.
+        I stedet piltasterene til at flytte det valgte kort mellem alle pladser på bordet.
+        Her er det, f.eks, muligt at flytte nummerkort til modstanderens karavaner,
+        men en rød markering bruges til at vise at det ikke er muligt at spille kortet dér.
+        Derfor skal spilleren søge efter pladser hvor det er muligt at spille deres kort.
+    
+    #. 
+        Derudover giver den originale udgave ingen tilbagemelding når en karavane er solgt.
+        Eller at spillets afslutning er forhindret af en uafgjort karavane.
+    
+    #. 
+        I det mindste gives en rød markering på værdien karavanen efter den overskrider dens maksimale værdi.
+        Men da denne tilbagemelding gives efter at kortet er spillet,
+        er det muligt at spilleren vil spille kort indtil de tilfældigvis overbyrder deres karavane.
+
+    #. 
+        Samtidigt gives der heller ingen tilbagemelding på hvilke kort en joker vil fjerne.
+        Og derfor virker det tilfældigt når den fjerner halvdelen af bordet.
+
+    #. 
+        Når et kort fjernes, animeres karvanen (fra det nederste til det fjernede kort) ud ad skærmen.
+        Hvorefter den animeres tilbage på plads uden det fjernede kort.
+        Dette kan gøre det svært at se præcist hvilket kort som fjernes.
+
+-----------------------------------
+
+    Produktrapporten uddyber hvordan min udgave forsøger at gøre spillereglerne nemmere at forstå.
+
+
 
 Refleksioner
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-I modsætning til det tværfaglige projekt på H5PD010124,
-har vi på H6PD091124 haft langt mere mulighed for at arbejde hjemmefra.
+    I modsætning til det tværfaglige projekt på H5PD010124,
+    har vi på H6PD091124 haft langt mere mulighed for at arbejde hjemmefra.
 
-For mig har det specialt gjort mig mere effektiv om morgenen,
-hvor jeg ofte oplever den bedste koncentration.
-Hjemmefra kan jeg nemlig vågne med gode ideér at bruge dagen på,
-og med det samme arbejde på dem ved computeren.
+    For mig har det specialt gjort mig mere effektiv om morgenen,
+    hvor jeg ofte oplever den bedste koncentration.
+    Hjemmefra kan jeg nemlig vågne med gode ideér at bruge dagen på,
+    og med det samme arbejde på dem ved computeren.
 
-Desuden brillerer min stationære arbejdsstation herhjemme også over bærebaren som medbringes til skolen.
-(Dog skal det siges at skolen supplerer os med ekstra skærme, og dette er en stor hjælp).
+    Desuden brillerer min stationære arbejdsstation herhjemme også over bærebaren som medbringes til skolen.
+    (Dog skal det siges at skolen supplerer os med ekstra skærme, og dette er en stor hjælp).
 
-I visse tilfælde kan koncentration dog udfordres på hjemmekontoret,
-især efter en given indsats på dagens opgaver.
-Det samme kan dog siges på skolen.
-Så som helhed vil jeg mene at jeg arbejder bedst hjemmefra.
+    I visse tilfælde kan koncentration dog udfordres på hjemmekontoret,
+    især efter en given indsats på dagens opgaver.
+    Det samme kan dog siges på skolen.
+    Så som helhed vil jeg mene at jeg arbejder bedst hjemmefra.
 
 
 
