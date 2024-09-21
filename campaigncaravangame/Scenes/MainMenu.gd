@@ -15,8 +15,8 @@ func background_restore_hook(game_manager: GameManager):
 
 	for player in game_manager.find_child("Players", false).get_children():
 		assert(player is BotPlayer)
-		player.min_delay = 0.5
-		player.max_delay = 1
+		player.min_delay = 1
+		player.max_delay = 2
 
 	human_replacement.init()
 
