@@ -12,6 +12,7 @@ class_name GameManager
 
 var game_over_man: bool = false
 var restore_hook: Callable
+var turn_counter: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -286,9 +287,12 @@ func restart() -> void:
 
 func start() -> void:
 
-	# No need to advance turn, we are waiting forthe player.
+	# No need to advance turn, we are waiting for the player.
 	# TODO Kevin: This is probably a bit spaghetti
 	for player in self.players:
+		
+		player.is_current_player = (player == self.starting_player)
+
 		if player is HumanPlayer:
 			assert(player.is_current_player)
 			return
@@ -297,6 +301,14 @@ func start() -> void:
 
 
 func advance_turn(old_player: Player) -> void:
+	
+	self.turn_counter += 1
+	
+	#print(" ")
+	#print(self.turn_counter)
+	#for player in self.players:
+		#print(player.name, " ", player.is_current_player)
+	#print(" ")
 	
 	# We should be responsible for advanding to the next player.
 	# This also helps to guard against weird stuff from the Player.lost() signal.

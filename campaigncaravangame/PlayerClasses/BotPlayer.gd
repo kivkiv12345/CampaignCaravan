@@ -24,6 +24,19 @@ func perform_turn() -> void:
 	var cards: Array[CardHandSlot] = self._seeded_shuffle(self.hand.get_cards())
 	assert(cards.size())
 	
+	# In cases very short randomized delay (especially 0.02 <-> 0.04 seconds)
+	#	is employed to start turns between 2 bots,
+	#	it can occur that a bot starts its turn when it is not actually its turn.
+	#	I assume this is because its turn is somehow delayed into that of the next player.
+	#	Although I don't know how the next player manages to start its turn,
+	#	before this one has taken place.
+	#	Nevertheless, returning here (without taking any action) seems entirely valid,
+	#	despite my initial suspicion that this might cause deadlocks.
+	if not self.is_current_player:
+		return
+
+	assert(self.is_current_player)
+	
 	for hand_card in cards:
 		
 		# Skip queens in this loop, so we prioritize cards that give a numeric benefit.
@@ -48,16 +61,13 @@ func perform_turn() -> void:
 				if hand_card.card.rank == Card.Rank.KING:
 					# Do not overburden ourselves with kings
 					if legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()*2) > self.game_rules.caravan_max_value:
-						#print("AAA")
 						continue  # Playing this king would overburden our caravan
 				# Make sure we don't accidentally 'fix' an enemy caravan
 				elif hand_card.card.rank == Card.Rank.JACK:
 					if legal_slot.caravan.get_value() <= self.game_rules.caravan_max_value:
-						#print("BBB")
 						continue  # This caravan is not overburdened, so don't play a jack on it.
 				elif hand_card.card.is_numeric_card():
 					if (legal_slot.caravan.get_value() + hand_card.card.rank) > self.game_rules.caravan_max_value:
-						#print("CCC")
 						continue  # Don't play number cards that would overburden our caravan
 			else:  # We are looking at an enemy caravan
 				# Make sure playing kings on the enemy actually hurts them
@@ -71,10 +81,8 @@ func perform_turn() -> void:
 					# TODO Kevin: If playing a jack on the enemy,
 					#	make sure to prioritize the most valuable cards in sold caravans.
 					if legal_slot.caravan.get_value() > self.game_rules.caravan_max_value:
-						#print("EEE")
 						continue  # Don't play jacks on overburdended enemy caravans
-					#if (legal_slot.caravan.get_value() - legal_slot.number_card.get_value()) in range(CARAVAN_MIN_VALUE, CARAVAN_MAX_VALUE+1):
-						#continue
+
 
 			if legal_slot.try_play_card(hand_card):
 				# We played a card!
@@ -104,6 +112,9 @@ func perform_turn() -> void:
 
 			if legal_slot.caravan.player != self:
 				continue  # This loop is only for our own caravans
+				
+			if legal_slot.caravan.get_value() > legal_slot.caravan.player.game_rules.caravan_max_value:
+				continue  # Queens don't help an overburdened caravan.
 
 			#print("IIIIII %d %d" % [legal_slot.number_card.get_index(), legal_slot.caravan.find_child("PlayedCards", false).get_child_count()])
 			assert(legal_slot.number_card in legal_slot.caravan.find_child("PlayedCards", false).get_children())
@@ -113,7 +124,7 @@ func perform_turn() -> void:
 			if legal_slot.try_play_card(hand_card):
 				# We played a queen!
 				#	Hopefully we can now play a number card next round.
-				print("GGG")
+				#print("GGG")
 				return
 		
 		# That didn't work, let's just "discard" it, by playing it on the enemy.
@@ -121,6 +132,9 @@ func perform_turn() -> void:
 		for legal_slot in legal_slots:
 			
 			assert(legal_slot is OpenFaceCardSlot)
+			
+			if legal_slot.caravan.get_value() > legal_slot.caravan.player.game_rules.caravan_max_value:
+				continue  # Queens don't help an overburdened caravan.
 			
 			if legal_slot.caravan.player == self:
 				continue  # This loop is only for enemy caravans
@@ -135,9 +149,20 @@ func perform_turn() -> void:
 				print("HHH")
 				return
 	
+	# Before we just keep discarding cards forever,
+	#	let's see if we have some caravans to give up on.
+	for caravan in self.get_tree().get_nodes_in_group("Caravans"):
+		assert(caravan is Caravan)
+		
+		if caravan.num_turns_overburdened > 3:
+			if caravan.try_discard_caravan():
+				# Well, hopefully it was truly broken beyond repair.
+				#	And that we can quickly rebuild it.
+				print("FFF")
+				return
+	
 	# We didn't have any cards to play, so we must discard something.
 	if self.hand.try_discard_card(self.hand.get_lowest_value_card(), true):
-		print("FFF")
 		return  # We ended our turn by discarding a card
 		
 	# Maybe the reason we weren't able to perform any actions, is because we have lost.
@@ -149,6 +174,7 @@ func perform_turn() -> void:
 	
 	# Somehow we started our turn without being able to perform any actions.
 	# This should not be possible, and we should've lost before this/our turn started.
+	print("Bot started turn without being able to perform any actions")
 	assert(false)
 
 

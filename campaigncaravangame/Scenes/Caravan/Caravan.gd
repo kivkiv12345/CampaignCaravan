@@ -7,12 +7,25 @@ signal on_value_changed(caravan: Caravan, old_value: int, new_value: int)
 signal new_sold_status(caravan: Caravan, new_status: SoldStatus)
 
 @export var player: Player = null
+
+var num_turns_overburdened: int = 0
+
 var ongoing_tween: Tween = null
 
 enum SoldStatus {SOLD, UNDERBURDENED, OVERBURDENED, TIED, OUTBID}
 
+
+func _on_player_turn_ended(player: Player) -> void:
+	
+	if self.get_value() > player.game_rules.caravan_max_value:
+		self.num_turns_overburdened += 1
+	else:
+		self.num_turns_overburdened = 0
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	assert(self.player)
+	self.player.turn_ended.connect(self._on_player_turn_ended)
 	for card_slot in self.get_children():
 		if not card_slot is OpenNumericCardSlot:
 			continue
