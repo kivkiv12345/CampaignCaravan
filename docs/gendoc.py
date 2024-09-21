@@ -15,7 +15,30 @@ def check_gen_sidoc_version(version):
 
 def main():
 
-    extensions = [
+
+    # Merely attempting to install dependecies takes a while,
+    # even when they're already installed.
+    # We there start by assuming that they are already installed.
+    for _ in range(2):
+
+        docdate = str(date.today())
+        reports: dict[str, str] = {
+            "Process Rapport": "procesrapport.rst",
+            "Produkt Rapport": "produktrapport.rst",
+        }
+        
+        for report_name, report_file in reports.items():
+            report_name_escaped: str = report_name.replace(' ', '\ ')
+            cmd_line = f"gen-sidoc -d {docdate} -t MAN {report_name_escaped} -o {report_name.replace(' ', '_')}.pdf {path.join(dirname(__file__).rstrip('.'), report_file).strip()}"
+            print(cmd_line)
+            err_code: int = system(cmd_line)
+            if err_code != 0:
+                break
+        else:  # All documents generated successfully
+            break  # No need to install dependencies
+
+
+        extensions = [
             'sphinx_rtd_theme',
             'myst_parser',
             'sphinx_c_autodoc',
@@ -23,21 +46,12 @@ def main():
             "sphinx_git",
             "sphinx_copybutton"
         ]
-    system(f"pip3 install {' '.join(i for i in extensions)}")
+        err_code: int = system(f"pip3 install {' '.join(i for i in extensions)}")
+        assert err_code == 0
 
-    docdate = str(date.today())
-    reports: dict[str, str] = {
-        "Process Raport": "processraport.rst",
-        "Produkt Raport": "produktrapport.rst",
-    }
-    if not which('gen-sidoc') or not check_gen_sidoc_version('0.1.6'):
-        system("python3 -m pip install -U git+https://github.com/spaceinventor/libdoc.git")
-
-    for report_name, report_file in reports.items():
-        report_name_escaped: str = report_name.replace(' ', '\ ')
-        cmd_line = f"gen-sidoc -d {docdate} -t MAN {report_name_escaped} -o {report_name.replace(' ', '_')}.pdf {path.join(dirname(__file__).rstrip('.'), report_file).strip()}"
-        print(cmd_line)
-        system(cmd_line)
+        if not which('gen-sidoc') or not check_gen_sidoc_version('0.1.6'):
+            err_code: int = system("python3 -m pip install -U git+https://github.com/spaceinventor/libdoc.git")
+            assert err_code == 0
 
 
 if __name__ == '__main__':
