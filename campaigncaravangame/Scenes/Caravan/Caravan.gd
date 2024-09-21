@@ -44,7 +44,7 @@ func _fix_card_spacing() -> void:
 
 ## Called by Jacks and Jokers
 ## Help from: https://chatgpt.com
-func remove_card(number_card: PlayedNumericCardSlot) -> void:
+func remove_card(number_card: PlayedNumericCardSlot, animation_delay: float = 0.0) -> void:
 	assert(number_card in $PlayedCards.get_children())  # TODO Kevin: This can fail
 
 	# Move affected card to CardsToRemove node, so we can recalculate caravan value immediately
@@ -92,7 +92,7 @@ func remove_card(number_card: PlayedNumericCardSlot) -> void:
 		ongoing_tween.tween_callback(_animate_card_removal)  # Wait for the face card animation to finish
 		ongoing_tween.play()
 	else:
-		_animate_card_removal.call()  # Animate immediately if no ongoing face card animation
+		CaravanUtils.delay(_animate_card_removal.call, animation_delay, self)  # Animate immediately if no ongoing face card animation
 
 	# Update the caravan's value immediately
 	self.on_value_changed.emit(self, before_value, self.get_value())
@@ -213,4 +213,41 @@ func try_play_number_card(hand_card: CardHandSlot, animate: bool = true) -> bool
 		return false
 		
 	self._play_number_card(hand_card, animate)
+	return true
+
+
+func _discard_caravan() -> void:
+	
+	# Discarding a large caravan deserves a little "reward"
+	if $PlayedCards.get_child_count() > 4:
+		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_04.ogg"), 0, 0, randf_range(0.98, 1.05))
+	
+	var animation_delay: float = 0
+	for card in $PlayedCards.get_children():
+		assert(card is CaravanCardSlot)
+		
+		self.remove_card(card, animation_delay)
+		animation_delay += 0.05
+		
+	self.player.end_turn()
+
+
+func can_discard_caravan() -> bool:
+	if not self.player.is_current_player:
+		return false
+	
+	# It's not like it's illegal to discard an empty caravan.
+	# But if we return true here, the player will think they should end their turn.
+	# And that's a little harsh.
+	if $PlayedCards.get_child_count() == 0:
+		return false
+
+	return true
+
+
+func try_discard_caravan() -> bool:
+	if not self.can_discard_caravan():
+		return false
+		
+	self._discard_caravan()
 	return true

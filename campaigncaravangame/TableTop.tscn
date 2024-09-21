@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctgss67e70gan"]
+[gd_scene load_steps=15 format=3 uid="uid://ctgss67e70gan"]
 
 [ext_resource type="Script" path="res://player_manager.gd" id="1_uwe67"]
 [ext_resource type="Texture2D" uid="uid://qp0tlfcrely1" path="res://tabletop_textures/IMG_20240917_070156_972.jpg" id="2_3j8h7"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://l8saoo5gq6v7" path="res://Scenes/WinLoseLabel.tscn" id="9_wpiup"]
 [ext_resource type="PackedScene" uid="uid://e0tsv8uo1qfs" path="res://Scenes/GameOverModal.tscn" id="12_330lx"]
 [ext_resource type="PackedScene" uid="uid://dv7i4xx78frso" path="res://Scenes/CardDropSlots/DiscardCardSlot.tscn" id="13_vcai4"]
+[ext_resource type="PackedScene" uid="uid://cavhv6egbwb2s" path="res://Scenes/Caravan/DiscardCaravanButton.tscn" id="14_u87lk"]
 
 [node name="TableTop" type="Control" node_paths=PackedStringArray("players", "starting_player")]
 layout_mode = 3
@@ -74,9 +75,14 @@ offset_bottom = 23.0
 player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/Player/Caravan3" instance=ExtResource("6_5qcvu")]
-layout_mode = 0
-offset_top = -36.0
-offset_bottom = -6.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.277
+anchor_right = 0.326
+anchor_bottom = -0.046
+offset_top = 0.0100021
+offset_right = 0.0299988
+offset_bottom = -0.0199995
 
 [node name="Caravan2" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -87,9 +93,14 @@ offset_bottom = 23.0
 player = NodePath("..")
 
 [node name="CaravanValueCounter" parent="Players/Player/Caravan2" instance=ExtResource("6_5qcvu")]
-layout_mode = 0
-offset_top = -36.0
-offset_bottom = -6.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.277
+anchor_right = 0.326
+anchor_bottom = -0.046
+offset_top = 0.0100021
+offset_right = 0.0299988
+offset_bottom = -0.0199995
 
 [node name="Caravan1" parent="Players/Player" node_paths=PackedStringArray("player") instance=ExtResource("3_qnxvu")]
 layout_mode = 0
@@ -100,9 +111,14 @@ offset_bottom = 23.0
 player = NodePath("..")
 
 [node name="CaravanValueCounter2" parent="Players/Player/Caravan1" instance=ExtResource("6_5qcvu")]
-layout_mode = 0
-offset_top = -36.0
-offset_bottom = -6.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.277
+anchor_right = 0.326
+anchor_bottom = -0.046
+offset_top = 0.0100021
+offset_right = 0.0299988
+offset_bottom = -0.0199995
 
 [node name="Deck" parent="Players/Player" instance=ExtResource("6_xbpa7")]
 show_behind_parent = true
@@ -135,6 +151,39 @@ offset_right = -200.0
 offset_bottom = -9.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="PlayerDiscardCaravanPanel2" parent="Players/Player" node_paths=PackedStringArray("caravan") instance=ExtResource("14_u87lk")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -417.0
+offset_top = -143.0
+offset_right = -336.0
+offset_bottom = -113.0
+caravan = NodePath("../Caravan2")
+
+[node name="PlayerDiscardCaravanPanel1" parent="Players/Player" node_paths=PackedStringArray("caravan") instance=ExtResource("14_u87lk")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -576.0
+offset_top = -143.0
+offset_right = -496.0
+offset_bottom = -113.0
+caravan = NodePath("../Caravan1")
+
+[node name="PlayerDiscardCaravanPanel3" parent="Players/Player" node_paths=PackedStringArray("caravan") instance=ExtResource("14_u87lk")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -259.0
+offset_top = -143.0
+offset_right = -177.0
+offset_bottom = -113.0
+caravan = NodePath("../Caravan3")
 
 [node name="BotPlayer" parent="Players" node_paths=PackedStringArray("game_manager", "caravans") instance=ExtResource("2_xjwne")]
 layout_mode = 1
@@ -219,6 +268,19 @@ grow_horizontal = 1
 grow_vertical = 1
 text = "[center]DUNNO[/center]"
 
+[node name="DiscardCardSlot" parent="." instance=ExtResource("13_vcai4")]
+layout_mode = 1
+anchor_left = 1.0
+anchor_top = 0.522
+anchor_right = 1.0
+anchor_bottom = 0.522
+offset_left = -154.0
+offset_top = -62.256
+offset_right = -59.0
+offset_bottom = 67.744
+grow_horizontal = 0
+grow_vertical = 2
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -232,19 +294,6 @@ mouse_filter = 2
 visible = false
 layout_mode = 2
 game_manager = NodePath("../..")
-
-[node name="DiscardCardSlot" parent="." instance=ExtResource("13_vcai4")]
-layout_mode = 1
-anchor_left = 1.0
-anchor_top = 0.522
-anchor_right = 1.0
-anchor_bottom = 0.522
-offset_left = -154.0
-offset_top = -62.256
-offset_right = -59.0
-offset_bottom = 67.744
-grow_horizontal = 0
-grow_vertical = 2
 
 [connection signal="lost" from="Players/Player" to="." method="on_player_lost"]
 [connection signal="lost" from="Players/Player" to="Players/Player/WinLoseLabel" method="_on_player_lost"]

@@ -15,6 +15,7 @@ var is_current_player: bool = false
 
 var has_lost: bool = false
 
+signal turn_started(player: Player)
 signal turn_ended(player: Player)
 signal lost(player: Player)
 signal won(player: Player)
@@ -104,11 +105,11 @@ func get_legal_caravan_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]:
 
 	return legal_slots
 
-## Abstract method. This is where bot players would do their thing.
+## "Abstract" method. This is where bot players would do their thing.
 ## Human players would likely just write "pass" here (or start a timeout).
 ## But it assert(false), just so we don't get stuck if we forget to override it.
 func start_turn() -> void:
-	assert(false)
+	self.turn_started.emit(self)
 
 ## Called by the various objects in the game
 func end_turn() -> void:

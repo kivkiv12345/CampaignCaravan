@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cavhv6egbwb2s"]
+
+[ext_resource type="Script" path="res://Scenes/Caravan/DiscardCaravanButton.gd" id="1_dqwn3"]
+
+[node name="DiscardCaravanPanel" type="PanelContainer" groups=["CaravanDiscardButtons"]]
+anchors_preset = -1
+anchor_right = 0.073
+anchor_bottom = 0.048
+offset_right = -0.0960083
+offset_bottom = -1.104
+script = ExtResource("1_dqwn3")
+
+[node name="DiscardCaravanButton" type="Button" parent="."]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Discard"
+
+[connection signal="pressed" from="DiscardCaravanButton" to="." method="_on_discard_caravan_button_pressed"]

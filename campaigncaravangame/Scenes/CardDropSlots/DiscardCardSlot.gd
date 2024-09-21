@@ -8,7 +8,6 @@ func _animate_card_removal(hand_card: CardHandSlot) -> void:
 	# Store the original z-index before moving the card,
 	#	so we can correctly render cards in the middle of caravans when animating their removal.
 	var original_z_index = hand_card.get_z_index()
-	var original_global_position = hand_card.global_position
 	
 	hand_card.hand.find_child("CardsToRemove", false).add_child(hand_card)
 	

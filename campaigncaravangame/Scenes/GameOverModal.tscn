@@ -4,6 +4,11 @@
 
 [node name="GameOverModal" type="PanelContainer"]
 custom_minimum_size = Vector2(300, 200)
+anchors_preset = -1
+anchor_right = 0.26
+anchor_bottom = 0.309
+offset_right = -299.52
+offset_bottom = -200.232
 script = ExtResource("1_7t4d0")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

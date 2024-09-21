@@ -42,6 +42,7 @@ NumericCardSlots=""
 CardSlots=""
 Caravans=""
 OpenCardSlots=""
+CaravanDiscardButtons=""
 
 [gui]
 

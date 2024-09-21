@@ -153,6 +153,7 @@ func perform_turn() -> void:
 
 
 func start_turn() -> void:
+	super()
 	if self.min_delay or self.max_delay:
 		CaravanUtils.delay(self.perform_turn, self.rng.randf_range(self.min_delay, self.max_delay), self)
 	else:

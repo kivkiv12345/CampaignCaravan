@@ -33,6 +33,11 @@ func _init(_source: CardHandSlot, _card: Card, render_offset: Vector2 = Vector2.
 
 ## Source: https://dev.to/pdeveloper/godot-4x-drag-and-drop-5g13
 func _on_tree_exiting()->void:
+	
+	for discard_button in self.get_tree().get_nodes_in_group("CaravanDiscardButtons"):
+		assert(discard_button is DiscardCaravanButton)
+		discard_button.update_visibility()
+	
 	for slot in self.get_tree().get_nodes_in_group("OpenCardSlots"):
 		assert(slot is CardSlot)
 		slot.visible = false
@@ -53,5 +58,10 @@ func return_to_original_position() -> bool:
 
 
 func _on_tree_entered() -> void:
+	
+	for discard_button in self.get_tree().get_nodes_in_group("CaravanDiscardButtons"):
+		assert(discard_button is DiscardCaravanButton)
+		discard_button.update_visibility()
+	
 	for slot in self.source.hand.player.get_legal_slots(self.source):
 		slot.visible = true

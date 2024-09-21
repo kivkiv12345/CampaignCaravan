@@ -25,6 +25,7 @@ func _ready() -> void:
 		self.starting_player = self.players[0]  # Default starting player
 	assert(self.starting_player in self.players)
 	self.starting_player.is_current_player = true
+	self.starting_player.start_turn()
 
 const SoldStatus = Caravan.SoldStatus
 

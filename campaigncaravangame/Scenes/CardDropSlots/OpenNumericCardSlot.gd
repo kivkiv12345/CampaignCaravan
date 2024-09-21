@@ -23,7 +23,7 @@ func _drop_data(_pos: Vector2, data: Variant):
 	assert(data is DraggedCard)
 	
 	data.destination = self
-	
+
 	self.caravan.try_play_number_card(data.source, false)
 
 
