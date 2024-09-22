@@ -16,6 +16,7 @@ class_name GameRules
 
 @export var hand_size: int = 5  # Number of cards that may be kept in the hand during play
 @export var can_discard_caravans: bool = true  # Whether caravans can be discard (when overburdened and such)
+@export var require_all_caravans: bool = true  # Require a player must sell all their caravans to win
 
 const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the future?
 

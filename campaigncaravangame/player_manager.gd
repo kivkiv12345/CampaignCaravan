@@ -195,11 +195,17 @@ func check_for_winner() -> Player:
 		
 	var winning_player: Player = _get_unique_max_key(num_caravans_won)
 	
+	if winning_player.game_rules.require_all_caravans:
+		if num_caravans_won[winning_player] < winning_player.caravans.size():
+			# This player might have won by traditional rules,
+			#	but their game rules require that they sell all their caravans.
+			return null
+	
 	if winning_player == null:
 		# 2 or more players have sold an equal number of caravans.
 		#	This should not be possible with the default configuration of 2 players and 3 caravans.
 		#	But maybe, in the future, we allow some situation where this can occur. 
-		return null  
+		return null
 	
 	return winning_player
 
@@ -274,6 +280,8 @@ func restart() -> void:
 	if self.restore_hook:
 		self.restore_hook.call(caravan_game)
 		
+	# TODO Kevin: Iterate through caravans of the last game, and animate their removal in this.
+		
 	var self_index: int = self.get_index()
 
 	# Step 4: Set the modified scene as the new current scene
@@ -286,6 +294,8 @@ func restart() -> void:
 
 
 func start() -> void:
+
+	#print_orphan_nodes()
 
 	# No need to advance turn, we are waiting for the player.
 	# TODO Kevin: This is probably a bit spaghetti

@@ -15,6 +15,12 @@ var custom_deck_optionbutton: OptionButton = null
 func _ready() -> void:
 	if OS.get_name() == "Web":
 		%CustomizeDeckButton.visible = false
+		
+	self.custom_deck_optionbutton = %BaseCustomDeckOptionButton.duplicate()
+	
+	%BaseCustomDeckOptionButton.visible = false
+	self.custom_deck_optionbutton.visible = true
+	%CustomDeckOptionHBoxContainer.add_child(self.custom_deck_optionbutton)
 
 
 func to_game_rules() -> GameRules:
@@ -43,6 +49,8 @@ func to_game_rules() -> GameRules:
 		game_rules.hand_size = int(%HandSizeLineEdit.text)
 	
 	game_rules.can_discard_caravans = %CanDiscardCaravansButton.is_pressed()
+	
+	game_rules.require_all_caravans = %RequireAllCaravansSoldButton.is_pressed()
 
 	if %DeckMinCardsLineEdit.text != "":
 		game_rules.deck_min_size = int(%DeckMinCardsLineEdit.text)
@@ -88,17 +96,13 @@ func from_game_rules(game_rules: GameRules) -> void:
 	%MaxCardsLineEdit.text = String.num_int64(game_rules.caravan_max_cards)
 
 	%QueenChangeSuitButton.button_pressed = game_rules.queen_changes_suit
-	# %QueenChangeSuitButton.pressed.emit()
 	%QueenChangeSuitButton._update_checkbox_icon()
 	%QueenChangeDirectionButton.button_pressed = game_rules.queen_changes_direction
-	# %QueenChangeDirectionButton.pressed.emit()
 	%QueenChangeDirectionButton._update_checkbox_icon()
 
 	%FaceCardFirstRoundButton.button_pressed = game_rules.number_card_allow_faces_first_round
-	# %FaceCardFirstRoundButton.pressed.emit()
 	%FaceCardFirstRoundButton._update_checkbox_icon()
 	%FaceMatchSuitButton.button_pressed = game_rules.number_card_require_face_match_suit
-	# %FaceMatchSuitButton.pressed.emit()
 	%FaceMatchSuitButton._update_checkbox_icon()
 	
 	%MaxFacesLineEdit.text = String.num_int64(game_rules.number_card_max_faces)
@@ -106,16 +110,16 @@ func from_game_rules(game_rules: GameRules) -> void:
 	%HandSizeLineEdit.text = String.num_int64(game_rules.hand_size)
 	
 	%CanDiscardCaravansButton.button_pressed = game_rules.can_discard_caravans
-	# %CanDiscardCaravansButton.pressed.emit()
 	%CanDiscardCaravansButton._update_checkbox_icon()
+	
+	%RequireAllCaravansSoldButton.button_pressed = game_rules.require_all_caravans
+	%RequireAllCaravansSoldButton._update_checkbox_icon()
 
 	%DeckMinCardsLineEdit.text = String.num_int64(game_rules.deck_min_size)
 	%DeckMaxCardsLineEdit.text = String.num_int64(game_rules.deck_max_size)
 	%ShuffleButton.button_pressed = game_rules.deck_shuffle
-	# %ShuffleButton.pressed.emit()
 	%ShuffleButton._update_checkbox_icon()
 	%UniqueCardsButton.button_pressed = game_rules.deck_require_unique_cards
-	# %UniqueCardsButton.pressed.emit()
 	%UniqueCardsButton._update_checkbox_icon()
 
 
@@ -156,7 +160,7 @@ func _on_customize_deck_button_pressed() -> void:
 	var custom_deck_nodes: Array[Node] = [
 		%DeckConformsUniqueCardsHBoxContainer,
 		%CustomDeckOptionHBoxContainer,
-		%ManageDecksSpacer,
+		#%ManageDecksSpacer,
 		%ManageDecksHBoxContainer,
 		%NumberOfCardsHBoxContainer,
 	]

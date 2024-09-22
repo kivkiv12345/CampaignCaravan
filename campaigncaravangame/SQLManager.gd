@@ -77,6 +77,7 @@ func ensure_database() -> void:
 
 		# 	"hand_size": {"data_type":"int", "not_null": true, "default": 6},
 		# 	"can_discard_caravans": {"data_type":"int", "not_null": true, "default": 1},
+		# 	"require_all_caravans": {"data_type":"int", "not_null": true, "default": 1},
 
 		# 	"deck_min_size": {"data_type":"int", "not_null": true, "default": 30},
 		# 	"deck_max_size": {"data_type":"int", "not_null": true, "default": 108},

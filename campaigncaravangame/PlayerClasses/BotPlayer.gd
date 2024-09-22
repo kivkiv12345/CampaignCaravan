@@ -62,10 +62,18 @@ func playing_card_loses_game(card_slot: CaravanCardSlot, hand_card: CardHandSlot
 			break
 	assert(unsold_idx != -1)
 
-	# If our caravan, corresponding to the unsold opponent one, is sold, then we should have lost now.
+	
+	# This is our unsold caravan, which may lose us the game if we sell it.
 	var danger_caravan: Caravan = self.caravans[unsold_idx]
 
-	assert(self.game_manager.get_caravan_sold_status(danger_caravan) != SoldStatus.SOLD)
+
+	# If our caravan, corresponding to the unsold opponent one, is sold, then we should have lost now.
+	if self.game_manager.get_caravan_sold_status(danger_caravan) != SoldStatus.SOLD:
+		# Unless the opponent is required to sell all their caravans.
+		#	In which case we just assume it's okay to play this card.
+		#	This custom rule is a bit of an edge case anyway, so it's probably fine... probably.
+		assert(opponent_player.game_rules.require_all_caravans)
+		return false
 
 
 	# TODO Kevin: It would be nice to have a method telling us what the value of a caravan will be, after playing a card.
