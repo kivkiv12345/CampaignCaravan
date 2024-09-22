@@ -254,6 +254,10 @@ func can_discard_caravan() -> bool:
 	# And that's a little harsh.
 	if $PlayedCards.get_child_count() == 0:
 		return false
+	
+	# NOTE: This works, but it probably doesn't make much sense, if we still allow playing cards.
+	#if self.player.game_manager.game_over_man:
+		#return false
 
 	return true
 
