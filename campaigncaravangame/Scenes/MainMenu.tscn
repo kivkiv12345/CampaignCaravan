@@ -26,7 +26,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MainMenuMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.457
@@ -40,31 +41,124 @@ offset_bottom = -0.0440063
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuMarginContainer"]
 layout_mode = 2
 
-[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Play" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Start a game with randomized decks and default game rules."
 text = "Play"
 
-[node name="Custom Game" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="CustomGame" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 tooltip_text = "Prepare a game with customized decks and game rules."
 text = "Custom Game"
 
-[node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="HowToPlay" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+tooltip_text = "View the rules of Caravan"
+text = "How to Play"
+
+[node name="Options" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
 layout_mode = 2
 tooltip_text = "Options for game volume and such. Not yet implemented, please come back later."
 disabled = true
 text = "Options"
 
-[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Exit"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Custom Game" to="." method="_on_custom_game_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[node name="HowToPlayOuterMarginContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="HowToPlayPanelContainer" type="PanelContainer" parent="HowToPlayOuterMarginContainer"]
+layout_mode = 2
+
+[node name="HowToPlayInnerMarginContainer" type="MarginContainer" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="RichTextLabel" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[center]Howdy Caravaneer, welcome to Caravan!
+
+First of all, this version provides a lot more feedback than the one in Fallout New Vegas.
+So don't be too afraid of just hitting \"Play\".
+
+If you would prefer, you can refer to the rules lifted from the kind folks over at the wiki:
+https://fallout.fandom.com/wiki/How_to_play_Caravan
+
+BUILDING A DECK
+Caravan decks are comprised of at least 30 cards from one or more traditional playing card sets. The deck may have any number of cards of any type that suits a player's strategy, although it cannot have duplicate cards from the same set. For example, a King of Spades from Set A and a King of Spades from the Set B deck is acceptable, but more than one King of Spades from Set A would be illegal.
+
+RULES
+Caravan is played with two players building three opposing piles (or \"caravans\") of numbered cards. The goal is to outbid your opponent's caravan with the highest value of numbered cards without being too light (under 21) or overburdened (over 26).
+
+The game begins with each player taking eight cards from their deck and placing either one numerical card or ace on each caravan. Players may not discard during this initial round.
+
+Once both players have started their three caravans, each player may do ONE of the following on their turn:
+1. Play one card and draw a new card from his or her deck to their hand.
+2. Discard one card from their hand and draw a new card from his or her deck.
+3. Disband one of their three caravans by removing all cards from that pile.
+
+Caravans have a direction, either ascending or descending numerically, and a suit. The suit is determined with the first card placed on a caravan, the direction by the second. All subsequent cards must continue the numerical direction or match the suit of the previous card. Cards of the same numerical value cannot be played in sequence, regardless of suit. Face cards can be attached to numeric cards in any caravan and affects them in various ways.
+
+CARD VALUES
+Joker: Played against ace, 2-10. Effects change based on whether it's an ace or a numbered card (see below). Multiple jokers may be played on the same card.
+
+Ace: Value of 1. Jokers played on aces remove all other non-face cards of the ace's suit from the table. E.g. a joker played on an Ace of Spades removes all spades (except face cards and that card, specifically) from the table.
+
+2-10: Listed value. Jokers played on these cards remove all other cards of this value from the table. E.g. a joker played on a 4 of Hearts removes all 4s (other than that card, specifically) from the table.
+
+Jack: Played against ace, 2-10. Removes that card, along with any face cards attached to it.
+
+Queen: Played against ace, 2-10. Reverses the current direction of the hand and changes the current suit of the hand. Multiple queens may be played on the same card.
+
+King: Played against ace, 2-10. Adds the value of that card again. E.g. a king played on a 9 adds 9 to that hand. Multiple kings may be played on the same card for multiplicative effects. E.g. 4+ king = 8. 4 + 2 kings = 16.
+
+WINNING
+A player's caravan is considered sold when the value of its cards is over 20 and under 27. The other player may still outbid by increasing the value of their opposing pile while staying within the 21-26 range. When each of the three competing caravans has sold, the game is over. In the event that one of the three caravan values are tied between players, the game continues until all three caravans have sold. The player with two or more sales wins the pot.
+"
+
+[node name="HowToPlayMarginContainer" type="MarginContainer" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_bottom = 15
+
+[node name="HowToPlayBackButton" type="Button" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/HowToPlayMarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "Back"
+
+[connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/CustomGame" to="." method="_on_custom_game_pressed"]
+[connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/HowToPlay" to="." method="_on_how_to_play_pressed"]
+[connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/HowToPlayMarginContainer/HowToPlayBackButton" to="." method="_on_how_to_play_back_button_pressed"]

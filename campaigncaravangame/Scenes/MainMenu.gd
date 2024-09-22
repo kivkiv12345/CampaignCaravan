@@ -15,22 +15,22 @@ func background_restore_hook(game_manager: GameManager):
 
 	for player in game_manager.find_child("Players", false).get_children():
 		assert(player is BotPlayer)
-		player.min_delay = 1
-		player.max_delay = 2
+		player.min_delay = 1#0.02
+		player.max_delay = 2#0.04
 
 	human_replacement.init()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
-	$"MarginContainer/VBoxContainer/Play".grab_focus()
+	%"Play".grab_focus()
 
 	background_restore_hook($TableTop)
 
 	CaravanUtils.delay($TableTop.start, 0.5, $TableTop)
 
 	if OS.get_name() == "Web":
-		$MarginContainer/VBoxContainer/Exit.hide()
+		%Exit.hide()
 
 
 func _on_play_pressed() -> void:
@@ -67,3 +67,17 @@ func _on_exit_pressed() -> void:
 
 func _on_custom_game_pressed() -> void:
 	self.get_tree().change_scene_to_file("res://Scenes/PlaySetup.tscn")
+
+
+func _on_how_to_play_back_button_pressed() -> void:
+	%HowToPlayOuterMarginContainer.hide()
+	%MainMenuMarginContainer.show()
+
+
+func _on_how_to_play_pressed() -> void:
+	%MainMenuMarginContainer.hide()
+	
+	if not %HowToPlayOuterMarginContainer.visible:
+		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_messagewindow.wav"), 0, 0, randf_range(0.98, 1.05))
+	
+	%HowToPlayOuterMarginContainer.show()

@@ -14,6 +14,7 @@ script = ExtResource("1_dqwn3")
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+tooltip_text = "Discard all cards played on this caravan, and end your turn."
 text = "Discard"
 
 [connection signal="pressed" from="DiscardCaravanButton" to="." method="_on_discard_caravan_button_pressed"]
