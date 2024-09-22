@@ -15,8 +15,6 @@ var custom_deck_optionbutton: OptionButton = null
 func _ready() -> void:
 	if OS.get_name() == "Web":
 		%CustomizeDeckButton.visible = false
-	else:
-		self.set_custom_deck_options(SqlManager.query_custom_decks())
 
 
 func to_game_rules() -> GameRules:
@@ -127,8 +125,8 @@ func from_game_rules(game_rules: GameRules) -> void:
 		if self.custom_deck_optionbutton.get_item_text(idx) == game_rules.custom_deck_name:
 			self.custom_deck_optionbutton.select(idx)
 			break
-	
-	
+	self.update_custom_deck_stats()
+
 
 ## The signal call order is important here,
 ##	this must be called after the LineEdit has been sanitized.
@@ -140,18 +138,84 @@ func _on_button_pressed() -> void:
 	self.gamerules_changed.emit(self.to_game_rules())
 
 
+var customize_first_click: bool = true
 func _on_customize_deck_button_pressed() -> void:
+	
+	# No need to re-query every time customize is clicked
+	if customize_first_click:
+		self.set_custom_deck_options(SqlManager.query_custom_decks())
+		self.update_custom_deck_stats()
+		self.customize_first_click = false
+	
+	var seeded_deck_nodes: Array[Node] = [
+		%DeckMinCardsHBoxContainer,
+		%DeckMaxCardsHBoxContainer,
+		%DeckSeedCardsHBoxContainer,
+	]
+	
+	var custom_deck_nodes: Array[Node] = [
+		%DeckConformsUniqueCardsHBoxContainer,
+		%CustomDeckOptionHBoxContainer,
+		%ManageDecksSpacer,
+		%ManageDecksHBoxContainer,
+		%NumberOfCardsHBoxContainer,
+	]
 
 	if %CustomizeDeckButton.is_pressed():
-		%SeededDeckOptionsHBoxContainer.hide()
-		%CustomDeckOptionsHBoxContainer.show()
+		for node in seeded_deck_nodes:
+			node.hide()
+		for node in custom_deck_nodes:
+			node.show()
+		#%SeededDeckOptionsHBoxContainer.hide()
+		#%CustomDeckOptionsHBoxContainer.show()
 	else:
-		%SeededDeckOptionsHBoxContainer.show()
-		%CustomDeckOptionsHBoxContainer.hide()
+		#%SeededDeckOptionsHBoxContainer.show()
+		#%CustomDeckOptionsHBoxContainer.hide()
+		for node in custom_deck_nodes:
+			node.hide()
+		for node in seeded_deck_nodes:
+			node.show()
+
+
+func update_custom_deck_stats() -> void:
+	
+	var selected_id: int = self.custom_deck_optionbutton.get_selected_id()
+	if selected_id <= 1:
+		%DeckConformsUniqueCardsButton.button_pressed = true
+		%DeckConformsUniqueCardsButton._update_checkbox_icon()
+		return  # No option selected
+
+	var custom_deck_name: String = self.custom_deck_optionbutton.get_item_text(self.custom_deck_optionbutton.get_item_index(selected_id))
+	var custom_deck: Array[DeckCardWithCounter] = SqlManager.query_deck_cards(custom_deck_name)
+	
+	
+	var num_cards_total: int = 0
+	for deck_cards in custom_deck:
+		assert(deck_cards is DeckCardWithCounter)
+		
+		num_cards_total += deck_cards.get_card_count()
+	
+	%NumberOfCardsValueLabel.text = String.num_int64(num_cards_total)
+	
+	
+	for cards in custom_deck:
+		if cards.get_card_count() > 2:
+			%DeckConformsUniqueCardsButton.button_pressed = false
+			%DeckConformsUniqueCardsButton._update_checkbox_icon()
+			return  # Too many of this card
+
+	%DeckConformsUniqueCardsButton.button_pressed = true
+	%DeckConformsUniqueCardsButton._update_checkbox_icon()
 
 
 func _on_custom_deck_item_selected(_index: int) -> void:
 	self.gamerules_changed.emit(self.to_game_rules())
+
+	assert( %CustomizeDeckButton.is_pressed())
+	assert(%DeckConformsUniqueCardsHBoxContainer.visible == true)
+	assert(%NumberOfCardsValueLabel.visible == true)
+
+	self.update_custom_deck_stats()
 
 
 func _on_manage_decks_button_pressed() -> void:

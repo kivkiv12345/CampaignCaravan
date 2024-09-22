@@ -288,6 +288,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="DeckMinCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Minimum starting number of cards allowed in the deck"
 
@@ -302,6 +303,7 @@ tooltip_text = "Minimum starting number of cards allowed in the deck"
 text = "30"
 
 [node name="DeckMaxCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum starting number of cards allowed in the deck"
 
@@ -314,6 +316,82 @@ unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum starting number of cards allowed in the deck"
 text = "108"
+
+[node name="CustomDeckIgnoreHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+tooltip_text = "Minimum starting number of cards allowed in the deck"
+
+[node name="IgnoreLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer"]
+layout_mode = 2
+text = "Min Cards "
+
+[node name="IgnoreLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer" instance=ExtResource("1_wh0lf")]
+layout_mode = 2
+tooltip_text = "Minimum starting number of cards allowed in the deck"
+text = "30"
+
+[node name="DeckConformsUniqueCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
+
+[node name="DeckConformsUniqueCardsButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "The chosen (caravan) deck consists only of cards found in 2 normal card decks.
+i.e, it is not filled with only: 10's, 6's and kings "
+theme_type_variation = &"ButtonCheckboxMCM"
+disabled = true
+toggle_mode = true
+button_pressed = true
+text = "Consists of Unique Cards"
+icon = ExtResource("4_bnw7l")
+alignment = 0
+icon_alignment = 2
+script = ExtResource("3_2cbb5")
+
+[node name="NumberOfCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="NumberOfCardsNameLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/NumberOfCardsHBoxContainer"]
+layout_mode = 2
+tooltip_text = "How many cards are in the selected deck"
+mouse_filter = 1
+text = "Number of Cards:"
+
+[node name="NumberOfCardsValueLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/NumberOfCardsHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+horizontal_alignment = 2
+
+[node name="CustomDeckOptionHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
+
+[node name="HandSizeLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
+layout_mode = 2
+text = "Custom Deck"
+
+[node name="BaseCustomDeckOptionButton" type="OptionButton" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+selected = 0
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "None"
+popup/item_0/disabled = true
+popup/item_1/id = 1
+popup/item_1/separator = true
 
 [node name="ShuffleHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -333,11 +411,13 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
 
-[node name="UniqueCardsHBoxContainer2" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+[node name="UniqueCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
 
-[node name="UniqueCardsButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/UniqueCardsHBoxContainer2"]
+[node name="UniqueCardsButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/UniqueCardsHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -352,124 +432,44 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
 
-[node name="DeckSeedCardsHBoxContainer2" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+[node name="DeckSeedCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Seed for randomized deck, leave blank (or 0) for random"
 
-[node name="DeckSeedLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2"]
+[node name="DeckSeedLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer"]
 layout_mode = 2
 text = "Deck Seed "
 
-[node name="DeckSeedLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2" instance=ExtResource("1_wh0lf")]
+[node name="DeckSeedLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer" instance=ExtResource("1_wh0lf")]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Seed for randomized deck, leave blank (or 0) for random"
 
-[node name="Control" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer"]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-
-[node name="CustomDeckOptionsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer"]
+[node name="ManageDecksSpacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="CustomDeckIgnoreHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-tooltip_text = "Minimum starting number of cards allowed in the deck"
-
-[node name="IgnoreLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer"]
-layout_mode = 2
-text = "Min Cards "
-
-[node name="IgnoreLineEdit" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer" instance=ExtResource("1_wh0lf")]
-layout_mode = 2
-tooltip_text = "Minimum starting number of cards allowed in the deck"
-text = "30"
-
-[node name="ShuffleHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
-layout_mode = 2
-tooltip_text = "Shuffle deck before starting game"
-
-[node name="CustomDeckShuffleButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/ShuffleHBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "Shuffle deck before starting game"
-theme_type_variation = &"ButtonCheckboxMCM"
-toggle_mode = true
-button_pressed = true
-text = "Shuffle"
-icon = ExtResource("4_bnw7l")
-alignment = 0
-icon_alignment = 2
-script = ExtResource("3_2cbb5")
-
-[node name="DeckConformsUniqueCardsHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
-layout_mode = 2
-tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
-
-[node name="DeckConformsUniqueCardsButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-tooltip_text = "The chosen (caravan) deck consists only of cards found in 2 normal card decks.
-i.e, it is not filled with only: 10's, 6's and kings "
-theme_type_variation = &"ButtonCheckboxMCM"
-disabled = true
-toggle_mode = true
-button_pressed = true
-text = "Consists of Unique Cards"
-icon = ExtResource("4_bnw7l")
-alignment = 0
-icon_alignment = 2
-script = ExtResource("3_2cbb5")
-
-[node name="CustomDeckOptionHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
-
-[node name="HandSizeLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
-layout_mode = 2
-text = "Custom Deck"
-
-[node name="BaseCustomDeckOptionButton" type="OptionButton" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 3
-selected = 0
-allow_reselect = true
-item_count = 2
-popup/item_0/text = "None"
-popup/item_0/disabled = true
-popup/item_1/id = 1
-popup/item_1/separator = true
-
-[node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="DeckConformsUniqueCardsHBoxContainer2" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer"]
+[node name="ManageDecksHBoxContainer" type="HBoxContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
 
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer2"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/ManageDecksHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ManageDecksButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer2/CenterContainer"]
+[node name="ManageDecksButton" type="Button" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/ManageDecksHBoxContainer/CenterContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
 tooltip_text = "Customize a deck to your liking"
 text = "Manage Decks"
 
-[node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer"]
+[node name="Control" type="Control" parent="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
@@ -491,11 +491,10 @@ size_flags_horizontal = 3
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/DeckMinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/DeckMaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer/IgnoreLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer/DeckConformsUniqueCardsButton" to="." method="_on_button_pressed"]
+[connection signal="item_selected" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer/BaseCustomDeckOptionButton" to="." method="_on_custom_deck_item_selected"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/UniqueCardsHBoxContainer2/UniqueCardsButton" to="." method="_on_button_pressed"]
-[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer2/DeckSeedLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckIgnoreHBoxContainer/IgnoreLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/ShuffleHBoxContainer/CustomDeckShuffleButton" to="." method="_on_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer/DeckConformsUniqueCardsButton" to="." method="_on_button_pressed"]
-[connection signal="item_selected" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer/BaseCustomDeckOptionButton" to="." method="_on_custom_deck_item_selected"]
-[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/CustomDeckOptionsHBoxContainer/VBoxContainer/DeckConformsUniqueCardsHBoxContainer2/CenterContainer/ManageDecksButton" to="." method="_on_manage_decks_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/UniqueCardsHBoxContainer/UniqueCardsButton" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckSeedCardsHBoxContainer/DeckSeedLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/ManageDecksHBoxContainer/CenterContainer/ManageDecksButton" to="." method="_on_manage_decks_button_pressed"]

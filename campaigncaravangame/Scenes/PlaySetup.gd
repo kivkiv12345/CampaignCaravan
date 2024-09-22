@@ -77,7 +77,9 @@ func _on_deck_customizer_back() -> void:
 	var custom_decks: Array[CustomDeckScene] = deck_customizer.get_custom_decks()
 	
 	%EnemySettings.set_custom_deck_options(custom_decks)
+	%EnemySettings.update_custom_deck_stats()
 	%OurSettings.set_custom_deck_options(custom_decks)
+	%OurSettings.update_custom_deck_stats()
 	
 	%DeckCustomizer.hide()
 	%PlayerSettingsVBoxContainer.show()
