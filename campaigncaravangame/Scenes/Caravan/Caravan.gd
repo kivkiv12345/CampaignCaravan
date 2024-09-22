@@ -232,7 +232,7 @@ func try_play_number_card(hand_card: CardHandSlot, animate: bool = true) -> bool
 func _discard_caravan() -> void:
 	
 	# Discarding a large caravan deserves a little "reward"
-	if $PlayedCards.get_child_count() > 4:
+	if $PlayedCards.get_child_count() >= 1:
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/casino/cardtable/sfx_cards_os_04.ogg"), 0, 0, randf_range(0.98, 1.05))
 	
 	var animation_delay: float = 0
