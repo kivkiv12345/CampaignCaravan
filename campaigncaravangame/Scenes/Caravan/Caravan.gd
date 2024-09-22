@@ -144,6 +144,10 @@ func _play_number_card(hand_card: CardHandSlot, animate: bool = true) -> void:
 		var tween: Tween = self.create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 		played_card.global_position = hand_card.global_position
 		tween.tween_property(played_card, "position", $OpenNumericCardSlot.position, 1)
+		# TODO Kevin: We can put a callback here,
+		#	which fixes the issue with cards being played on top of eachother,
+		#	But it makes the animation jittery, with the tween starting and stopping.
+		#tween.tween_callback(self._fix_card_spacing)
 	else:
 		played_card.position = $OpenNumericCardSlot.position
 

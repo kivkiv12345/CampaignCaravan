@@ -60,7 +60,17 @@ func playing_card_loses_game(card_slot: CaravanCardSlot, hand_card: CardHandSlot
 		if not i in opponent_sold_indexes:
 			unsold_idx = i
 			break
-	assert(unsold_idx != -1)
+	
+	
+	# Apparently the opponent has sold all of their caravans.
+	# 	This should be an assert(),
+	#	but we can probably let the rest of the game handle the consequences.
+	#	There's no good right/wrong answer here,
+	#	but maybe we can assume that we can outbid one the of sold opponent caravans.
+	#assert(unsold_idx != -1)
+	if unsold_idx == -1:
+		return false
+	
 
 	
 	# This is our unsold caravan, which may lose us the game if we sell it.
@@ -68,7 +78,7 @@ func playing_card_loses_game(card_slot: CaravanCardSlot, hand_card: CardHandSlot
 
 
 	# If our caravan, corresponding to the unsold opponent one, is sold, then we should have lost now.
-	if self.game_manager.get_caravan_sold_status(danger_caravan) != SoldStatus.SOLD:
+	if self.game_manager.get_caravan_sold_status(danger_caravan) == SoldStatus.SOLD:
 		# Unless the opponent is required to sell all their caravans.
 		#	In which case we just assume it's okay to play this card.
 		#	This custom rule is a bit of an edge case anyway, so it's probably fine... probably.
@@ -153,7 +163,6 @@ func perform_turn() -> void:
 				if hand_card.card.rank == Card.Rank.KING:
 					if (legal_slot.caravan.get_value() + (legal_slot.number_card.get_value())) <= self.game_rules.caravan_max_value:
 						# TODO Kevin: There is a bug here, for some reason kings are played anyway.
-						print("DDD")
 						continue  # Playing this king would not overburden the enemy caravan
 				# Make sure we don't accidentally 'fix' an enemy caravan
 				elif hand_card.card.rank == Card.Rank.JACK:
