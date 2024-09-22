@@ -1,6 +1,13 @@
 extends Control
 
 
+func _input(event: InputEvent) -> void:
+	
+	if event.is_action_pressed("pause"):
+		if %HowToPlayOuterMarginContainer.visible == true:
+			%HowToPlayBackButton.pressed.emit()
+
+
 func background_restore_hook(game_manager: GameManager):
 
 	game_manager.restore_hook = background_restore_hook
@@ -72,6 +79,9 @@ func _on_custom_game_pressed() -> void:
 func _on_how_to_play_back_button_pressed() -> void:
 	%HowToPlayOuterMarginContainer.hide()
 	%MainMenuMarginContainer.show()
+	# Probably not what the user want's to click again,
+	#	but it would've been the last thing in focus.
+	%HowToPlay.grab_focus()
 
 
 func _on_how_to_play_pressed() -> void:
@@ -81,6 +91,7 @@ func _on_how_to_play_pressed() -> void:
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_messagewindow.wav"), 0, 0, randf_range(0.98, 1.05))
 	
 	%HowToPlayOuterMarginContainer.show()
+	%HowToPlayBackButton.grab_focus()
 
 
 func _on_howtoplay_meta_clicked(meta: Variant) -> void:

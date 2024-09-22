@@ -16,7 +16,7 @@ func _input(event: InputEvent) -> void:
 	if self.game_manager.auto_restart:
 		return
 	
-	if event.is_action("pause"):
+	if event.is_action_pressed("pause"):
 		if self._end_game_player == null:
 			$VBoxContainer/MarginContainer/Label.text = "Game is still in progress"
 		self.make_visible_and_focus()

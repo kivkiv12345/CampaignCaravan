@@ -57,6 +57,7 @@ tooltip_text = "Prepare a game with customized decks and game rules."
 text = "Custom Game"
 
 [node name="HowToPlay" type="Button" parent="MainMenuMarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 tooltip_text = "View the rules of Caravan"
@@ -151,6 +152,7 @@ theme_override_constants/margin_top = 25
 theme_override_constants/margin_bottom = 15
 
 [node name="HowToPlayBackButton" type="Button" parent="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/HowToPlayMarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
