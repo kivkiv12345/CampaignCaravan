@@ -111,7 +111,7 @@ First of all, this version provides a lot more feedback than the one in Fallout 
 So don't be too afraid of just hitting \"Play\".
 
 If you would prefer, you can refer to these rules lifted from the kind folks over at the wiki:
-https://fallout.fandom.com/wiki/How_to_play_Caravan
+[url]https://fallout.fandom.com/wiki/How_to_play_Caravan[/url]
 
 BUILDING A DECK
 Caravan decks are comprised of at least 30 cards from one or more traditional playing card sets. The deck may have any number of cards of any type that suits a player's strategy, although it cannot have duplicate cards from the same set. For example, a King of Spades from Set A and a King of Spades from the Set B deck is acceptable, but more than one King of Spades from Set A would be illegal.
@@ -161,4 +161,5 @@ text = "Back"
 [connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/HowToPlay" to="." method="_on_how_to_play_pressed"]
 [connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="meta_clicked" from="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/Label" to="." method="_on_howtoplay_meta_clicked"]
 [connection signal="pressed" from="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/HowToPlayMarginContainer/HowToPlayBackButton" to="." method="_on_how_to_play_back_button_pressed"]

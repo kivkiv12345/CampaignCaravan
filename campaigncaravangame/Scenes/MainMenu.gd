@@ -81,3 +81,7 @@ func _on_how_to_play_pressed() -> void:
 		SoundManager.playback.play_stream(preload("res://FalloutNVUISounds/popup/ui_popup_messagewindow.wav"), 0, 0, randf_range(0.98, 1.05))
 	
 	%HowToPlayOuterMarginContainer.show()
+
+
+func _on_howtoplay_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta))
