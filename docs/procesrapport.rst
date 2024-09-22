@@ -1,10 +1,11 @@
 
 
-..
-    _:: Reading matetial for page index: https://stackoverflow.com/questions/44912601/restructuredtext-multilevel
 
 Læsevejledning
-------------------------
+----------------------------------------
+I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
+I tilfælde hvor læseren ønske følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
+
 
 Indledning
 ------------------------
@@ -43,7 +44,7 @@ Afgrænsning
 Estimeret Tidsplan
 ------------------------
 
-.. image:: Estimeret_Tidsplan.png 
+.. image:: Pictures/Estimeret_Tidsplan.png 
 
 Valg af teknologier
 ------------------------
@@ -257,7 +258,7 @@ og blot inkludere et link dertil i disse rapporter.
     Som hjemmel til det skræmmende omry skrives Unreal spil, som udgangspunkt, i C/C++.
     Men som alternativ hertil tilbyder Unreal deres grafiske programmeringsværktøj "Blueprints":
 
-    .. image:: Unreal_Blueprints.png
+    .. image:: Pictures/Unreal_Blueprints.png
 
     Kilde: https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprints-quick-start-guide?application_version=4.27
 
@@ -335,7 +336,7 @@ https://github.com/2shady4u/godot-sqlite
 
     Spillets database er på nuværende tidspunkt ret lille, med følgende 3 tabeller: "Cards", "Decks" og "DeckCards".
 
-    .. image:: ER_diagram.png
+    .. image:: Pictures/ER_diagram.png
 
     Tabellerne har følgene formål
 
@@ -362,7 +363,7 @@ Denne tabel har ikke været en prioritet med den nuværende tidsplan,
 da jeg stadig har planer om udvidelse og tilpasning af GameRules klassen.
 Følgende er et udkast af denne tabel (på baggrund af GameRules nuværende struktur):
 
-.. image:: ER_diagram_future.png
+.. image:: Pictures/ER_diagram_future.png
 
 
 Distribution og Hosting
@@ -436,6 +437,7 @@ Og herved er det nemmest hvis ikke man behøver arrangere en runde med et andet 
 
 Som forklaret i afgrænsningen, har det ikke været en prioritet at implementere flere typer modstandere.
 På tidsplanen ses denne beslutning som en forskydelse af startdatoen på de påvirkede opgaver (K6 specialt).
+I kravspecifikationen er de forskellige typer modstandere flettet til ét krav.
 
 Konklusion
 ------------------------

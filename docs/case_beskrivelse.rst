@@ -29,5 +29,5 @@ Er spillet alligevel uafgjort, fortsætter det indtil én spiller vinder.
 
 Problemformulering
 ^^^^^^^^^^^^^^^^^^
-Hvordan kan jeg bygge en udgave af kortspillet Caravan,
+Hvordan kan jeg bygge en digital udgave af kortspillet Caravan,
 som kan spilles uafhængigt af Fallout New Vegas?

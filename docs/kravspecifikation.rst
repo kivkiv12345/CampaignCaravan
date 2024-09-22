@@ -42,21 +42,19 @@ Kravspecifikation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. list-table::
-   :widths: 20 50 50 15 10 15
+   :widths: 20 50 50 15 15
    :header-rows: 1
 
    * - Krav ID - Kategori ID - Prioritet
      - Beskrivelse
      - Test kondition(er)
-     - PASS
-     - <->
-     - FAIL
+     - Opfyldt
+     - Ikke Opfyldt
 
    * - **K1** - KN1 - 1
      - Produktet/spillet respekterer de basale spilleregler for numeriske spillekort i Caravan
      - 1
      - **X**
-     -  
      -  
 
    * - **K2** - KN1 - 1
@@ -64,33 +62,28 @@ Kravspecifikation
      - 1
      - **X**
      -  
-     -  
 
    * - **K3** - KN1 - 1
      - Produktet/spillet respekterer spilleregler vedr. afskaffelse af kort
      - 1
-     - 
-     -  
      - **X**
+     - 
 
    * - **K4** - KN1 - 2
      - Produktet/spillet respekterer spilleregler vedr. afskaffelse af karavaner
      - 2
-     - 
+     - **X**
      -  
-     - **X** 
 
    * - **K5** - KN1 - 1
      - Produktet/spillet respekterer når spillere vinder/taber
      - 1
      - **X**
      -  
-     -  
 
    * - **K6** - KN3 - 2
      - Multiplayer; Mulighed for at spille imod andre menneskelige modstandere (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere)
      - 2
-     - 
      -  
      - **X**
 
@@ -99,12 +92,10 @@ Kravspecifikation
      - 2
      - **X**
      -  
-     -  
 
    * - **K8** - KN4 - 3
      - Spillet indeholder en guide/instruktioner som forklarer reglerne
      - 3
-     - 
      - **X**
      -  
 
@@ -113,13 +104,11 @@ Kravspecifikation
      - 3
      - **X**
      -  
-     -  
 
    * - **K10** - KN5 - 3
      - Produktet/spillet understøtter udvalgte tilpasninger af spilleregler
      - 3
      - **X**
-     -  
      -  
 
    * - **K11** - KN4 - 4
@@ -127,13 +116,11 @@ Kravspecifikation
      - 4
      - **X**
      -  
-     -  
 
    * - **K14** - KN4 - 3
      - Spillet distribueres på en let tilgængelig måde
      - 3
      - **X**
-     -  
      -  
 
 
@@ -143,15 +130,13 @@ Kravspecifikation
      - Produktet/spillet kan logge træk i spillet, til database og eller blot i spillet.
      - 5
      - 
-     -  
-     - x
+     - **x**
 
    * - **K13** - KN3 - 6
      - AI modstander (med ML). Sandsynligvis vha. integration med generativ AI model. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere). Denne modstandertype er nedprioriteret grundet kompleksitet.
      - 6
      - 
-     -  
-     - x
+     - **x**
 
 
   
