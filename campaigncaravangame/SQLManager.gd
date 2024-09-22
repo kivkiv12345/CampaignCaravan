@@ -57,6 +57,37 @@ func ensure_database() -> void:
 			"deck": {"data_type": "int", "foreign_key": "Decks.id", "not_null": true},
 			"card": {"data_type": "int", "foreign_key": "Cards.id", "not_null": true},
 		},
+		
+		# "GameRules": {
+		# 	"id": {"data_type":"int", "primary_key": true, "not_null": true, "auto_increment": true},
+			
+		# 	# Normal columns
+		# 	# TODO Kevin: We should consider some static/const default value variables on GameRule.
+		# 	#	It seems like that these should always be synced with the database.
+		# 	"caravan_max_value": {"data_type":"int", "not_null": true, "default": 26},
+		# 	"caravan_min_value": {"data_type":"int", "not_null": true, "default": 21},
+		# 	"caravan_max_cards": {"data_type":"int", "not_null": true, "default": 20},
+
+		# 	"queen_changes_suit": {"data_type":"int", "not_null": true, "default": 1},
+		# 	"queen_changes_direction": {"data_type":"int", "not_null": true, "default": 0},
+
+		# 	"number_card_allow_faces_first_round": {"data_type":"int", "not_null": true, "default": 1},
+		# 	"number_card_require_face_match_suit": {"data_type":"int", "not_null": true, "default": 0},
+		# 	"number_card_max_faces": {"data_type":"int", "not_null": true, "default": 6},
+
+		# 	"hand_size": {"data_type":"int", "not_null": true, "default": 6},
+		# 	"can_discard_caravans": {"data_type":"int", "not_null": true, "default": 1},
+
+		# 	"deck_min_size": {"data_type":"int", "not_null": true, "default": 30},
+		# 	"deck_max_size": {"data_type":"int", "not_null": true, "default": 108},
+		# 	"deck_shuffle": {"data_type":"int", "not_null": true, "default": 1},
+		# 	"deck_require_unique_cards": {"data_type":"int", "not_null": true, "default": 1},
+	
+		# 	"deck_seed": {"data_type":"int", "not_null": true, "default": 0},
+
+		# 	# Foreign Keys
+		# 	"deck": {"data_type": "int", "foreign_key": "Decks.id", "not_null": false},
+		# },
 	}
 	
 	for table_name in tables:

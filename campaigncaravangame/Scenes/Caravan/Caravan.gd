@@ -248,7 +248,10 @@ func _discard_caravan() -> void:
 func can_discard_caravan() -> bool:
 	if not self.player.is_current_player:
 		return false
-	
+
+	if not self.player.game_rules.can_discard_caravans:
+		return false
+
 	# It's not like it's illegal to discard an empty caravan.
 	# But if we return true here, the player will think they should end their turn.
 	# And that's a little harsh.

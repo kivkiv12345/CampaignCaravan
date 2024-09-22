@@ -15,6 +15,7 @@ class_name GameRules
 @export var number_card_max_faces: int = 6  # Maximum number of face cards applied to a number card.
 
 @export var hand_size: int = 5  # Number of cards that may be kept in the hand during play
+@export var can_discard_caravans: bool = true  # Whether caravans can be discard (when overburdened and such)
 
 const caravan_count: int = 3  # TODO Kevin: Maybe make this variable in the future?
 

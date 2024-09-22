@@ -100,6 +100,23 @@ layout_mode = 2
 tooltip_text = "Amount of cards kept in the hand (game starts with an additional card for each caravan)"
 text = "5"
 
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CanDiscardCaravansButton" type="Button" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Whether caravans can be discarded (when overburdened and such)"
+theme_type_variation = &"ButtonCheckboxMCM"
+toggle_mode = true
+button_pressed = true
+text = "Can Discard Carvans"
+icon = ExtResource("4_bnw7l")
+alignment = 0
+icon_alignment = 2
+script = ExtResource("3_2cbb5")
+
 [node name="Control" type="Control" parent="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
@@ -464,13 +481,14 @@ size_flags_horizontal = 3
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MinValueHBoxContainer/MinValueLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxCardsHBoxContainer/MaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HandSizeHBoxContainer/HandSizeLineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="pressed" from="HBoxContainer/CaravanVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/CanDiscardCaravansButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer/QueenChangeSuitButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2/QueenChangeDirectionButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer3/FaceCardFirstRoundButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer4/FaceMatchSuitButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer/VBoxContainer/MaxFacesHBoxContainer/MaxFacesLineEdit" to="." method="_on_line_edit_text_changed"]
-[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_customize_deck_button_pressed"]
+[connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/DeckMarginContainer/HBoxContainer/CustomizeDeckButton" to="." method="_on_button_pressed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckMinCardsHBoxContainer/DeckMinCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="text_changed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/DeckMaxCardsHBoxContainer/DeckMaxCardsLineEdit" to="." method="_on_line_edit_text_changed"]
 [connection signal="pressed" from="HBoxContainer/DeckVBoxContainer3/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/ShuffleHBoxContainer/ShuffleButton" to="." method="_on_button_pressed"]
