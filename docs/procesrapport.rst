@@ -1,5 +1,8 @@
 
 
+.. |module_image| image:: ../campaigncaravangame/CardTextures/joker_courier.jpeg
+    :width: 8cm
+
 
 Læsevejledning
 ----------------------------------------
@@ -36,9 +39,6 @@ Så polering har haft en hvis prioritet over omfang.
 Med hensyn til modstandere er det dog vigtigt for mig,
 at spillet er åben for udvidelse med flere typer i fremtiden.
 
-
-Afgrænsning
-------------------------
 
 
 Estimeret Tidsplan
@@ -122,28 +122,11 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
     og dermed sikre at lyttermetoden bliver kaldt.
 
 * Dependency Injection
-    Som nævnt tidligere er Godot dårlig til at sikre at dependency injection bliver udført korrekt,
-    men alligevel kan mønstret ofte bruges når noder kreeres dynamisk.
-    
-    I Godot kaldes klassekonstruktøren "_init()",
-    og såvidt som klassen instanstieres uafhængigt af en tilknyttet scene, kan "_init()" parameteriseres.
-    I tilfælde hvor noden skal parameteriseres i sammenhæng med en scene, er det nødvendigt at kalde en brugerdefineret initialiseringsmetode.
-    I dette projekt kan det ses ved Player klassen, hvor kortdækket tildeles efterfulgt klassens instantiering:
-
-    .. code-block::
-
-        func init() -> void:
-            $Deck.fill_deck(Deck.new(self.game_rules.deck_min_size, self.game_rules.deck_max_size, self.game_rules.deck_seed))
-            $Hand.fill_initial_hand()
-
-    .. code-block::
-
-        func _ready() -> void:
-
-            for player in players:
-                assert(player is Player)
-                player.init()
-                ...
+    Spillets mest markante brug af dependency injection, er formentlig med GameManager.restore_hook,
+    Denne funktionspointer kan tilpasses af brugeren af klassen, hvorefter funktionen kaldes når karavanespillet genstartes.
+    Denne funktionspointer bruges af hovedmenuen, som ønsker at tilpasse 2 CPU spillere, til at spille mod hinanden.
+    Derfor udfylder hovedmenuen denne funktion, og bruger den til at tildele en CPU spiller instants til den nederste spiller,
+    som ellers vil være styret af den menneskelige spiller.
 
 **Programmeringssprog supportereret af Godot**
 
@@ -259,6 +242,7 @@ og blot inkludere et link dertil i disse rapporter.
     Men som alternativ hertil tilbyder Unreal deres grafiske programmeringsværktøj "Blueprints":
 
     .. image:: Pictures/Unreal_Blueprints.png
+        :width: 75%
 
     Kilde: https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprints-quick-start-guide?application_version=4.27
 
@@ -404,7 +388,7 @@ kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes se
     Desværre stopper dette GitHub fra at fuldføre workflowet, så derfor sletter artifakterne.
     Dette problem løses enkeltvis ved brug af en kommando som forhindrer fejlkoden fra kompileringen:
 
-    .. code-block::
+    .. code-block:: sh
 
         godot [options...] --export-debug "HTML5" ../build/... || echo ""
 
@@ -439,8 +423,107 @@ Som forklaret i afgrænsningen, har det ikke været en prioritet at implementere
 På tidsplanen ses denne beslutning som en forskydelse af startdatoen på de påvirkede opgaver (K6 specialt).
 I kravspecifikationen er de forskellige typer modstandere flettet til ét krav.
 
+
+Test Metodik
+------------------------
+
+Spillet har primært været testet med integrationstest, hvor 2 CPU spillere sammensættes som modstandere.
+Hermed har de haft mulighed for at kalde det fulde sæt af spillekort API(er), ligeledes som en menneskelig spiller.
+Spillets kildekode gør stor brug af både `Defensive programming <https://en.wikipedia.org/wiki/Defensive_programming>`_ og `Offensive programming <https://en.wikipedia.org/wiki/Offensive_programming>`_.
+
+På nuværende tidspunkt har spillets kildekode ~222 return "kald", og ~122 assert() kald.
+
+Mange af spillets markante APIer, gør brug af det følgende format:
+
+
+.. code-block:: GDScript
+
+    func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
+        
+        ...
+
+
+    func can_play_face_card(hand_card: CardHandSlot) -> bool:
+        
+        if (...):
+            return false
+
+        if (...):
+            return false
+
+        return true
+
+
+    func try_play_face_card(hand_card: CardHandSlot, animate: bool = true) -> bool:
+        if not self.can_play_face_card(hand_card):
+            return false
+            
+        self._play_face_card(hand_card, animate)
+        return true
+
+
+Et eksempel på en funktion som kombinerer både `Defensive programming <https://en.wikipedia.org/wiki/Defensive_programming>`_ og `Offensive programming <https://en.wikipedia.org/wiki/Offensive_programming>`_,
+kan ses i **func get_caravan_sold_status(caravan: Caravan) -> SoldStatus**.
+Denne metode starter med guard clauses til at tjekke om den givne karavane er over- eller underbyrdet.
+Hvis ikke; er det nødvendigt at konsultere det større spilstadie, for at se hvor vidt karavanen står lige men den over for sig.
+
+.. code-block:: GDScript
+
+    ## Check if the provided caravan is sold.
+    ## This entails checking if the caravan is:
+    ##	over/under-burdened, underbidding or tied with the opponent
+    ## It might initally seem that this method should exist on the Caravn class,
+    ##	but the Caravan is only loosly coupled to the larger game state.
+    ##	So it has no concept about opponent caravans.
+    ##	Which is needed to determine if a caravan has been outbid, or is tied.
+    func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
+
+        if caravan.get_value() < caravan.player.game_rules.caravan_min_value:
+            self.notify_opponent_caravans(caravan)
+            return SoldStatus.UNDERBURDENED
+        elif caravan.get_value() > caravan.player.game_rules.caravan_max_value:
+            self.notify_opponent_caravans(caravan)
+            return SoldStatus.OVERBURDENED
+
+        for player in self.players:
+            assert(player is Player)
+
+            if player == caravan.player:
+                continue  # No need to check if we are outbidding our own caravan
+
+            # TODO Kevin: Are we comfortable using the index to check for tied caravans.
+            var opponent_caravan: Caravan = player.caravans[caravan.player.caravans.find(caravan)]
+            if opponent_caravan.get_value() > caravan.player.game_rules.caravan_max_value:
+                continue  # The opponent caravan is overburdened (Using our rules)
+
+            if opponent_caravan.get_value() > caravan.get_value():
+                # Opponent caravan must be sold, because it is outbidding us, without being overburdened
+                assert(opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value, opponent_caravan.player.game_rules.caravan_max_value+1))
+                # TODO Kevin: Maybe this is a bit spaghetti,
+                #	but we need to tell the other caravan, that it is outbid now.
+                opponent_caravan.update_sold_status(SoldStatus.SOLD)
+                return SoldStatus.OUTBID
+            elif opponent_caravan.get_value() == caravan.get_value():
+                # TODO Kevin: This is just as spaghetti as the outbid situation.
+                opponent_caravan.update_sold_status(SoldStatus.TIED)
+                return SoldStatus.TIED
+            elif caravan.get_value() > opponent_caravan.get_value():
+                # Tell the opponent caravan that we just outbid it (Yes; this is also spaghetti)
+                opponent_caravan.update_sold_status(SoldStatus.OUTBID)
+
+        # Success!
+        return SoldStatus.SOLD
+
+
 Konklusion
 ------------------------
+
+Det er meget muligt a rekreere kortspillet Caravan i selvstændigt format.
+Med spilmoteren Godot kan spillet let laves cross-platform,
+hvorved det bliver væsentligt lettere tilgængeligt for potentielle spillere.
+Godot tilbyder flere måder hvor brugerdata kan lagres persistent,
+men ønskes brugen af en centraliseret relationel (SQL) database,
+skal der enten gøres brug af SQLite, eller vedligeholdelse af endnu en service.
 
 **Vejledning af Spilleregler i spillet**
 
@@ -524,3 +607,10 @@ Refleksioner
 
 Den endegyldige udgave af denne rapport findes i .rst på GitHub.
 Kevin inc. er ikke ansvarlig for malformeret tekst skabt af konverteringen til .pdf
+
+
+
+Bilag
+----------------------------------
+
+.. include:: logbog.rst

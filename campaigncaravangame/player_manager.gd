@@ -58,9 +58,11 @@ func get_joker_affected_cards(face_slot: OpenFaceCardSlot) -> Array[PlayedNumeri
 		assert(number_card is CaravanCardSlot)
 
 		if not number_card is PlayedNumericCardSlot:
+			# This is the open slot at the bottom of a caravan, which is not affected by jokers.
 			continue
 
 		if number_card == face_slot.number_card:
+			# A joker does not remove the exact card it's played on.
 			continue
 
 		if to_play_on_card.rank == Card.Rank.ACE:
@@ -102,7 +104,8 @@ func get_caravan_sold_status(caravan: Caravan) -> SoldStatus:
 
 		if opponent_caravan.get_value() > caravan.get_value():
 			# Opponent caravan must be sold, because it is outbidding us, without being overburdened
-			assert(opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value, opponent_caravan.player.game_rules.caravan_max_value+1))
+			assert(opponent_caravan.get_value() in range(opponent_caravan.player.game_rules.caravan_min_value,
+				opponent_caravan.player.game_rules.caravan_max_value+1))
 			# TODO Kevin: Maybe this is a bit spaghetti,
 			#	but we need to tell the other caravan, that it is outbid now.
 			opponent_caravan.update_sold_status(SoldStatus.SOLD)
