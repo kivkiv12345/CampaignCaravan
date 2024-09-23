@@ -50,7 +50,7 @@ def main():
         assert err_code == 0
 
         if not which('gen-sidoc') or not check_gen_sidoc_version('0.1.6'):
-            err_code: int = system("python3 -m pip install -U git+https://github.com/spaceinventor/libdoc.git")
+            err_code: int = system("python3 -m pip install -U git+https://github.com/kivkiv12345/libdoc.git")
             assert err_code == 0
 
 
