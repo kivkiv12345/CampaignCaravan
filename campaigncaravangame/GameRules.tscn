@@ -230,7 +230,7 @@ text = "Number Card, Max Faces"
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Maximum number of face cards, that can be played on a number card"
-text = "6"
+text = "3"
 
 [node name="Control" type="Control" parent="HBoxContainer/CardVBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)

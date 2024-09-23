@@ -73,7 +73,7 @@ func ensure_database() -> void:
 
 		# 	"number_card_allow_faces_first_round": {"data_type":"int", "not_null": true, "default": 1},
 		# 	"number_card_require_face_match_suit": {"data_type":"int", "not_null": true, "default": 0},
-		# 	"number_card_max_faces": {"data_type":"int", "not_null": true, "default": 6},
+		# 	"number_card_max_faces": {"data_type":"int", "not_null": true, "default": 3},
 
 		# 	"hand_size": {"data_type":"int", "not_null": true, "default": 6},
 		# 	"can_discard_caravans": {"data_type":"int", "not_null": true, "default": 1},

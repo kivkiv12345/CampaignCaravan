@@ -12,7 +12,7 @@ class_name GameManager
 
 var game_over_man: bool = false
 var restore_hook: Callable
-var turn_counter: int = 0
+var play_counter: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -312,7 +312,7 @@ func start() -> void:
 
 func advance_turn(old_player: Player) -> void:
 	
-	self.turn_counter += 1
+	self.play_counter += 1
 	
 	#print(" ")
 	#for player in self.players:
@@ -325,7 +325,7 @@ func advance_turn(old_player: Player) -> void:
 	
 	var winning_player: Player = self.check_for_winner()
 	if winning_player:
-		print("Game ended on turn: ", self.turn_counter)
+		print("Game ended on play: ", self.play_counter)
 		self.celebrate_winner(winning_player)
 
 		if self.auto_restart:
