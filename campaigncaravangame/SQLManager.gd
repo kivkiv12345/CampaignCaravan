@@ -25,7 +25,7 @@ func ensure_database() -> void:
 	self._db.path = "res://data_v1.db"
 
 	self._db.verbosity_level = SQLite.VerbosityLevel.NORMAL
-	self._db.foreign_keys = true
+	self._db.foreign_keys = true  # Must be set for godot-SQLite to handle foreign keys
 	self._db.open_db()  # .db file will be created here, if it doesn't exist.
 
 	

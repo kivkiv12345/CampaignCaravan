@@ -102,9 +102,10 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
 * Observer Pattern
     Godot's brug af Observer mønstret kaldes "Signals".
     Her kan en klasse/node definere en række signaler som den er i stand til at udsende.
-    Herefter kan "lyttere" forbinde metoder som skal køres når signalet udsendes.
+    Hvorefter "lyttere" kan forbinde metoder som skal køres når signalet udsendes.
     Signaler kan defineres med argumenter,
-    som herefter skal udfyldes ved udsendelse, hvorefter det kan bruges af lytteren.
+    som herefter skal udfyldes ved udsendelse,
+    og lytterfunktioner skal parameteriseres så de kan modtage disse argumenter.
     Hvilke argumenter et signal videregiver, afhænger meget af signalets formål.
     Men ét typisk argument er "self", hvilket tillader en lytter at forbinde til mange afsendere,
     og herefter bruge argumentet til at referere tilbage til kilden af signalet.
@@ -276,7 +277,15 @@ Til dette formål findes et par enkelte projekter,
 hvoraf det mest opdaterede kan findes her:
 https://github.com/2shady4u/godot-sqlite
 
+
 **Godot-SQLite**
+
+    *Bemærk venligst at dele af denne beskrivelse også forekommer i produktrapporten.*
+
+    .. include:: godot-sqlite_generic.rst
+
+    .. end of generic Godot-SQLite description.
+
 
     Repoet til godot-sqlite nævner at HTML5 er understøttet.
     Men en nærlæsning viser at det, indtil videre, kun er tilfældet med en ældre version af Godot.
@@ -297,48 +306,8 @@ https://github.com/2shady4u/godot-sqlite
     Som en midlertidig løsning, har jeg lavet en version af spillet uden mulighed for at tilpasse kortdæk.
     Denne version bruges derfor af HTML5 varianten af spillet.
 
-**Implementation i spillet**
 
-    Til hver af spillets forsøg på at forspørge data fra databasen kaldes funktionen SqlManager.ensure_database().
-    Første gang denne funktion kaldes, oprettes forbindelsen til databasen,
-    og herefter oprettes de manglende tabeller (og fyldes med data, hvis nødvendigt).
-    Dette har til formål at databasen ikke oprettes før brugeren nyder behov af den.
-    Derudover sikrer det også at databasen automatisk oprettes igen, i tilfælde hvor den slettes.
-
-    En SQLite database lagres som en enkelt .db fil,
-    og i tilfælde hvor den ikke allerede eksisterer, opretter godot-sqlite den for os.
-    På nuværende tidspunkt navngives denne fil "data_v1.db".
-    I tilfælde af at fremtidige versioner af spillet laver inkompatible ændringer til databasen, kan versionennummeret øges.
-    Hermed behøver vi ikke at lave destruktive ændringer på brugerens tidligere spilledata.
-    Hvilket tillader dem at nedgradere til ældre versioner af spillet, og fortsætte hvor de slap.
-
-    Her vil det også være muligt at programmere migrering af data mellem versioner.
-    Hvis "data_v4.db" ikke findes, på det tidspunkt hvor der forsøges at oprette forbindelse til den,
-    kan vi sikkert antage at denne version af databasen er tom.
-    Herefter kan vi søge baglens efter versionerede databasefiler (v3, v2, v1),
-    og rekursivt migrere den fundne version til den efterfølgende, indtil vi når den nuværende/ønskede version.
-
-    Spillets database er på nuværende tidspunkt ret lille, med følgende 3 tabeller: "Cards", "Decks" og "DeckCards".
-
-    .. image:: Pictures/ER_diagram.png
-
-    Tabellerne har følgene formål
-
-    - **"Cards" repræsenterer de mulige valg af spillekort, og fyldes ved første kald af SqlManager.ensure_database().**
-
-    - **"Decks" repræsenterer tilpassede kortdæk, gemt af brugeren. Denne tabel gemmer dog kun navnet.**
-
-    - **"DeckCards" er samlingstabellen, for mange-til-mange relation, mellem "Kort" og "Dæk".**
-        Hvert spillekort kan eksistere i flere kortdæk.
-        Og selvfølgelig skal et dæk af spillekort kunne have flere spillekort.
-        Samtidigt kan hvert kortdæk have flere instanser af samme spillekort.
-        Dette repræsenteres af kolonnen "count", som er valgt for det nære forhold til DeckCardWithCounter._num_cards.
-        Alternativt kunne mængden (af kort) repræsenteres af flere rækker af "DeckCards" (med samme kort og deck),
-        hvilket også ville forhindre potentiale tilfælde med inkonsekvent data hvor "count" kolonnen er 0.
-        Disse tilfælde håndteres dog pænt af spillet, og er derfor ikke et større problem.
-        Idealt set ville "DeckCards" benytte sig af en sammensat primær nøgle mellem kolonnerne "deck" og "card",
-        desværre specificerer godot-sqlite's dokumentation at tabeller kun må indeholde én primær nøgle.
-
+Produktetrapportens afsnit **database** forklarer hvordan disse teknologier er inkorporeret i spillet.
 
 Havde jeg haft omkring en uges ekstra tid,
 ville jeg også have prioriteret at lave en tabel (og tilsvarende bruger)
@@ -379,9 +348,9 @@ kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes se
     som indeholder metadata vedrørende (f.eks) komprimering af ressourcen.
 
     Desværre virker oprettelsen (og den lejlighedsvise tilrettelse) af disse metafiler kun pålidelig gennem den grafiske brugerflade til Godot.
-    Dette har været den primære udfordring GitHub workflowet.
+    Dette har været den primære udfordring ved GitHub workflowet.
 
-    Derudover har godot-sqlite også besværet GitHub workflowet,
+    Derudover har godot-sqlite også besværliggjort GitHub workflowet,
     da det viser sig at kompilering af spillet, med godot-sqlite inkluderet, resulterer i en segmentationsfejl.
     Dette sker ikke via brug af den grafiske brugerflade, og viste sig derfor først i GitHub workflowet.
     Heldigvis har det vist sig at segmentationsfejlen sker efter spillet er kompileret og binæren produceret.
@@ -439,7 +408,7 @@ Mange af spillets markante APIer, gør brug af det følgende format:
 .. code-block:: GDScript
 
     func _play_face_card(hand_card: CardHandSlot, animate: bool = true) -> void:
-        
+        assert(*.state_is_good)
         ...
 
 
@@ -460,6 +429,23 @@ Mange af spillets markante APIer, gør brug af det følgende format:
             
         self._play_face_card(hand_card, animate)
         return true
+
+
+
+Mange dele af spillet har behov for at teste hvor vidt det er muligt at kalde bestemte API(er),
+uden af faktisk kalde nævnte API.
+F.eks når spilleren løfter et kort med musen, her skal brugerfladen opdateres, og vise hvor kortet kan lægges.
+Her kan det pågældende script kalde (f.eks) **can_play_face_card()**.
+
+I samme sammenhæng håndterer CPU spillerne de utallige kombinationer
+af spilindstillinger ved at kalde (f.eks) **try_play_face_card()**.
+Som set i kodeeksemplet ovenfor, vil denne funktion returnere **false** når dette ikke er tilladt eller muligt.
+Dette informerer botten om at deres ønskede korttræk ikke er muligt,
+og at de skal forsøge deres nærmest ønskede korttræk i stedet.
+
+Når **can_play_face_card()** lykkes, forsætter eksekveringen til det interne API (f.eks) **_play_face_card()**.
+Dette API gør tungt brug af **assert()**, og lader sig ikke byrdes af pæn propagering af fejltilstande.
+Dette er som sagt **can_play_face_card()'s** arbejde.
 
 
 Et eksempel på en funktion som kombinerer både `Defensive programming <https://en.wikipedia.org/wiki/Defensive_programming>`_ og `Offensive programming <https://en.wikipedia.org/wiki/Offensive_programming>`_,
@@ -524,6 +510,8 @@ hvorved det bliver væsentligt lettere tilgængeligt for potentielle spillere.
 Godot tilbyder flere måder hvor brugerdata kan lagres persistent,
 men ønskes brugen af en centraliseret relationel (SQL) database,
 skal der enten gøres brug af SQLite, eller vedligeholdelse af endnu en service.
+
+.. TODO Kevin: Move the section below to somewhere where it's more fitting.
 
 **Vejledning af Spilleregler i spillet**
 
@@ -605,12 +593,14 @@ Refleksioner
 
 
 
-Den endegyldige udgave af denne rapport findes i .rst på GitHub.
-Kevin inc. er ikke ansvarlig for malformeret tekst skabt af konverteringen til .pdf
+Den oprindelige udgave af denne rapport findes i .rst på GitHub her: https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst.
 
 
 
 Bilag
 ----------------------------------
+
+Logbog
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. include:: logbog.rst
