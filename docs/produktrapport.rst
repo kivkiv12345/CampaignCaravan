@@ -4,12 +4,19 @@
     :width: 8cm
 
 
+.. TODO Kevin
+    .. |author_name| replace:: TODO
+
 Læsevejledning
 ----------------------------------------
 I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
-I tilfælde hvor læseren ønske følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
-Denne produktrapport er forsøgt vidt mulig uafhængig af dens tilsvarende `procesrapport <https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst>`_ (link til .rst format).
+I tilfælde hvor læseren ønsker følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
 
+Denne produktrapport er forsøgt vidt mulig uafhængig af dens tilsvarende `procesrapport <https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst>`_ (link til .rst format).
+I visse tilfælde vil dette betyde at tekster kan forekomme i begge rapporter, i disse tilfælde vil læseren gøres opmærksom på dette.
+
+
+.. _`Overbliksdiagram - Grænsefladenavigation`:
 
 Overbliksdiagram - Grænsefladenavigation
 ----------------------------------------
@@ -116,6 +123,17 @@ Hvilket forhindrer at spillere medbringer ene 10'ere, for eksempel).
 Teknisk produktdokumentation
 -----------------------------------
 
+Godot
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Spillets kodebase gør brug af et arvehierarki til at differentiere de forskellige kort pladser i spillet.
+Dette arvehierarki kombineres med Godot's "group" funktionalitet.
+Dette tillader at forekomsterne af de forskellige kort pladser kan forspørges og itereres.
+
+Arvehierarki ses på UML diagrammet nedenunder.
+
+.. image:: Pictures/UML_CardSlot.png
+    :width: 85%
 
 Database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -220,6 +238,7 @@ Overordnet set distribueres spillet i 2 udgaver:
 
 Bemærk at de downloadede udgaver nyder udvidet funktionalitet (i form af persistent lagring af tilpassede kortdæk).
 
+Denne brugervejledning følger navigationsstrukturen beskrevet i `Overbliksdiagram - Grænsefladenavigation`_.
 
 
 Anvendelse
@@ -341,7 +360,7 @@ Anvendelse
 
     - **"Main Menu"**: Som enkeltvis fører spilleren tilbage til `hovedmenuen`_.
 
-    - **"Quit"**: Denne knap lukker spillet. Bemærk dog at den er fjernet i browserudgaven, hvor det forventes at brugeren lukker browservinduet i stedet.
+    - **"Quit"**: Denne knap lukker spillet. Bemærk dog at denne er fjernet i browserudgaven, hvor det forventes at brugeren lukker browservinduet i stedet.
 
     .. image:: Pictures/GameInProgress.jpeg
         :width: 75%

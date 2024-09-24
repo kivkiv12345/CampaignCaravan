@@ -1,0 +1,120 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>232</x><y>32</y><w>168</w><h>152</h></coordinates><panel_attributes>Card
+--
+-suit: Suit
+-rank: Rank
+--
+#is_face_card(): bool
+#is_number_card(): bool
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>432</x><y>32</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;Abstract Class&gt;&gt;
+CardSlot
+--
+-card: Card
+--
+#set_card(new_card: Card): void
+#remove_card(): void
+--
+Responsibilities
+-- Resp1
+*-- Resp2*</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>224</y><w>168</w><h>168</h></coordinates><panel_attributes>CaravanCardSlot
+--
+-caravan: Caravan
+--
+#set_caravan(_caravan: Caravan): void
+/+_play_card(_hand_card: CardHandSlot,
+          _animate: bool = true): void/
+/+can_play_card(_hand_card:
+            CardHandSlot): bool/
+#try_play_card(hand_card: CardHandSlot,
+           animate: bool = true): bool
+--
+Responsibilities
+-- Used to query all caravans
+    card slots in the game</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>176</y><w>128</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;140;10</additional_attributes></element><element><id>Relation</id><coordinates><x>392</x><y>104</y><w>56</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>432</x><y>248</y><w>168</w><h>96</h></coordinates><panel_attributes>DiscardCardSlot
+--
+#_animate_card_removal(hand_card: CardHandSlot): void
+--
+Responsibilities
+-- UI element for discarding cards,
+   handles animation
+   from it's own location.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>512</x><y>176</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>32</x><y>464</y><w>168</w><h>88</h></coordinates><panel_attributes>FaceCardSlot
+--
+-number_card: PlayedNumericCardSlot
+--
+Responsibilities
+-- Every PlayedNumericCardSlot
+   maintans a "linked-list" of these.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>104</x><y>384</y><w>152</w><h>96</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;100;140;70;170;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>32</x><y>584</y><w>168</w><h>152</h></coordinates><panel_attributes>OpenFaceCardSlot
+--
+#can_play_card(_hand_card:
+            CardHandSlot): bool
+
+#try_play_card(hand_card: CardHandSlot,
+           animate: bool = true): bool
+--
+Responsibilities
+-- Open face card slot to the
+    side of a PlayedNumericCardSlot.
+-- This is where face
+    cards can be played.</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>104</x><y>544</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>424</x><y>432</y><w>168</w><h>152</h></coordinates><panel_attributes>OpenNumericCardSlot
+--
+#can_play_card(_hand_card:
+            CardHandSlot): bool
+#try_play_card(hand_card: CardHandSlot,
+           animate: bool = true): bool
+--
+Responsibilities
+-- Open slot at the
+    bottom of a Caravan,
+-- Instances of these can
+    be quered through the group</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>240</x><y>432</y><w>168</w><h>208</h></coordinates><panel_attributes>PlayedNumericCardSlot
+--
+#can_play_card(_hand_card:
+            CardHandSlot): bool
+
+#try_play_card(hand_card: CardHandSlot,
+           animate: bool = true): bool
+
+#get_value(): int
+
+#num_queens(): int
+
+#get_effective_suit(): Suit
+
+--
+Responsibilities
+-- Manages any face cards attatched
+-- Manages its OpenFaceCardSlot</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>384</y><w>128</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>312</x><y>384</y><w>32</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;20;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>32</x><y>280</y><w>168</w><h>152</h></coordinates><panel_attributes>&lt;&lt;enemuration&gt;&gt;
+Suit
+{Some Properties}
+--
+NONE = 0,
+CLOVER = 1,
+DIAMOND,
+HEARTS,
+SPADES,
+# Jokers don't have a suit, and we use this fact to uniquely idenfity either of them (for texturing purposes).
+JOKER0,
+JOKER1
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>176</y><w>136</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>150;10;50;50;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>32</x><y>32</y><w>168</w><h>232</h></coordinates><panel_attributes>&lt;&lt;enemuration&gt;&gt;
+Rank
+{Some Properties}
+--
+NONE = 0,
+ACE = 1,
+TWO,
+THREE, 
+FOUR, 
+FIVE, 
+SIX, 
+SEVEN, 
+EIGHT, 
+NINE, 
+TEN, 
+JACK, 
+QUEEN, 
+KING, 
+JOKER</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>104</y><w>56</w><h>80</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>50;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>632</y><w>64</w><h>40</h></coordinates><panel_attributes>lt=-
+
+</panel_attributes><additional_attributes>10;30;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>512</y><w>64</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element></diagram>

@@ -7,7 +7,12 @@
 Læsevejledning
 ----------------------------------------
 I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
-I tilfælde hvor læseren ønske følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
+I tilfælde hvor læseren ønsker følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
+
+Procesrapporten har til formål af beskrive Campaign Caravan's udviklingen,
+hvorimod produktrapporten har til formål at beskrive spillets nuværende tilstand.
+
+Visse dele af dene procesrapport, især teknisk dokumentation, vil også kunne findes i den tilhørende produktraport.
 
 
 Indledning
@@ -17,7 +22,17 @@ Denne procesrapport er skrevet i sammenhæng med svendeprøveprojektet på H6PD0
 Procesraporten dækker udvikling af min selvstændige udgave af kortspillet Caravan (fra videospillet Fallout New Vegas).
 Raporten inkluderer overvejelser vedrørende projektet teknologier og primære alternativer dertil.
 
-Visse dele af dene procesrapport, især teknisk dokumentation, vil også kunne findes i den tilhørende produktraport.
+Idéen om produktet opstod, da jeg opdagede at den eksisterende online udgave af kortspillet (på: http://caravan.meteor.com/) tilsyneladende er lukket.
+Personligt har det indtil denne rapport ikke lykkedes mig at finde et frontend værktøj/framework som jeg synes godt om og kan arbejde effektivt i.
+Dog man skulle tro, at dette ofte vil være et problem for en programmør,
+har det sjældent været tilfældet for mig, da jeg primært arbejder med embedded C kode. 
+
+Min tidligere erfaring med programmering af browserbaserede brugerflader,
+har efterladt mig søgen efter alternativer som lever op til mine præferencer.
+Tidligere på H5PD010124 stiftede jeg for første gang bekendtskab med spiludviklingsværktøjet Godot.
+Her blev jeg også introduceret for mulighederne om at lave brugerflader deri.
+Desværre nåede jeg ikke at tilfredsstille min nysgerrighed dengang.
+Derfor har det været mig en stor glæde, at svendeprøven har tilladt mig endnu et forsøg på at forbyde mig i værktøjet.
 
 
 Case Beskrivelse
@@ -322,8 +337,13 @@ Følgende er et udkast af denne tabel (på baggrund af GameRules nuværende stru
 Distribution og Hosting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Når det kommer til hosting, fortrækker jeg at gøre det "in house" (i mit teknikrum).
-Men kort tid inden projektets opstart hørte jeg for første gang om brugen af GitHub Pages til dette.
+.. NOTE: Rewritten
+    Når det kommer til hosting, fortrækker jeg at gøre det "in house" (i mit teknikrum).
+    Men kort tid inden projektets opstart hørte jeg for første gang om brugen af GitHub Pages til dette.
+
+Angående hosting foretrækker jeg typisk erfaringen som medfølger nærværen af "metallet".
+Derfor har jeg serveret tidligere projekter fra en computer/server i mit teknikrum.
+Men kort inden dette projekts opstart blev jeg for første gang gjort opmærksom på GitHub Pages. 
 
 GitHub Pages tillader hosting direkte fra et repository.
 Typisk/traditionelt fungerer dette ved at man vælger en branch,
@@ -509,19 +529,19 @@ Med spilmoteren Godot kan spillet let laves cross-platform,
 hvorved det bliver væsentligt lettere tilgængeligt for potentielle spillere.
 Godot tilbyder flere måder hvor brugerdata kan lagres persistent,
 men ønskes brugen af en centraliseret relationel (SQL) database,
-skal der enten gøres brug af SQLite, eller vedligeholdelse af endnu en service.
+skal der enten gøres brug af SQLite, eller vedligeholdelse af en databaseserver.
 
 .. TODO Kevin: Move the section below to somewhere where it's more fitting.
 
 **Vejledning af Spilleregler i spillet**
 
-    Caravan har et ry blandt Fallout New Vegas' spillere om a være meget forvirrende og kompliceret.
+    Caravan har et ry blandt Fallout New Vegas' spillere om a være ret forvirrende og kompliceret.
     I søgen om at gøre min udgave af kortspillet så forståligt som muligt,
     har jeg været meget interesseret i årsagen bag forvirringen.
 
     Derfor har jeg været specialt interesseret i førstehåndindtryk af begge udgaver af spillet.
-    Desværre har jeg ikke nået at observere førstehåndintryk af min udgave personligt,
-    men det lykkedes mig at finde en youtuber spille hendes første spil af udgaven i Fallout:
+    Desværre har jeg haft begrænset erfaring med observation af førstehåndintryk i min udgave af spillet,
+    men det lykkedes mig at finde en youtuber spille hendes første spil af den originale udgave:
 
     https://www.youtube.com/watch?v=yD_lWpDgcUQ&list=PLZIrkWszSEEM_ywEah_f8G4-oePaGweG1&t=1832s
 
@@ -566,10 +586,37 @@ skal der enten gøres brug af SQLite, eller vedligeholdelse af endnu en service.
         Hvorefter den animeres tilbage på plads uden det fjernede kort.
         Dette kan gøre det svært at se præcist hvilket kort som fjernes.
 
------------------------------------
 
-    Produktrapporten uddyber hvordan min udgave forsøger at gøre spillereglerne nemmere at forstå.
+    Med dette mangler i mente, har jeg forsøgt at udfylde, og eller afhjælpe, dem på følgende måder:
 
+    #.
+        På hovedmenuen forsøges spillerens opmærksomhed tiltrykkes knappen "Play".
+        Her kan de et spil, uden at skulle bekymre sig om at konstruere et dæk.
+    
+    #.
+        Herefter eftertragtes det at spillerens opmærksomhed falder på deres hånd (af kort).
+        Erfaring har vist at dette også er tilfældet, da disse kort er de eneste som vender opad.
+        Derudover viser erfaring også at spillere kan udregne at kortene kan trækkes med musen.
+
+    #.
+        Når spillere løfter deres kort, vil de se en fremhåndvisnings af dets mulige placeringer.
+
+    #.
+        Når karavanernes værdi øges tilstrækeksligt til at de sælges, vil farven på værdien ændres til grøn.
+
+    #.
+        Ligeledes når værdien bliver for høj, ændres den til rød.
+
+    #.
+        Når spilleren forsøger at spille et kort som vil øge værdien af en af deres egne karavaner,
+        vil fremhåndvisningen være rød.
+        Dette fortæller spilleren af det fremhåndsviste træk, sandsynligvis er en dårlig idé.
+
+    #.
+        Når en joker fremhåndsvises, vil de potentielt fjernede kort markeres gule.
+        Erfaring har vist at spillere kan forveksle jokere og knægte,
+        og derfor hjælper denne farvelægning med at differentiere dem.
+        Derudover bliver det også markant hurtigere at se hvordan en joker påvirker spillet.
 
 
 Refleksioner

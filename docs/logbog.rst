@@ -217,3 +217,10 @@
 **23/9-2024 (Mandag Uge #4)**
 
     Mere rapportskrivning, primært brugervejledning i produktrapporten.
+
+
+**24/9-2024 (Tirsdag Uge #4)**
+
+    Mere rapportskrivning, UML diagram over CardSlot arvehierarkiet.
+    Jeg er ved at være ret træt af at skrive rapporter.
+    Så det er begrænset hvor meget arbejde der bliver lagt i de sidste mangler.
