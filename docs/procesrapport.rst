@@ -4,6 +4,8 @@
     :width: 8cm
 
 
+.. include:: secrets.rst
+
 Læsevejledning
 ----------------------------------------
 I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
