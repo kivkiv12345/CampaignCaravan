@@ -7,13 +7,22 @@
 
 .. include:: secrets.rst
 
+.. |num_pages| replace:: 18
+
+.. |num_characters| replace:: ~27000 (.rst) - 40818 (.pdf)
+
+
 Læsevejledning
 ----------------------------------------
 I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
 I tilfælde hvor læseren ønsker følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
 
-Denne produktrapport er forsøgt vidt mulig uafhængig af dens tilsvarende `procesrapport <https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst>`_ (link til .rst format).
-I visse tilfælde vil dette betyde at tekster kan forekomme i begge rapporter, i disse tilfælde vil læseren gøres opmærksom på dette.
+Procesrapporten har til formål af beskrive Campaign Caravan's udvikling,
+hvorimod produktrapporten har til formål at beskrive spillets nuværende tilstand.
+
+Størstedelen af tekonologierne nævnt i denne produktrapport er ydereligere beskrevet i den tilsvarende `procesrapport <https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst>`_ (link til .rst format).
+For at forbedre læsbarheden vil enkelte tekster forekomme i begge rapporter, i disse tilfælde vil læseren gøres opmærksom på dette.
+
 
 
 .. _`Overbliksdiagram - Grænsefladenavigation`:
@@ -31,7 +40,7 @@ Kravspecifikation og Accepttest
 
 
 Kernen bag accepttesten er at spillet opfylder kravene stillet af kortspillets Karavanes spilleregler.
-Disse spilleregler ses nedenunder:
+Disse spilleregler ses nedenunder i afsnittet `Karavane Spilleregler`_:
 
 
 .. _`Karavane Spilleregler`:
@@ -139,7 +148,7 @@ Godot
 
 Spillets kodebase gør brug af et arvehierarki til at differentiere de forskellige kort pladser i spillet.
 Dette arvehierarki kombineres med Godot's "group" funktionalitet.
-Dette tillader at forekomsterne af de forskellige kort pladser kan forspørges og itereres.
+Kombinerer man disse, kan forekomsterne af kort pladserne forspørges og itereres.
 
 Arvehierarki ses på UML diagrammet nedenunder.
 
@@ -218,14 +227,15 @@ Spillet's brug af en SQlite database, sikrer at ingen personfølsom data lagres 
 Herudover lagrer spillet ingen personfølsom data.
 Havde der været gjort brug af en Database server,
 ville det være nødvendigt at oprette og vedligeholde forbindelsen hertil gennem en sikker krypteret protokol.
-(typisk HTTPS hvis databasen tilgås via et web-API)
+(typisk HTTPS, især hvis databasen tilgås via et web-API)
 Herudover ville det også være nødvendigt at afgrænse synligheden af databasen mellem brugere,
 således forskellige brugere ikke kan tilgå uhensigtmæssige/personfølsomme dele af hinandens data.
 
-En HTTPS sikret forbindelse benyttes til at tilgå/downloade de forskellige udgaver af spillet.
+Da spillet serveres fra GitHub (Pages),
+benyttes en HTTPS sikret forbindelse til at tilgå/downloade de forskellige udgaver af spillet.
 Dette sikrer at en mellemmand ikke kan servere en ondsindet modificering af spillet.
 Derudover er kildekoden tilgængelig,
-således at en tilpas teknisk kyndig spiller kan undersøge kildekoden for ondsindede hensigter og sikkerhedsbrud.
+således at en tilpas teknisk kyndig spiller kan undersøge den for ondsindede hensigter og sikkerhedsbrud.
 
 
 Testrapport
@@ -383,3 +393,9 @@ Service
 
 For at gøre det let at udrulle opdateringer, gør spillets repository brug af et `GitHub workflow <https://github.com/kivkiv12345/CampaignCaravan/blob/master/.github/workflows/godot-ci.yml>`_.
 Dette workflow opdaterer både de downloadede og browserudgaven, når opdateringer skubbes til master branchen.
+
+
+
+---------------------------------------------------------------
+
+Den oprindelige udgave af denne rapport findes i .rst på GitHub her: https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/produktrapport.rst.

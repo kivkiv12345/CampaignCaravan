@@ -6,12 +6,17 @@
 
 .. include:: secrets.rst
 
+.. |num_pages| replace:: 18
+
+.. |num_characters| replace:: ~50056 (.rst) - 60677 (.pdf), (med bilag på ~12500 anslag)
+
+
 Læsevejledning
 ----------------------------------------
 I visse tilfælde vil denne rapport gøre brug af supplementerende internetlinks.
 I tilfælde hvor læseren ønsker følge disse links, bedes de venligst benytte en aktiv internetforbindelse.
 
-Procesrapporten har til formål af beskrive Campaign Caravan's udviklingen,
+Procesrapporten har til formål af beskrive Campaign Caravan's udvikling,
 hvorimod produktrapporten har til formål at beskrive spillets nuværende tilstand.
 
 Visse dele af dene procesrapport, især teknisk dokumentation, vil også kunne findes i den tilhørende produktraport.
@@ -201,7 +206,7 @@ Godot supporterer flere forskellige programmeringssprog:
     når man kan sætte et breakpoint i sit script og se hvordan/hvornår symboler opdages.
 
     I starten kendte jeg ikke til Python's type-hinting syntax,
-    så selvfølgelig brugte jeg det heller ikke.
+    så selvfølgelig brugte jeg den heller ikke.
     Men jeg var så glad for Python, at jeg ville simpelthen bare lære alt om sproget.
     Så det varede ikke længe inden alle mine variable havde type-hints.
     Et faktum som også gjorde PyCharm's liv meget nemmere, for ikke at tale om mit eget.
@@ -397,23 +402,94 @@ Men herefter er det, som udgangspunkt, hjemmesidens eget ansvar at tilpasse visn
 Det modtagede indhold vil dog ikke indeholde den klassiske HTML rodstruktur, og dette kendetegner en PWA.
 I modsætning vil den traditionelle hjemmeside modtage hele HTML strukturen for hver forespørgsel.
 
-Realiseret tidsplan
-------------------------
 
-.. TODO Kevin: Include tidsplan
+Forbedringer fra den originale udagave af spillet
+---------------------------------------------------------------------------------------------
 
-Inden jeg havde startet udviklingen af spillemodstandere,
-havde jeg svært ved at vælge/prioritere mellem menneskelige kontra CPU modstandere.
-Men efter jeg fik implementeret funktionen "func get_legal_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]",
-blev det åbenlyst for mig hvor nemt det ville være at implementere en simpel ("tilfældig") algoritme som modstader.
-Efterfølgende gik det også op for mig at de var således jeg oftest brugte den tidligere hjemmeside variant.
-Jeg ser Caravan som et godt spil, når man har en smule tid man skal have brændt af.
-Og herved er det nemmest hvis ikke man behøver arrangere en runde med et andet menneske.
+Caravan har et ry blandt Fallout New Vegas' spillere om a være ret forvirrende og kompliceret.
+I søgen om at gøre min udgave af kortspillet så forståligt som muligt,
+har jeg været meget interesseret i årsagen bag forvirringen.
 
-Som forklaret i afgrænsningen, har det ikke været en prioritet at implementere flere typer modstandere.
-På tidsplanen ses denne beslutning som en forskydelse af startdatoen på de påvirkede opgaver (K6 specialt).
-I kravspecifikationen er de forskellige typer modstandere flettet til ét krav.
+Derfor har jeg været specialt interesseret i førstehåndindtryk af begge udgaver af spillet.
+Desværre har jeg kun observeret et par enkelte førstehåndsindtryk af min udgave.
+Det har i stedet været nemmere, dog stadig nogenlunde udfordrende,
+at finde førstehåndsindtryk af den originale udgave af kortspillet.
+Her har jeg kunne observere flere punkter som gør spillet svært at forstå:
 
+#. 
+    Fallout giver en overordnet, utilstrækkelig, forklaring af spillereglerne.
+    Herefter gives en note med den uddybede forklaring.
+    Men spilleren inviteres til deres første spil,
+    inden de har mulighed for at læse spillereglerne.
+
+#. 
+    Accepterer spilleren invitationen til spillet,
+    bliver de præsenteret med brugerfladen til at konstruere deres kortdæk.
+    Dette er inden de har lært betydningen bag de forskellige kort.
+    Heldigvis er det nemt for brugeren at vælge alle, eller tilfældige, kort her,
+    men sandynligvis er denne brugerflade alligevel ikke betryggende for spilleren.
+
+#. 
+    Herefter starter selveste spillet, og spilleren kan begynde at placere kort.
+    Når et kort løftes fra hånden, gives der ingen hentydning til hvor det er muligt at spille det.
+    I stedet piltasterene til at flytte det valgte kort mellem alle pladser på bordet.
+    Her er det, f.eks, muligt at flytte nummerkort til modstanderens karavaner,
+    men en rød markering bruges til at vise at det ikke er muligt at spille kortet dér.
+    Derfor skal spilleren søge efter pladser hvor det er muligt at spille deres kort.
+
+#. 
+    Derudover giver den originale udgave ingen tilbagemelding når en karavane er solgt.
+    Eller at spillets afslutning er forhindret af en uafgjort karavane.
+
+#. 
+    I det mindste gives en rød markering på værdien karavanen efter den overskrider dens maksimale værdi.
+    Men da denne tilbagemelding gives efter at kortet er spillet,
+    er det muligt at spilleren vil spille kort indtil de tilfældigvis overbyrder deres karavane.
+
+#. 
+    Samtidigt gives der heller ingen tilbagemelding på hvilke kort en joker vil fjerne.
+    Og derfor virker det tilfældigt når den fjerner halvdelen af bordet.
+
+#. 
+    Når et kort fjernes, animeres karvanen (fra det nederste til det fjernede kort) ud ad skærmen.
+    Hvorefter den animeres tilbage på plads uden det fjernede kort.
+    Dette kan gøre det svært at se præcist hvilket kort som fjernes.
+
+
+Med disse mangler i mente, har jeg forsøgt at udfylde, og eller afhjælpe, dem på følgende måder:
+
+#.
+    På hovedmenuen forsøges spillerens opmærksomhed tiltrykkes knappen "Play".
+    Her kan de et spil, uden at skulle bekymre sig om at konstruere et dæk.
+
+#.
+    Herefter eftertragtes det at spillerens opmærksomhed falder på deres hånd (af kort).
+    Erfaring har vist at dette også er tilfældet, da disse kort er de eneste som vender opad.
+    Derudover viser erfaring også at spillere kan udregne at kortene kan trækkes med musen.
+
+#.
+    Når spillere løfter deres kort, vil de se en fremhåndvisnings af dets mulige placeringer.
+
+#.
+    Når karavanernes værdi øges tilstrækeksligt til at de sælges, vil farven på værdien ændres til grøn.
+
+#.
+    Ligeledes når værdien bliver for høj, ændres den til rød.
+
+#.
+    Når spilleren forsøger at spille et kort som vil øge værdien af en af deres egne karavaner,
+    vil fremhåndvisningen være rød.
+    Dette fortæller spilleren af det fremhåndsviste træk, sandsynligvis er en dårlig idé.
+
+#.
+    Når en joker fremhåndsvises, vil de potentielt fjernede kort markeres gule.
+    Erfaring har vist at spillere kan forveksle jokere og knægte,
+    og derfor hjælper denne farvelægning med at differentiere dem.
+    Derudover bliver det også markant hurtigere at se hvordan en joker påvirker spillet.
+
+
+
+.. _Test Metodik:
 
 Test Metodik
 ------------------------
@@ -523,8 +599,61 @@ Hvis ikke; er det nødvendigt at konsultere det større spilstadie, for at se hv
         return SoldStatus.SOLD
 
 
+Unit Testing
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Unit Testing har ikke været en prioritet under udvikling af spillet.
+Med målet om af færdiggøre spillet inden afleveringsdatoen,
+har der opbygget sig en hvis mængde kode med behov for refaktorering.
+Derfor har det ikke været ønsket at fastlåse den nuværende arkitektur/implementation med unit tests.
+
+I stedet har hensigten været at regressionsteste den enorme mængde kombinationer af spilleregler med integrationstesten,
+som beskrives i den indledende andel af `Test Metodik`_.
+
+Desværre har tidsmangel forhindret automatisering af denne integrationstest.
+Dette har dog ikke været set som et større problem,
+da den samme tidsmangel sandsyndligvis også ville have forhindret alle kombinationer af spilleregler fungere korrekt.
+
+Havde afleveringsfristen ikke været en begrænsning,
+vil jeg have gjort brug af tredjepartsbiblioteket GUT (Godot Unit Test).
+
+
+
+Realiseret tidsplan
+------------------------
+
+.. image:: Pictures/RealTidsplan.png
+
+Inden jeg havde startet udviklingen af spillemodstandere,
+havde jeg svært ved at vælge/prioritere mellem menneskelige kontra CPU modstandere.
+Men efter jeg fik implementeret funktionen "func get_legal_slots(hand_card: CardHandSlot) -> Array[CaravanCardSlot]",
+blev det åbenlyst for mig hvor nemt det ville være at implementere en simpel ("tilfældig") algoritme som modstader.
+Efterfølgende gik det også op for mig at de var således jeg oftest brugte den tidligere hjemmeside variant.
+Jeg ser Caravan som et godt spil, når man har en smule tid man skal have brændt af.
+Og herved er det nemmest hvis ikke man behøver arrangere en runde med et andet menneske.
+
+Som forklaret i afgrænsningen, har det ikke været en prioritet at implementere flere typer modstandere.
+På tidsplanen ses denne beslutning som en forskydelse af startdatoen på de påvirkede opgaver (K6 specialt).
+I kravspecifikationen er de forskellige typer modstandere flettet til ét krav.
+
+
 Konklusion
 ------------------------
+
+Svendeprøven har givet mig tiden til at dykke ned i én af mine,
+efterhånden mange, idéer til fritidsprojekter.
+Det har glædet mig meget at finde et brugerfladeudviklingsværktøj som jeg har følt mig tilpas i,
+og det har været en stor gode for færdiggørelsen af især produktet.
+
+I modsætningen til nogle af mine tidligere projekter,
+har Caravan også haft en let definérbar kravspecifikation i form af spillereglerne.
+Dette har gjort det nemt at identificere mangler i koden,
+men udseendet på brugerfladen udfordrede mig især i starten.
+I søgen på inspiration valgte jeg at undersøge Godot's styling system,
+og her gik det op for mig hvordan jeg kunne bruge det til at efterabe Fallout's egen brugerflade.
+Dette kombineret med nogle enkelte billeder fra Fallout's reklamemateriale har givet et fuldendt udseende til spillet.
+
+Derfor vil jeg opsummere således:
 
 Det er meget muligt a rekreere kortspillet Caravan i selvstændigt format.
 Med spilmoteren Godot kan spillet let laves cross-platform,
@@ -533,112 +662,49 @@ Godot tilbyder flere måder hvor brugerdata kan lagres persistent,
 men ønskes brugen af en centraliseret relationel (SQL) database,
 skal der enten gøres brug af SQLite, eller vedligeholdelse af en databaseserver.
 
-.. TODO Kevin: Move the section below to somewhere where it's more fitting.
-
-**Vejledning af Spilleregler i spillet**
-
-    Caravan har et ry blandt Fallout New Vegas' spillere om a være ret forvirrende og kompliceret.
-    I søgen om at gøre min udgave af kortspillet så forståligt som muligt,
-    har jeg været meget interesseret i årsagen bag forvirringen.
-
-    Derfor har jeg været specialt interesseret i førstehåndindtryk af begge udgaver af spillet.
-    Desværre har jeg haft begrænset erfaring med observation af førstehåndintryk i min udgave af spillet,
-    men det lykkedes mig at finde en youtuber spille hendes første spil af den originale udgave:
-
-    https://www.youtube.com/watch?v=yD_lWpDgcUQ&list=PLZIrkWszSEEM_ywEah_f8G4-oePaGweG1&t=1832s
-
-    Dette har givet mig en god forståelse af hvorfor den originale udgave er svær at forstå:
-
-    #. 
-        Fallout giver en overordnet, utilstrækkelig, forklaring af spillereglerne.
-        Herefter gives en note med den uddybede forklaring.
-        Men spilleren inviteres til deres første spil,
-        inden de har mulighed for at læse spillereglerne.
-
-    #. 
-        Accepterer spilleren invitationen til spillet,
-        bliver de præsenteret med brugerfladen til at konstruere deres kortdæk.
-        Dette er inden de har lært betydningen bag de forskellige kort.
-        Heldigvis er det nemt for brugeren at vælge alle, eller tilfældige, kort her,
-        men sandynligvis er denne brugerflade alligevel ikke betryggende for spilleren.
-
-    #. 
-        Herefter starter selveste spillet, og spilleren kan begynde at placere kort.
-        Når et kort løftes fra hånden, gives der ingen hentydning til hvor det er muligt at spille det.
-        I stedet piltasterene til at flytte det valgte kort mellem alle pladser på bordet.
-        Her er det, f.eks, muligt at flytte nummerkort til modstanderens karavaner,
-        men en rød markering bruges til at vise at det ikke er muligt at spille kortet dér.
-        Derfor skal spilleren søge efter pladser hvor det er muligt at spille deres kort.
-    
-    #. 
-        Derudover giver den originale udgave ingen tilbagemelding når en karavane er solgt.
-        Eller at spillets afslutning er forhindret af en uafgjort karavane.
-    
-    #. 
-        I det mindste gives en rød markering på værdien karavanen efter den overskrider dens maksimale værdi.
-        Men da denne tilbagemelding gives efter at kortet er spillet,
-        er det muligt at spilleren vil spille kort indtil de tilfældigvis overbyrder deres karavane.
-
-    #. 
-        Samtidigt gives der heller ingen tilbagemelding på hvilke kort en joker vil fjerne.
-        Og derfor virker det tilfældigt når den fjerner halvdelen af bordet.
-
-    #. 
-        Når et kort fjernes, animeres karvanen (fra det nederste til det fjernede kort) ud ad skærmen.
-        Hvorefter den animeres tilbage på plads uden det fjernede kort.
-        Dette kan gøre det svært at se præcist hvilket kort som fjernes.
-
-
-    Med dette mangler i mente, har jeg forsøgt at udfylde, og eller afhjælpe, dem på følgende måder:
-
-    #.
-        På hovedmenuen forsøges spillerens opmærksomhed tiltrykkes knappen "Play".
-        Her kan de et spil, uden at skulle bekymre sig om at konstruere et dæk.
-    
-    #.
-        Herefter eftertragtes det at spillerens opmærksomhed falder på deres hånd (af kort).
-        Erfaring har vist at dette også er tilfældet, da disse kort er de eneste som vender opad.
-        Derudover viser erfaring også at spillere kan udregne at kortene kan trækkes med musen.
-
-    #.
-        Når spillere løfter deres kort, vil de se en fremhåndvisnings af dets mulige placeringer.
-
-    #.
-        Når karavanernes værdi øges tilstrækeksligt til at de sælges, vil farven på værdien ændres til grøn.
-
-    #.
-        Ligeledes når værdien bliver for høj, ændres den til rød.
-
-    #.
-        Når spilleren forsøger at spille et kort som vil øge værdien af en af deres egne karavaner,
-        vil fremhåndvisningen være rød.
-        Dette fortæller spilleren af det fremhåndsviste træk, sandsynligvis er en dårlig idé.
-
-    #.
-        Når en joker fremhåndsvises, vil de potentielt fjernede kort markeres gule.
-        Erfaring har vist at spillere kan forveksle jokere og knægte,
-        og derfor hjælper denne farvelægning med at differentiere dem.
-        Derudover bliver det også markant hurtigere at se hvordan en joker påvirker spillet.
-
 
 Refleksioner
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-    I modsætning til det tværfaglige projekt på H5PD010124,
-    har vi på H6PD091124 haft langt mere mulighed for at arbejde hjemmefra.
+    **Motivation**
 
-    For mig har det specialt gjort mig mere effektiv om morgenen,
-    hvor jeg ofte oplever den bedste koncentration.
-    Hjemmefra kan jeg nemlig vågne med gode ideér at bruge dagen på,
-    og med det samme arbejde på dem ved computeren.
+        I modsætning til det tværfaglige projekt på H5PD010124,
+        har vi på H6PD091124 haft langt mere mulighed for at arbejde hjemmefra.
 
-    Desuden brillerer min stationære arbejdsstation herhjemme også over bærebaren som medbringes til skolen.
-    (Dog skal det siges at skolen supplerer os med ekstra skærme, og dette er en stor hjælp).
+        For mig har det specialt gjort mig mere effektiv om morgenen,
+        hvor jeg ofte oplever den bedste koncentration.
+        Hjemmefra kan jeg nemlig vågne med gode ideér at bruge dagen på,
+        og med det samme arbejde på dem ved computeren.
 
-    I visse tilfælde kan koncentration dog udfordres på hjemmekontoret,
-    især efter en given indsats på dagens opgaver.
-    Det samme kan dog siges på skolen.
-    Så som helhed vil jeg mene at jeg arbejder bedst hjemmefra.
+        Desuden brillerer min stationære arbejdsstation herhjemme også over bærebaren som medbringes til skolen.
+        (Dog skal det siges at skolen supplerer os med ekstra skærme, og dette er en stor hjælp).
+
+        Det har endda været sådan at jeg nogle dage har vågnet mellem 02:00-03:00 om natten,
+        med så stor en lyst til at arbejde videre på projektet at jeg ikke kunne falde i søvn igen.
+        Disse dage viste sig sjovt nok også at være nogle af mine mest produktive.
+
+        Meget af denne motivation har jeg også kunne bære over til rapportskrivningen,
+        som jeg ikke selv vil beskrive som en af mine stærke sider.
+        Typisk skriver jeg meget langsomt,
+        og jeg kan ikke ærligt sige at dette projekt har været meget anderledes her.
+        Derfor har jeg dedikeret meget at den sidste tid inden afleveringsfristen til rapportskrivning,
+        fremfor at fikse de enkelt fejl og mangler som spillet stadig har.
+
+        Passende nok er meget af min motivation for rapportskrivningen,
+        langsomt aftaget som jeg nærmer mig deres ende.
+
+    **Projektets Fremtid**
+
+        Det har glædet mig meget at "færdiggøre" et software produkt med grad og tidsfrist stillet til dette projekt.
+        Men med det blod på tanden har jeg set hvordan spillet kunne udvikle sig i fremtiden.
+
+        Navnet "Campaign Caravan" har været produktets arbejdstitel.
+        Oprindeligt havde jeg en idé om et system hvor spillekort kunne optjenes efter sejre, potentielt kombineret med en "kampagne".
+
+        Efter at have lavet systemet til tilpasning af spilleregler, virker det også oplagt at kombinere dem begge.
+        Spillets kampagne kunne laves således at sejre belønnede genstande som tilod udvalgte tilpasninger.
+
+        Herefter kunne spillet også indeholde butikker hvor disse tilpasninger/spillekort kan købes/sælges.
 
 
 
@@ -648,6 +714,25 @@ Den oprindelige udgave af denne rapport findes i .rst på GitHub her: https://gi
 
 Bilag
 ----------------------------------
+
+Kildeangivelser
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- Reklamemateriale brugt som baggrundsbilleder er taget fra:
+  https://wallpapercave.com/fallout-new-vegas-wallpaper-1080p
+
+- Spillekortene er fra det `officielle spillekortsæt <https://fallout.fandom.com/wiki/Vault_playing_cards>`_ inkludret med Fallout New Vegas' `Collector's Edition <https://fallout.fandom.com/wiki/Fallout:_New_Vegas#Collector's_Edition>`_.
+  Disse spillekort er derefter blevet indskannet og tilgængeliggjort her:
+  https://imgur.com/a/playing-cards-vDQaW
+  https://imgur.com/a/fallout-new-vegas-playing-card-scans-missing-images-o9Sht
+
+- Lydeffekterne er også fra Fallout, og er hentet fra:
+  https://www.sounds-resource.com/pc_computer/falloutnew/sound/5655/
+
+- I tilfælde, især til opstart af projektet, har ChatGPT været brugt til inspiration og feedback.
+  I tilfælde hvor kode er kopieret eller tæt inspireret derfra, vil dette være marketet i kildekoden med "## Source: https://chatgpt.com" el.
+  Den fulde samtale med ChatGPT fra projektet er tilgængelig her:
+  https://chatgpt.com/share/66f41f35-5f80-8001-ab35-99834fd5d61c
 
 Logbog
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

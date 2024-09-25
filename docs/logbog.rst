@@ -224,3 +224,7 @@
     Mere rapportskrivning, UML diagram over CardSlot arvehierarkiet.
     Jeg er ved at være ret træt af at skrive rapporter.
     Så det er begrænset hvor meget arbejde der bliver lagt i de sidste mangler.
+
+**25/9-2024 (Onsdag Uge #4)**
+
+    Mere rapportskrivning: Titelblad, uddybet konklusion.
