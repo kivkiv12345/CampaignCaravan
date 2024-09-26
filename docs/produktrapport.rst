@@ -7,9 +7,9 @@
 
 .. include:: secrets.rst
 
-.. |num_pages| replace:: 18
+.. |num_pages| replace:: 19
 
-.. |num_characters| replace:: ~27000 (.rst) - 40818 (.pdf)
+.. |num_characters| replace:: ~29000 (.rst) - 43046 (.pdf)
 
 
 Læsevejledning
@@ -99,6 +99,11 @@ Hvilket forhindrer at spillere medbringer ene 10'ere, for eksempel).
         Spiller man en joker på et es, fjernes alle andre kort med samme kulør (som esset) i stedet.
 
 
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+
 **Vinde/Tabe**
 
     Den eftertragtede måde at vinde spillet er ved at lægge værdien af hver af sine 3 karavaner mellem 21-26 (inklusiv) (og hermed "sælge" dem).
@@ -126,6 +131,11 @@ Hvilket forhindrer at spillere medbringer ene 10'ere, for eksempel).
     Spiller man sit sidste kort uden at vinde, taber man automatisk spillet.
 
 
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+
 **Tilpasninger af Spilleregler**
 
     Projektet her pastræber sig at kunne tilpasses spillerens ønskede spilleregler.
@@ -146,9 +156,35 @@ Teknisk produktdokumentation
 Godot
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Noder i Godot kan tildeles grupper, og dog det desværre ikke compile-sikres, vil noderne i disse grupper typisk følge et bestemt API.
+Derfor kan det siges at disse grupper kan bruges som interfaces kendt fra traditionelle objektorienterede sprog.
+Tildeler man grupper til en node i en scene, vil alle instanser af denne scene og også tildeles til disse grupper.
+Derfor bliver det muligt at forspørge og iterere alle instancer af underscener.
+Det kan dog siges at gruppesystemet har et svagt punkt, i at referencer til grupper er strengbaseret på gruppens navn.
+
+Gruppesystemet er en god måde af afkoble kode,
+og Campaign Caravan bruger det meget til at finde de forskellige klasseinstanser.
+Til dette formål definerer spillet de følgende klasser:
+
+- CaravanDiscardButtons
+
+- Caravans
+
+- CardSlots
+
+- FaceCardSlots
+
+- NumericCardSlots
+
+- OpenCardSlots
+
+Noder kan sagtens være medlem af grupper, f.eks tildeles OpenFaceCardSlot både: CardSlots, FaceCardSlots, OpenCardSlots.
+
+
 Spillets kodebase gør brug af et arvehierarki til at differentiere de forskellige kort pladser i spillet.
 Dette arvehierarki kombineres med Godot's "group" funktionalitet.
 Kombinerer man disse, kan forekomsterne af kort pladserne forspørges og itereres.
+
 
 Arvehierarki ses på UML diagrammet nedenunder.
 
@@ -244,22 +280,31 @@ Testrapport
 .. include:: testrapport.rst
 
 
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+
 Brugervejledning
 -----------------------------------
 
-Overordnet set distribueres spillet i 2 udgaver:
+Installation
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Den webbaserede udgave. Her er ingen installation nødvendig, og spillet kan enkeltvis tilgås her: https://kivkiv12345.github.io/CampaignCaravan/
+    Overordnet set distribueres spillet i 2 udgaver:
 
-- De downloadede udgaver (Linux, Windows), hvoraf de nyeste versioner kan findes her: https://nightly.link/kivkiv12345/CampaignCaravan/workflows/godot-ci/master?preview
+    - Den webbaserede udgave. Her er ingen installation nødvendig, og spillet kan enkeltvis tilgås her: https://kivkiv12345.github.io/CampaignCaravan/
 
-    Installation heraf forekommer enkeltvis i form af udpakningen af .zip filen. I tilfælde af Linux udgaven bør binærfilen laves eksekverbar med kommandoen: **chmod u+x caravan.x86_64**,
-    herefter kan spillet startes med **./caravan.x86_64**
+    - De downloadede udgaver (Linux, Windows), hvoraf de nyeste versioner kan findes her: https://nightly.link/kivkiv12345/CampaignCaravan/workflows/godot-ci/master?preview
+
+        Installation heraf forekommer enkeltvis i form af udpakningen af .zip filen. I tilfælde af Linux udgaven bør binærfilen laves eksekverbar med kommandoen: **chmod u+x caravan.x86_64**,
+        herefter kan spillet startes med **./caravan.x86_64**
 
 
-Bemærk at de downloadede udgaver nyder udvidet funktionalitet (i form af persistent lagring af tilpassede kortdæk).
+    Bemærk at de downloadede udgaver nyder udvidet funktionalitet (i form af persistent lagring af tilpassede kortdæk).
 
-Denne brugervejledning følger navigationsstrukturen beskrevet i `Overbliksdiagram - Grænsefladenavigation`_.
+    Denne brugervejledning følger navigationsstrukturen beskrevet i `Overbliksdiagram - Grænsefladenavigation`_.
 
 
 Anvendelse
@@ -297,7 +342,7 @@ Anvendelse
     Dette viderefører dem til `dæktilpasningsmenuen`_
 
     .. image:: Pictures/CustomGame.jpeg
-        :width: 85%
+        :width: 75%
 
 
 
@@ -385,7 +430,6 @@ Anvendelse
 
     .. image:: Pictures/GameInProgress.jpeg
         :width: 75%
-
 
 
 Service

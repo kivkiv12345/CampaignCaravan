@@ -225,6 +225,13 @@
     Jeg er ved at være ret træt af at skrive rapporter.
     Så det er begrænset hvor meget arbejde der bliver lagt i de sidste mangler.
 
+
 **25/9-2024 (Onsdag Uge #4)**
 
     Mere rapportskrivning: Titelblad, uddybet konklusion.
+
+
+**26/9-2024 (Torsdag Uge #4)**
+
+    Mere rapportskrivning: Beskrivelse af grupper i Godot.
+    Aflevering af rapporter

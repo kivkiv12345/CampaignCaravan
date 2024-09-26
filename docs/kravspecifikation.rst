@@ -106,24 +106,7 @@ Kravspecifikation
      - 4
      - Produktet kan lagre tilpassede spilledæk og eller spilleregler
 
-   * - **K14**
+   * - **K12**
      - KN4
      - 3
      - Spillet distribueres på en let tilgængelig måde
-
-
-
-.. TODO Kevin: Do we want to include the demands we decided against? assert(none_of_these_are_relevant_for_case_or_problemformulering)
-   * - **K12**
-     - KN6
-     - 5
-     - Produktet/spillet kan logge træk i spillet, til database og eller blot i spillet.
-
-   * - **K13** - KN3 - 6
-     - AI modstander (med ML). Sandsynligvis vha. integration med generativ AI model. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere). Denne modstandertype er nedprioriteret grundet kompleksitet.
-     - 6
-     - 
-     - **x**
-
-
-  

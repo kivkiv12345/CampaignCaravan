@@ -6,9 +6,9 @@
 
 .. include:: secrets.rst
 
-.. |num_pages| replace:: 18
+.. |num_pages| replace:: 16 - (uden bilag) - 20 (med bilag)
 
-.. |num_characters| replace:: ~50056 (.rst) - 60677 (.pdf), (med bilag på ~12500 anslag)
+.. |num_characters| replace:: ~52464 (.rst) - 67860 (.pdf), (med bilag på ~12700 anslag)
 
 
 Læsevejledning
@@ -19,7 +19,8 @@ I tilfælde hvor læseren ønsker følge disse links, bedes de venligst benytte 
 Procesrapporten har til formål af beskrive Campaign Caravan's udvikling,
 hvorimod produktrapporten har til formål at beskrive spillets nuværende tilstand.
 
-Visse dele af dene procesrapport, især teknisk dokumentation, vil også kunne findes i den tilhørende produktraport.
+Enkelte dele af dene procesrapport, især vedr. teknisk dokumentation,
+vil også kunne findes i den tilhørende produktraport.
 
 
 Indledning
@@ -77,7 +78,7 @@ Godot
 Som kerneteknologi for projektet ligger Godot,
 som er et gratis, open-source, spiludviklingsværktøj.
 
-Spil i Godot bygges som en sammensætning af _scener_, som i sig selv er en sammentætning af _noder_.
+Spil i Godot bygges som en sammensætning af *scener*, som i sig selv er en sammentætning af *noder*.
 Noder kan være så simple som funktionsløse geometriske former, disse former kan både bruges i spilverdenen,
 men kan også bruges til at konstruere den grafiske brugerflade.
 Mere avancerede noder tilknyttes et script,
@@ -93,11 +94,11 @@ kan variable (klassefelter) annoteres med "@export" (i GDScript).
 Denne annotering synliggører den påvirkede variabel i Godot's grafiske brugerflade,
 samtidig med at den kommunikerer at variablen er egnet til ændring af brugeren af klassen. 
 
-Set udefra (fra andre noder/scener) forekommer scener instanser som instanser af deres yderste/rod-node.
+Set udefra (fra andre noder/scener) forekommer scene-instanser som instanser af deres yderste/rod-node.
 Og vil derfor også forkomme som instanser af klassen defineret deri.
 
-Godot's scene arkitektur har dog en væsentlig ulempe, set fra det klassiske objektorienterede perspektiv.
-Scener i Godot (GDScript) kan ikke tilknyttes en constructor.
+Set fra det klassiske objektorienterede perspektiv, har Godot's scene arkitektur dog en væsentlig ulempe.
+Scener i Godot (GDScript) kan ikke tilknyttes parameteriserede konstruktøre.
 I stedet er meningen at man går den gammeldags "C" vej,
 og laver sin egen constructor funktion,
 som man skal huske at kalde i stedet.
@@ -106,7 +107,7 @@ men hvis sådanne klasser indgår som (under)noder i en scene, bliver konstrukt�
 
 I typisk objektorienteret programmering er en klasses konstruktør et vigtigt punkt,
 hvor der sikres at klassen tildeles nødvendighederne for dens funktion.
-Typisk vil dette tage sted i form af dependency injection,
+Oftest kan dette tage sted i form af dependency injection,
 hvor der sikres at klassen ikke kan instantieres uden at blive tildelt objekter som kan afdække nødvendige ansvarsområder.
 Yderligere er konstruktøren et naturligt punkt at udføre fornuftighedstjek mellem metodens argumenter,
 og dermed sikre en samhørighed til klassens funktion.
@@ -129,7 +130,7 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
     som herefter skal udfyldes ved udsendelse,
     og lytterfunktioner skal parameteriseres så de kan modtage disse argumenter.
     Hvilke argumenter et signal videregiver, afhænger meget af signalets formål.
-    Men ét typisk argument er "self", hvilket tillader en lytter at forbinde til mange afsendere,
+    Men ét typisk argument er "self", hvilket tillader en lytter at forbinde til mange signaler af samme type,
     og herefter bruge argumentet til at referere tilbage til kilden af signalet.
 
     Sandsynligvis er disse signaler implementeret som en liste af funktionsreferencer,
@@ -138,7 +139,7 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
     Godot's brugerflade er meget nyttig til at forbinde disse signaler.
     Her kan man under "Node" fanen (øverst til højre, ved siden af "Inspector" fanen),
     og derefter "Signals", vælge hvilke signaler man gerne vil lytte på.
-    Herefter har man mulighed for vælge lytteren, ved enten at vælge en funktion eller definere en ny.
+    Herefter har man mulighed for vælge lytteren, ved enten at vælge en eksisterende funktion eller definere en ny.
     
     Men i tilfælde hvor noder kreeres dynamisk, kan det være udfordrende at forbinde deres signaler.
     Heldigvis kan lytteren (af signalet) ofte videregive sig selv til udsenderen, vha. Dependency Injection,
@@ -148,8 +149,12 @@ Den "fulde" liste af Design Patterns kan findes her: https://refactoring.guru/de
     Spillets mest markante brug af dependency injection, er formentlig med GameManager.restore_hook,
     Denne funktionspointer kan tilpasses af brugeren af klassen, hvorefter funktionen kaldes når karavanespillet genstartes.
     Denne funktionspointer bruges af hovedmenuen, som ønsker at tilpasse 2 CPU spillere, til at spille mod hinanden.
-    Derfor udfylder hovedmenuen denne funktion, og bruger den til at tildele en CPU spiller instants til den nederste spiller,
+    Derfor udfylder hovedmenuen denne funktion, og bruger den til at tildele en CPU spiller instans til den nederste spiller,
     som ellers vil være styret af den menneskelige spiller.
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 
 **Programmeringssprog supportereret af Godot**
 
@@ -158,14 +163,14 @@ Godot supporterer flere forskellige programmeringssprog:
 * GDScript
     Godot er selv skrevet i C++, men typisk skrives spil deri i deres scripting sprog GDScript.
     GDScript minder på mange måder om Python, potentielt blandet med lidt JavaScript.
-    GDScript filer kendetegnes med filentypen .gd, og knyttes oftest direkte til såkaldte "Noder" i spillet.
+    GDScript filer kendetegnes med filtypen .gd, og knyttes oftest direkte til såkaldte "Noder" i spillet.
     Når man knytter et .gd script til en node, bliver den node en instans af klassen som man definerer i .gd filen.
 
     Så trods det er svært at se i script filerne, er GDScript meget objektorienteret.
     Hver .gd script udgør præcis én klasse, hvilket bliver meget tydligere at se hvis man inkluderer nøgleordet "class_name <Name>" deri.
 
     GDScript har dog sine begrænsninger i forhold til de traditionelle objektorienteret programmeringssprog.
-    Ligevidt som C# og Java, understøtter GDScript _ikke_ multipel nedarvning. Dette faktum overkommer C# og Java med interfaces.
+    Ligevidt som C# og Java, understøtter GDScript *ikke* multipel nedarvning. Dette faktum overkommer C# og Java med interfaces.
     GDScript har dog ikke interfaces, i den traditionelle forstand,
     og afhænger i stedet af "duck typing" til at løse mere indviklede nedarvningshierarkier.
 
@@ -190,24 +195,24 @@ Godot supporterer flere forskellige programmeringssprog:
     Derfor startede min viden om programmering med C#,
     hvor det fandt det utroligt at sproget kunne skrive "Hello World!" i mit konsolvindue.
     Efter omkring et halvt år på GF1 havde jeg langsomt begyndt at forstå fidusen bag Objektorienteret Programmering,
-    men jeg undrede mig stadig over "static void Main(string[] args)".
-    For mig passede nøgleordet "static" ikke ind i et objektorienteret programmeringssprog.
-    Hvorfor skal jeg definere "class Program {...}", når "static void Main(string[] args)" ikke er bundet til nogen instans deraf?
+    men jeg undrede mig stadig over "*static void Main(string[] args)*".
+    For mig passede nøgleordet "*static*" ikke ind i et objektorienteret programmeringssprog.
+    Hvorfor skal jeg definere "*class Program {...}*", når "*static void Main(string[] args)*" ikke er bundet til nogen instans deraf?
 
     Herefter blev jeg introduceret til Python, og var totalt forbløffet over hvor nemt alting var.
     Det føltes som om jeg blev givet snyderkoder.
     Python er også lidt speciel i den forstand at det understøtter Objektorienteret Programmering,
     men det er ikke et krav.
-    Og for mig gav det bare meget mere mening. Intet magisk "this" nøgleord, i stedet har du "self",
-    som blot er en reference til en instans af klassen hvorpå metoden er defineret.
-    Funktioner er ikke knyttet nogen instans, er har derfor hverken "this" eller "self".
-    Samtidig gav det også bare meget mere mening at koden eksekverer fra toppen,
-    linking og symbol afvikling er meget nemmere at forstå,
-    når man kan sætte et breakpoint i sit script og se hvordan/hvornår symboler opdages.
+    Og for mig gav det bare meget mere mening. Intet magisk "this" nøgleord, i stedet modtager du "self",
+    som er en eksplicit reference til en instans af klassen hvorpå metoden er defineret.
+    Funktioner er ikke knyttet nogen instans, og har derfor hverken "this" eller "self".
+    Samtidig gav det også bare meget mere mening at moduler indlæses/eksekverer fra toppen.
+    Når man kan sætte et breakpoint i sit script og se hvordan/hvornår symboler opdages,
+    bliver linking og symbol afvikling er meget nemmere at forstå.
 
     I starten kendte jeg ikke til Python's type-hinting syntax,
     så selvfølgelig brugte jeg den heller ikke.
-    Men jeg var så glad for Python, at jeg ville simpelthen bare lære alt om sproget.
+    Men jeg var så glad for Python, at jeg simpelthen bare ville lære alt om sproget.
     Så det varede ikke længe inden alle mine variable havde type-hints.
     Et faktum som også gjorde PyCharm's liv meget nemmere, for ikke at tale om mit eget.
     De gjorde det meget nemmere at knytte APIer i mere komplekse programmer.
@@ -215,7 +220,7 @@ Godot supporterer flere forskellige programmeringssprog:
     Det var nok heromkring hvor jeg begyndte at tilgive C#.
     Det betyder ikke at jeg har tænkt mig at kode i sproget.
     Jeg har arbejdet utroligt meget med generics og reflection i Python,
-    hvor C#'s reflection wrapper API utroligt klodset forholdsvis.
+    hvor C#'s reflection wrapper API virker utroligt klodset forholdsvis.
     Og jeg fandt heller ikke skolens introduktion til Entity Framework specialt imponerende,
     efter at have arbejdet med Django's ORM.
 
@@ -233,13 +238,18 @@ Godot supporterer flere forskellige programmeringssprog:
     da jeg så det som en højere prioritet at udvikle spillet på en cross-platform manér.
     Det er nemlig min forståelse at brugen af C/C++ APIerne udfordrer Godot's lange række af indbyggede cross-platform eksporteringsmuligheder.
 
-Det kan dog siges at Godot lever i skyggen af sine væsentligt mere velkendte konkurrenter: Unity og Unreal.
+Det kan siges at Godot lever i skyggen af sine væsentligt mere velkendte konkurrenter: Unity og Unreal.
 Godot så dog et stort fremspring af både financial og moralsk støtte,
 da Unity indførte en række kontroversielle ændringer til deres servicevilkår i Q4 af 2023.
 
 For mig var én af Godot's store salgspunkter muligheden for at eksportere til HTML5.
 Jeg ser det som en kæmpe fordel at kunne hoste spillet som en server,
 og blot inkludere et link dertil i disse rapporter.
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 
 
 **Alternativer**
@@ -271,7 +281,7 @@ og blot inkludere et link dertil i disse rapporter.
 
 Jeg har primært valgt Godot grundet min tidligere, dog begrænsede, erfaring på H5PD010124.
 Trods GDScript's begrænsninger synes jeg generelt godt om sproget, med en syntaks som er nem at forstå.
-Men min primære motivation bag valget af Godot, er dets letvægtige og open-source natur,
+Derudover er valget også motiveret af Godot's letvægtige og open-source natur,
 samt muligheden for at eksportere til mine ønskede platforme.
 Jeg ønsker at se Godot brillere, og følger derfor somme tider op på dets udvikling.
 Her ser jeg et godt initiativ både inden for brug og udvikling deraf.
@@ -279,16 +289,20 @@ Dog er Godot stadig mindre populært end alternativerne,
 og dette viser sig når fejlfinde et obskurt problem.
 
 
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+
 Database
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 Jeg har følt det vigtigt at produktets vedligeholdelse ikke påtvinges unødvendige services,
-alligevel har jeg endda selv haft et ønske om persistent lagring.
+hvilket har udfordret mit ønske om persistent lagring.
 Godot har indbygget persistent lagring af Resource underklasser,
 men i ære af svendeprøven har jeg påtaget med udfordringen ved et relationel database.
 
 Dog er valget af "Godot kompatible" løsninger hertil forholdsvis tyndt,
 hvis man fravælger en ekstern database server.
-
 
 Mit ønske har været at indlejre en SQLite database,
 og dermed flytte den persistente lagring til klienterne.
@@ -302,11 +316,13 @@ https://github.com/2shady4u/godot-sqlite
 
 **Godot-SQLite**
 
-    *Bemærk venligst at dele af denne beskrivelse også forekommer i produktrapporten.*
+    Godot-SQLite er et lille GDExtension (skrevet i C++) bibliotek,
+    som udvider Godot med et API mellem GDScript og SQLite.
+    
+    Der findes et par biblioteker som giver et inteface mellem SQLite og GDScript,
+    men efter min undersøgelse er **Godot-SQLite** det mest vedligeholdte.
 
-    .. include:: godot-sqlite_generic.rst
-
-    .. end of generic Godot-SQLite description.
+    *Bemærk venligst at den overstående beskrivelse også forekommer i produktrapporten.*
 
 
     Repoet til godot-sqlite nævner at HTML5 er understøttet.
@@ -344,10 +360,6 @@ Følgende er et udkast af denne tabel (på baggrund af GameRules nuværende stru
 Distribution og Hosting
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. NOTE: Rewritten
-    Når det kommer til hosting, fortrækker jeg at gøre det "in house" (i mit teknikrum).
-    Men kort tid inden projektets opstart hørte jeg for første gang om brugen af GitHub Pages til dette.
-
 Angående hosting foretrækker jeg typisk erfaringen som medfølger nærværen af "metallet".
 Derfor har jeg serveret tidligere projekter fra en computer/server i mit teknikrum.
 Men kort inden dette projekts opstart blev jeg for første gang gjort opmærksom på GitHub Pages. 
@@ -360,6 +372,8 @@ men er man ejer af et CNAME kan repoet serveres dér i stedet.
 Som alternativ til 'branch' servering,
 kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes serveres.
 
+Jeg kan derfor, med glæde, nævne at spillet er offentligt tilgængeligt på:
+https://kivkiv12345.github.io/CampaignCaravan/
 
 **Brug af GitHub Workflows**
 
@@ -381,7 +395,7 @@ kan man benytte en Jekyll GitHub Action til at generere indholdet som ønskes se
     da det viser sig at kompilering af spillet, med godot-sqlite inkluderet, resulterer i en segmentationsfejl.
     Dette sker ikke via brug af den grafiske brugerflade, og viste sig derfor først i GitHub workflowet.
     Heldigvis har det vist sig at segmentationsfejlen sker efter spillet er kompileret og binæren produceret.
-    Desværre stopper dette GitHub fra at fuldføre workflowet, så derfor sletter artifakterne.
+    Desværre stopper dette GitHub fra at fuldføre workflowet, som derfor sletter artifakterne.
     Dette problem løses enkeltvis ved brug af en kommando som forhindrer fejlkoden fra kompileringen:
 
     .. code-block:: sh
@@ -706,14 +720,14 @@ Refleksioner
 
         Herefter kunne spillet også indeholde butikker hvor disse tilpasninger/spillekort kan købes/sælges.
 
+.. raw:: pdf
 
-
-Den oprindelige udgave af denne rapport findes i .rst på GitHub her: https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst.
-
-
+    PageBreak oneColumn
 
 Bilag
 ----------------------------------
+
+Den oprindelige udgave af denne rapport findes i .rst på GitHub her: https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst.
 
 Kildeangivelser
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -109,26 +109,8 @@
      - **X**
      -  
 
-   * - **K14**
+   * - **K12**
      - Spillet distribueres på en let tilgængelig måde
      - Spilleren kan tilgå spillet på en måde som ikke kræver større software-teknisk viden (link, download, osv).
      - **X**
      -  
-
-
-
-.. TODO Kevin: Do we want to include the demands we decided against? assert(none_of_these_are_relevant_for_case_or_problemformulering)
-   * - **K12**
-     - Produktet/spillet kan logge træk i spillet, til database og eller blot i spillet.
-     - Spillet kan logge træknummer og trækhandling, som effektivt set ville kunne tillade en genafspilning af spil.
-     - 
-     - **x**
-
-   * - **K13**
-     - AI modstander (med ML). Sandsynligvis vha. integration med generativ AI model. (Mindst én form for modstander skal inkluderes, før produktet/spillet kan fungere). Denne modstandertype er nedprioriteret grundet kompleksitet.
-     - 6
-     - 
-     - **x**
-
-
-  
