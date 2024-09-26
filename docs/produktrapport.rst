@@ -23,6 +23,8 @@ hvorimod produktrapporten har til formål at beskrive spillets nuværende tilsta
 Størstedelen af tekonologierne nævnt i denne produktrapport er ydereligere beskrevet i den tilsvarende `procesrapport <https://github.com/kivkiv12345/CampaignCaravan/blob/master/docs/procesrapport.rst>`_ (link til .rst format).
 For at forbedre læsbarheden vil enkelte tekster forekomme i begge rapporter, i disse tilfælde vil læseren gøres opmærksom på dette.
 
+Kildekoden for produktet, og projektet som helhed, er tilgængelig på GitHub her:
+https://github.com/kivkiv12345/CampaignCaravan
 
 
 .. _`Overbliksdiagram - Grænsefladenavigation`:
@@ -41,6 +43,11 @@ Kravspecifikation og Accepttest
 
 Kernen bag accepttesten er at spillet opfylder kravene stillet af kortspillets Karavanes spilleregler.
 Disse spilleregler ses nedenunder i afsnittet `Karavane Spilleregler`_:
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 
 
 .. _`Karavane Spilleregler`:

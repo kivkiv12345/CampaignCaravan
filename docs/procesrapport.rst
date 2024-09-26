@@ -22,6 +22,9 @@ hvorimod produktrapporten har til formål at beskrive spillets nuværende tilsta
 Enkelte dele af dene procesrapport, især vedr. teknisk dokumentation,
 vil også kunne findes i den tilhørende produktraport.
 
+Kildekoden for produktet, og projektet som helhed, er tilgængelig på GitHub her:
+https://github.com/kivkiv12345/CampaignCaravan
+
 
 Indledning
 ------------------------
