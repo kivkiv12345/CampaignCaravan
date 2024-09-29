@@ -9,3 +9,5 @@ CampaignCaravan.x86_64
 release/*
 
 data_v*.db
+
+conf.py

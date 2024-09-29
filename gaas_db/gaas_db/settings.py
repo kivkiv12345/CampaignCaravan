@@ -112,10 +112,12 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_NAME'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': 'db',
+        'HOST': ('db' if os.environ.get("DockerHOME") else "localhost"),
         'PORT': 5432,
     }
 }
+
+# POSTGRES_NAME=postgres POSTGRES_USER=postgres POSTGRES_PASSWORD=postgres python3 manage.py runserver 
 
 
 # Password validation
