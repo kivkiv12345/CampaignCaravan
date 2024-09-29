@@ -1,0 +1,16 @@
+## Dummy version of our SQL manager,
+##	which makes it easier to build the web export,
+##	without actually supporting the SQLite database
+
+extends Node
+
+
+@onready var connection: SQLManagerAbstract = self._get_original_connection()
+
+
+func _get_original_connection() -> SQLManagerAbstract:
+	return null
+
+
+func reset_to_orignal_connection() -> void:
+	self.connection = self._get_original_connection()

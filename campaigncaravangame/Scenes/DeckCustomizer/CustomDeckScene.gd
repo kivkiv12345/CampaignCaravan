@@ -26,7 +26,7 @@ func get_deck_name() -> String:
 
 func _on_delete_deck_button_pressed() -> void:
 	
-	var success = SqlManager.delete_custom_deck(self.get_deck_name())
+	var success = SQLDB.connection.delete_custom_deck(self.get_deck_name())
 	assert(success)
 	
 	self.get_parent().remove_child(self)

@@ -13,10 +13,10 @@ router.register(r'deck-cards', DeckCardViewSet)
 # print(router.urls)
 
 urlpatterns = [
-    
-    path('', include(router.urls)),
 
     path(f"token-auth/", authviews.obtain_auth_token),
     path(f"user-login/", user_login, name="user-login"),
     path(f"user-logout/", user_logout, name="user-logout"),
+    
+    path('', include(router.urls)),
 ]

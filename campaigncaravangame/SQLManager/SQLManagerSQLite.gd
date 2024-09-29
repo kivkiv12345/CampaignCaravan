@@ -1,24 +1,23 @@
 ## Inspiration: https://www.youtube.com/watch?v=j-BRiTrw_F0
 
-extends Node
+extends SQLManagerAbstract
+
+
+class_name SQLManagerSQLite
 
 
 var _db: SQLite = SQLite.new()
 
-func _ready() -> void:
-	# TODO Kevin: We are gonna use lazy ensure once 
-	self.ensure_database()
-
 
 ## This if the database exists, and that its version matches the game. Otherwise create it
-func ensure_database() -> void:
+func ensure_database() -> bool:
 	
 	# "default" is apparently the default path,
 	#	so we use that to check if we have already established a connection to the database.
 	#	This is not super ideal, ideally we would want a db.is_open()
 	if (self._db.path != "default"):
 		# Already connected to the database, which means we have already ensured its existance.
-		return
+		return true
 
 	# NOTE: Update the version number in the database name when changing the structure of tables.
 	#	That way players can still go back to old versions of the game and keep their data.
@@ -123,10 +122,12 @@ func ensure_database() -> void:
 		for card_vector in TextureManager.texture_paths:
 			card_data.append({"suit": card_vector.x, "rank": card_vector.y})
 		self._db.insert_rows("Cards", card_data)
+		
+	return true
 
 
 func query_custom_decks() -> Array[CustomDeckScene]:
-	SqlManager.ensure_database()
+	self.ensure_database()
 	
 	var decks_query_result: Array = self._db.select_rows("Decks", "", ["*"])
 	
@@ -140,7 +141,7 @@ func query_custom_decks() -> Array[CustomDeckScene]:
 
 
 func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
-	SqlManager.ensure_database()
+	self.ensure_database()
 	
 	var success: bool = true
 
@@ -169,7 +170,7 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 
 func delete_custom_deck(deck_name: String) -> bool:
 
-	SqlManager.ensure_database()
+	self.ensure_database()
 
 	var success: bool = true
 	success = self._db.query_with_bindings("SELECT id FROM Decks WHERE name = ?", [deck_name,])
@@ -193,12 +194,10 @@ func delete_custom_deck(deck_name: String) -> bool:
 	return true
 
 
-enum SaveCustomDeckResult {FAILED, UPDATED_EXISTING, SAVED_NEW}
-
 ## Will update the cards of an existing deck if one with the specified name already exists
-func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCounter]) -> SaveCustomDeckResult:
+func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCounter], callback: Callable) -> SaveCustomDeckResult:
 	
-	SqlManager.ensure_database()
+	self.ensure_database()
 	
 	var success: bool = true
 	

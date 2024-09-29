@@ -2,4 +2,4 @@
 *.pdf
 
 conf.py
-.zip
+*.zip

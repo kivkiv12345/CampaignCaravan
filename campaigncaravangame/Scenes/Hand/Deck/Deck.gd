@@ -101,7 +101,7 @@ static func from_custom_deck_name(custom_deck_name: String) -> Deck:
 	
 	var _self = Deck.new()
 		
-	for deck_cards in SqlManager.query_deck_cards(custom_deck_name):
+	for deck_cards in SQLDB.connection.query_deck_cards(custom_deck_name):
 		
 		for __ in range(deck_cards.get_card_count()):
 			_self.cards.append(deck_cards.card)

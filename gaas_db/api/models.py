@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 
 
 class Deck(Model):
-    name = CharField(max_length=128, null=False, blank=False)
+    name = CharField(max_length=128, null=False, blank=False, unique=True)
     # cards = ManyToManyField(Card, through=DeckCard)    
 
 

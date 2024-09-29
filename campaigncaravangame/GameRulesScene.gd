@@ -147,7 +147,7 @@ func _on_customize_deck_button_pressed() -> void:
 	
 	# No need to re-query every time customize is clicked
 	if customize_first_click:
-		self.set_custom_deck_options(SqlManager.query_custom_decks())
+		self.set_custom_deck_options(SQLDB.connection.query_custom_decks())
 		self.update_custom_deck_stats()
 		self.customize_first_click = false
 	
@@ -190,7 +190,7 @@ func update_custom_deck_stats() -> void:
 		return  # No option selected
 
 	var custom_deck_name: String = self.custom_deck_optionbutton.get_item_text(self.custom_deck_optionbutton.get_item_index(selected_id))
-	var custom_deck: Array[DeckCardWithCounter] = SqlManager.query_deck_cards(custom_deck_name)
+	var custom_deck: Array[DeckCardWithCounter] = SQLDB.connection.query_deck_cards(custom_deck_name)
 	
 	
 	var num_cards_total: int = 0
