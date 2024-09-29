@@ -1,0 +1,57 @@
+# Copied from H5 and Vue-Ollert projects
+
+version: '3.8'
+
+services:
+  # redis:
+  #   image: redis:7
+  #   ports:
+  #     - 6379:6379
+  db:
+      image: postgres
+      volumes:
+        - ./db_volume/db:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_DB=postgres
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      ports:
+        - "5432:5432"  # Forward the port, so we can use the container when running Django locally for debug purposes.
+  api:
+    build: gaas_db
+    volumes:
+      - .:/code
+      # - /var/run/docker.sock:/var/run/docker.sock  # Allow this container to administrate other containers
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "8000:8000"
+    depends_on:
+      # - redis
+      - db
+
+  # proxy_manager:
+  #   image: 'jc21/nginx-proxy-manager:latest'
+  #   restart: unless-stopped
+  #   ports:
+  #     - '80:80'
+  #     - '81:81'
+  #     - '443:443'
+  #   volumes:
+  #     - ./data:/data
+  #     - ./letsencrypt:/etc/letsencrypt
+  #   # depends_on:
+  #   #   - api
+
+  # nginx:
+  #   build: nginx-stream
+  #   ports:
+  #       - "80:80"
+  #       # Forwarding game ports should not be required when we are done.
+  #       # - "27020:27020"
+  #       # - "42420:42420"
+  #   volumes:
+  #       # - ./nginx/conf/http:/opt/nginx/http.conf.d
+  #       - ./nginx/conf/stream:/opt/nginx/stream.conf.d
