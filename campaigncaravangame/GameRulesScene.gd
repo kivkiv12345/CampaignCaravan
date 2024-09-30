@@ -15,6 +15,7 @@ var custom_deck_optionbutton: OptionButton = null
 func _ready() -> void:
 	if SQLDB.connection == null:  # Can't customize decks without a backend to store them
 		%CustomizeDeckButton.visible = false
+		%NoDatabaseCustomizeDeckButton.visible = true
 
 	self.set_custom_deck_options([])
 

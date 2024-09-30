@@ -273,6 +273,22 @@ alignment = 0
 icon_alignment = 2
 script = ExtResource("3_2cbb5")
 
+[node name="NoDatabaseCustomizeDeckButton" type="Button" parent="HBoxContainer/DeckVBoxContainer/DeckMarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "No deck database available, cannot customize decks."
+theme_type_variation = &"ButtonCheckboxMCM"
+disabled = true
+toggle_mode = true
+text = " Customize"
+icon = ExtResource("2_xmr2c")
+alignment = 0
+icon_alignment = 2
+script = ExtResource("3_2cbb5")
+
 [node name="Spacer" type="Control" parent="HBoxContainer/DeckVBoxContainer/DeckMarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
