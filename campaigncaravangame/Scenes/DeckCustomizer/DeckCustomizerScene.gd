@@ -259,6 +259,14 @@ func insert_custom_deck_alph(deck_to_insert: CustomDeckScene) -> void:
 	%CustomDecksVBoxContainer.move_child(deck_to_insert, insert_index)
 
 
+func _on_custom_deck_select_request_completed(deck_cards_arr: Array[DeckCardWithCounter]) -> void:
+	
+	for deck_cards in deck_cards_arr:
+		self.insert_deck_card_ordered(deck_cards)
+		
+	# Update the cache of saved cards, so we can compare for changes.
+	self.saved_deck_cache = self._build_saved_cache()
+	self.update_save_button_enabled_state()
 
 func _on_custom_deck_selected(selected_deck: CustomDeckScene) -> void:
 	
@@ -275,13 +283,9 @@ func _on_custom_deck_selected(selected_deck: CustomDeckScene) -> void:
 
 	for deck_cards in %CardsInDeckVBoxContainer.get_children():
 		%CardsInDeckVBoxContainer.remove_child(deck_cards)
-		
-	for deck_cards in SQLDB.connection.query_deck_cards(selected_deck.get_deck_name()):
-		self.insert_deck_card_ordered(deck_cards)
-		
-	# Update the cache of saved cards, so we can compare for changes.
-	self.saved_deck_cache = self._build_saved_cache()
-	self.update_save_button_enabled_state()
+	
+	# Async
+	SQLDB.connection.query_deck_cards(selected_deck.get_deck_name(), self._on_custom_deck_select_request_completed.call)
 
 
 func _on_custom_deck_deleted(deleted_deck: CustomDeckScene) -> void:

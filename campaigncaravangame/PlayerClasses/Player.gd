@@ -28,7 +28,21 @@ func _ready() -> void:
 	assert(self.game_manager != null)
 
 
-func init() -> void:
+func _deferred_init(deck: Deck, ready_callback: Callable) -> void:
+	
+	$Deck.fill_deck(deck)
+
+	# TODO Kevin: Quick play shows that we may actually do some shuffling,
+	#	even when this game rule is false.
+	if game_rules.deck_shuffle:
+		$Deck.unseeded_shuffle()
+
+	$Hand.fill_initial_hand()
+	
+	ready_callback.call(self)
+
+
+func init(ready_callback: Callable) -> void:
 
 	if self.hand == null:
 		self.hand = $Hand
@@ -64,20 +78,14 @@ func init() -> void:
 	var deck: Deck = null
 
 	if self.game_rules.custom_deck_name != "":
-		deck = Deck.from_custom_deck_name(self.game_rules.custom_deck_name)
+		Deck.from_custom_deck_name(self.game_rules.custom_deck_name, self._async_init.bind(ready_callback).call)
+		return  # Not ready yet, caller must wait for the supplied callback to be called
 
 	# No custom deck, generate a random one.
 	if deck == null:
 		deck = Deck.from_bounds_and_seed(self.game_rules.deck_min_size, self.game_rules.deck_max_size, deck_seed)
 
-	$Deck.fill_deck(deck)
-
-	# TODO Kevin: Quick play shows that we may actually do some shuffling,
-	#	even when this game rule is false.
-	if game_rules.deck_shuffle:
-		$Deck.unseeded_shuffle()
-
-	$Hand.fill_initial_hand()
+	self._deferred_init(deck, ready_callback)
 
 
 func get_legal_slots(hand_card: CardHandSlot) -> Array[CardSlot]:

@@ -18,10 +18,10 @@ func query_custom_decks() -> Array[CustomDeckScene]:
 	return []
 
 
-func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
+func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
 	self.ensure_database()
 	assert(false)
-	return []
+	callback.call([])
 
 
 func delete_custom_deck(deck_name: String, callback: Callable) -> void:

@@ -10,6 +10,10 @@ func _input(event: InputEvent) -> void:
 			%OptionsBackButton.pressed.emit()
 
 
+static func _dummy_player_ready(player: Player) -> void:
+	pass
+
+
 func background_restore_hook(game_manager: GameManager):
 
 	game_manager.restore_hook = background_restore_hook
@@ -27,7 +31,8 @@ func background_restore_hook(game_manager: GameManager):
 		player.min_delay = 1#0.02
 		player.max_delay = 2#0.04
 
-	human_replacement.init()
+	# TODO Kevin: Handle this being async
+	human_replacement.init(_dummy_player_ready.call)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

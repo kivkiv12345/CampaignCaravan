@@ -140,7 +140,7 @@ func query_custom_decks() -> Array[CustomDeckScene]:
 	return custom_decks
 
 
-func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
+func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
 	self.ensure_database()
 	
 	var success: bool = true
@@ -165,7 +165,7 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 		deck_card.set_card_count(query_deck_card["count"])
 		deck_cards.append(deck_card)
 	
-	return deck_cards
+	callback.call(deck_cards)
 
 
 func delete_custom_deck(deck_name: String, callback: Callable) -> void:

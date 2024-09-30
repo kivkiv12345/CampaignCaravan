@@ -71,9 +71,44 @@ func query_custom_decks() -> Array[CustomDeckScene]:
 	return []
 
 
-func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
+func _on_query_deck_cards_response(result: int, response_code: int, received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+	
+	if response_code < 200 or response_code >= 300:
+		print("Error fetching deck cards. Status Code: %d" % response_code)
+		print(body.get_string_from_utf8())
+		callback.call([])
+		
+	var response_json = body.get_string_from_utf8()
+	var deck_cards_data = JSON.parse_string(response_json).result
+
+	var deck_cards: Array[DeckCardWithCounter] = []
+	for card_data in deck_cards_data:
+		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()
+		deck_card.card = Card.new(card_data["suit"], card_data["rank"])
+		deck_card.set_card_count(card_data["count"])
+		deck_cards.append(deck_card)
+	
+	callback.call(deck_cards)
+
+
+func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
 	self.ensure_database()
-	return []
+	
+	# URL-encode the deck name to handle spaces and special characters
+	var encoded_deck_name = for_deck_name.uri_encode()
+	
+	# Construct the URL to query deck cards by deck name
+	var query_url = self.hostname + "/api/deck-cards/?deck__name=" + encoded_deck_name
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Token " + self.token.strip_edges(),
+	]
+
+	# Connect to handle the response once the request completes
+	self.request_manager.request_completed.connect(self._on_query_deck_cards_response.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
+	
+	# Make the GET request to query deck cards
+	self.request_manager.request(query_url, headers, HTTPClient.METHOD_GET)
 
 
 func _on_custom_deck_deleted(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
