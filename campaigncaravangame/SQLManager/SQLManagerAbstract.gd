@@ -24,10 +24,9 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 	return []
 
 
-func delete_custom_deck(deck_name: String) -> bool:
+func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 	self.ensure_database()
 	assert(false)
-	return false
 
 
 enum SaveCustomDeckResult {FAILED, UPDATED_EXISTING, SAVED_NEW, IN_PROGRESS}

@@ -76,10 +76,31 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 	return []
 
 
-func delete_custom_deck(deck_name: String) -> bool:
+func _on_custom_deck_deleted(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+	
+	if response_code < 200 or response_code >= 300:
+		print(body.get_string_from_ascii())
+		print("Error occurred with status code: %d" % response_code)
+		callback.call(false)  # Failed to delete deck
+		return
+	
+	callback.call(true)  # Sucessfully deleted deck
+
+
+func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 
 	self.ensure_database()
-	return true
+	
+	# First, delete the existing deck if it exists (API call)
+	var delete_url = self.hostname + "/api/decks/delete-by-name/" + deck_name + "/"
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Token " + self.token.strip_edges(),
+	]
+	
+	# Delete request first to ensure we overwrite existing decks with the same name
+	self.request_manager.request_completed.connect(self._on_custom_deck_deleted.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
+	var delete_response = request_manager.request(delete_url, headers, HTTPClient.METHOD_DELETE)
 
 
 func _on_deckcards_saved(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
@@ -94,13 +115,12 @@ func _on_deckcards_saved(result: int, response_code: int, headers: PackedStringA
 	callback.call(deckcard_result)
 
 
-func _on_decks_deleted(result: int, response_code: int, received_headers: PackedStringArray, body: PackedByteArray, deck_name: String, deck_cards_arr: Array[DeckCardWithCounter], callback: Callable):
+## Will update the cards of an existing deck if one with the specified name already exists
+## Some HTTP request help from: https://chatgpt.com
+func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCounter], callback: Callable) -> SaveCustomDeckResult:
 	
-	if response_code < 200 or response_code >= 300:
-		print(body.get_string_from_ascii())
-		print("Error occurred with status code: %d" % response_code)
-		return SaveCustomDeckResult.FAILED
-		
+	self.ensure_database()
+	
 	# Prepare deck data to send for creation/update
 	var cards_data = []
 	for deck_card in deck_cards_arr:
@@ -134,43 +154,4 @@ func _on_decks_deleted(result: int, response_code: int, received_headers: Packed
 		print("Error making the request")
 		return SaveCustomDeckResult.FAILED
 	
-	return SaveCustomDeckResult.SAVED_NEW  # Return the default result for now
-
-
-## Will update the cards of an existing deck if one with the specified name already exists
-## https://chatgpt.com
-func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCounter], callback: Callable) -> SaveCustomDeckResult:
-	
-	self.ensure_database()
-	
-	# First, delete the existing deck if it exists (API call)
-	var delete_url = self.hostname + "/api/decks/delete-by-name/" + deck_name + "/"
-	var headers = [
-		"Content-Type: application/json",
-		"Authorization: Token " + self.token.strip_edges(),
-	]
-	
-	#print("AAAAAAAAAA ", headers)
-	# Delete request first to ensure we overwrite existing decks with the same name
-	self.request_manager.request_completed.connect(self._on_decks_deleted.bind(deck_name, deck_cards_arr, callback).call, ConnectFlags.CONNECT_ONE_SHOT)
-	var delete_response = request_manager.request(delete_url, headers, HTTPClient.METHOD_DELETE)
-	
 	return SaveCustomDeckResult.IN_PROGRESS
-
-
-# Handle the result of the HTTP request
-func _on_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray):
-	
-	if response_code < 200 or response_code >= 300:
-		print(body.get_string_from_ascii())
-		print("Error occurred with status code: %d" % response_code)
-		return SaveCustomDeckResult.FAILED
-	
-	#var response_data = JSON.parse_string(body.get_string_from_utf8())
-	if response_code == 201:
-		print("Deck created successfully.")
-		return SaveCustomDeckResult.SAVED_NEW
-	elif response_code == 200:
-		print("Deck updated successfully.")
-		return SaveCustomDeckResult.UPDATED_EXISTING
-		

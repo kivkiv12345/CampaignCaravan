@@ -168,7 +168,7 @@ func query_deck_cards(for_deck_name: String) -> Array[DeckCardWithCounter]:
 	return deck_cards
 
 
-func delete_custom_deck(deck_name: String) -> bool:
+func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 
 	self.ensure_database()
 
@@ -179,7 +179,8 @@ func delete_custom_deck(deck_name: String) -> bool:
 	var existing_decks: Array[Dictionary] = self._db.query_result
 	
 	if existing_decks.size() == 0:
-		return false
+		callback.call(false)
+		return
 	
 	assert(existing_decks.size() == 1)
 
@@ -191,7 +192,7 @@ func delete_custom_deck(deck_name: String) -> bool:
 	success = self._db.query_with_bindings("DELETE FROM Decks WHERE id = ?", [existing_decks[0]["id"],])
 	assert(success)
 
-	return true
+	callback.call(true)
 
 
 ## Will update the cards of an existing deck if one with the specified name already exists
