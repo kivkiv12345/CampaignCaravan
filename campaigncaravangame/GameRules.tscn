@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://dic6t3g08dh4e"]
+[gd_scene load_steps=7 format=3 uid="uid://dic6t3g08dh4e"]
 
 [ext_resource type="Script" path="res://GameRulesScene.gd" id="1_phn6n"]
 [ext_resource type="PackedScene" uid="uid://c7qdk4crw0kvf" path="res://IntLineEdit.tscn" id="1_wh0lf"]
 [ext_resource type="Texture2D" uid="uid://bkd703ivppc5y" path="res://MCMUnchecked.png" id="2_xmr2c"]
 [ext_resource type="Script" path="res://Scenes/FalloutCheckboxMCM.gd" id="3_2cbb5"]
 [ext_resource type="Texture2D" uid="uid://dsmek6qhvw8t6" path="res://MCMChecked.png" id="4_bnw7l"]
+[ext_resource type="FontFile" uid="uid://crnftrw2o1g51" path="res://monofonto_rg.otf" id="6_2w512"]
 
 [node name="GameSettings" type="PanelContainer"]
 anchors_preset = -1
@@ -402,6 +403,7 @@ text = "Custom Deck"
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("6_2w512")
 selected = 0
 allow_reselect = true
 item_count = 2
