@@ -69,17 +69,17 @@ func ensure_database() -> bool:
 
 func _on_query_custom_decks_response(_result: int, response_code: int, _received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
 	
+	# Array to store custom decks
+	var custom_decks: Array[CustomDeckScene] = []
+	
 	if response_code < 200 or response_code >= 300:
 		print("Error fetching custom decks. Status Code: %d" % response_code)
 		print(body.get_string_from_utf8())
-		callback.call([])
+		callback.call(custom_decks)
 		return
 	
 	var response_json = body.get_string_from_utf8()
 	var decks_data = JSON.parse_string(response_json)
-
-	# Array to store custom decks
-	var custom_decks: Array[CustomDeckScene] = []
 
 	for deck_data in decks_data:
 		# Instantiate the CustomDeckScene and set the deck name

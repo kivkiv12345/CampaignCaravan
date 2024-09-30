@@ -30,7 +30,8 @@ func _ready() -> void:
 	# Bit of a hack to make sure save button state is correct.
 	self._on_deck_name_changed(%DeckNameLineEdit.text)
 	
-	SQLDB.connection.query_custom_decks(self._on_custom_decks_received.call)
+	if SQLDB.connection != null:
+		SQLDB.connection.query_custom_decks(self._on_custom_decks_received.call)
 
 
 func _on_customizer_back_button_pressed() -> void:

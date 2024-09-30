@@ -228,7 +228,7 @@ theme_override_constants/margin_bottom = 10
 [node name="ManageDecksHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
+tooltip_text = "Connect to an external database backend"
 
 [node name="CenterContainer" type="CenterContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/MarginContainer/ManageDecksHBoxContainer"]
 layout_mode = 2
@@ -240,7 +240,7 @@ text = "Connect to Database"
 
 [node name="DatabaseHostnameHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
-tooltip_text = "Maximum value to sell a caravan (inclusive)"
+tooltip_text = "Host for external database backend"
 
 [node name="DatabaseHostnameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseHostnameHBoxContainer"]
 layout_mode = 2
@@ -254,7 +254,7 @@ text = "http://localhost:8000/"
 
 [node name="DatabaseUsernameHBoxContainer3" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
-tooltip_text = "Maximum value to sell a caravan (inclusive)"
+tooltip_text = "Username for authentication to external database backend"
 
 [node name="DatabaseUsernameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseUsernameHBoxContainer3"]
 layout_mode = 2
@@ -268,7 +268,7 @@ text = "admin"
 
 [node name="DatabasePasswordHBoxContainer4" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
-tooltip_text = "Maximum value to sell a caravan (inclusive)"
+tooltip_text = "Password for authentication to external database backend"
 
 [node name="DatabasePasswordNameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabasePasswordHBoxContainer4"]
 layout_mode = 2
@@ -290,7 +290,7 @@ unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-tooltip_text = "Use the settings above to connect to an external database"
+tooltip_text = "Disconnect from external database, and revert to default local database"
 text = "Disconnect"
 
 [node name="ConnectDatabaseButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2"]

@@ -13,7 +13,7 @@ var custom_deck_optionbutton: OptionButton = null
 
 
 func _ready() -> void:
-	if OS.get_name() == "Web":
+	if SQLDB.connection == null:  # Can't customize decks without a backend to store them
 		%CustomizeDeckButton.visible = false
 		
 	self.custom_deck_optionbutton = %BaseCustomDeckOptionButton.duplicate()
@@ -155,6 +155,7 @@ func _on_customize_deck_button_pressed() -> void:
 	
 	# No need to re-query every time customize is clicked
 	if customize_first_click:
+		assert(SQLDB.connection != null)
 		SQLDB.connection.query_custom_decks(self._on_query_custom_decks_finished.call)
 		self.custom_deck_optionbutton.disabled = true  # Disabled until request finishes
 	
