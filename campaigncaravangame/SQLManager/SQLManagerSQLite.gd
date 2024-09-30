@@ -126,7 +126,7 @@ func ensure_database() -> bool:
 	return true
 
 
-func query_custom_decks() -> Array[CustomDeckScene]:
+func query_custom_decks(callback: Callable) -> void:
 	self.ensure_database()
 	
 	var decks_query_result: Array = self._db.select_rows("Decks", "", ["*"])
@@ -137,7 +137,7 @@ func query_custom_decks() -> Array[CustomDeckScene]:
 		custom_deck.set_deck_name(query_deck["name"])
 		custom_decks.append(custom_deck)
 	
-	return custom_decks
+	callback.call(custom_decks)
 
 
 func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
@@ -243,6 +243,8 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 	assert(insert_success == true, "I'm not gonna bother with what happens if we can't insert decks, for now")
 	
 	if saved_new:
+		callback.call(SaveCustomDeckResult.SAVED_NEW)
 		return SaveCustomDeckResult.SAVED_NEW
 	else:
+		callback.call(SaveCustomDeckResult.UPDATED_EXISTING)
 		return SaveCustomDeckResult.UPDATED_EXISTING

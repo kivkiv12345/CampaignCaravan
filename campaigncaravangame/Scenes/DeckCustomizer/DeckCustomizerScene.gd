@@ -8,6 +8,11 @@ class_name DeckCustomizer
 signal deck_customizer_back()
 
 
+func _on_custom_decks_received(custom_decks: Array[CustomDeckScene]) -> void:
+
+	for custom_deck in custom_decks:
+		self.insert_custom_deck_alph(custom_deck)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -25,8 +30,7 @@ func _ready() -> void:
 	# Bit of a hack to make sure save button state is correct.
 	self._on_deck_name_changed(%DeckNameLineEdit.text)
 	
-	for custom_deck in SQLDB.connection.query_custom_decks():
-		self.insert_custom_deck_alph(custom_deck)
+	SQLDB.connection.query_custom_decks(self._on_custom_decks_received.call)
 
 
 func _on_customizer_back_button_pressed() -> void:

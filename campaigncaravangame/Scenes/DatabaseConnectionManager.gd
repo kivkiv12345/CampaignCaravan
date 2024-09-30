@@ -1,9 +1,17 @@
 extends PanelContainer
 
 
-
-var gaas_connection: SQLManagerGAAS = null
-
+func _ready() -> void:
+	
+	if SQLDB.connection is SQLManagerGAAS:
+		%DatabaseHostnameLineEdit.text = SQLDB.connection.hostname
+		
+		# We have long since forgotten which credentials were used to log in.
+		#	We now only remember the token.
+		%DatabaseUsernameLineEdit.text = ""
+		%DatabasePasswordLineEdit.text = ""
+		
+		self._on_login_succeeded(SQLDB.connection)
 
 func _input(event: InputEvent) -> void:
 	
@@ -25,9 +33,9 @@ func _on_connect_database_button_pressed() -> void:
 	#print(db_url)
 	#%DatabaseHTTPRequest.request(db_url, headers, HTTPClient.METHOD_POST, JSON.stringify(login_credentials))
 	
-	self.gaas_connection = SQLManagerGAAS.new()
+	var gaas_connection: SQLManagerGAAS = SQLManagerGAAS.new()
 	gaas_connection.hostname = %DatabaseHostnameLineEdit.text.rstrip("/")
-	gaas_connection.login(%DatabaseUsernameLineEdit.text, %DatabasePasswordLineEdit.text, self._on_database_http_request_request_completed)
+	gaas_connection.login(%DatabaseUsernameLineEdit.text, %DatabasePasswordLineEdit.text, self._on_database_http_request_request_completed.bind(gaas_connection).call)
 	
 	%DisconnectDatabaseButton.visible = false
 	%ConnectDatabaseButton.visible = false
@@ -48,19 +56,19 @@ func _on_disconnect_database_button_pressed() -> void:
 	%SpinnerProgressBar.visible = false
 
 
-func _on_login_succeeded() -> void:
+func _on_login_succeeded(successful_connection: SQLManagerGAAS) -> void:
 	%DatabaseHostnameLineEdit.editable = false
 	%DatabaseUsernameLineEdit.editable = false
 	%DatabasePasswordLineEdit.editable = false
 	
-	SQLDB.connection = self.gaas_connection
+	SQLDB.connection = successful_connection
 	
 	%DisconnectDatabaseButton.visible = true
 	%ConnectDatabaseButton.visible = false
 	%SpinnerProgressBar.visible = false
 
 
-func _on_database_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_database_http_request_request_completed(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray, gaas_connection: SQLManagerGAAS) -> void:
 	
 	%DisconnectDatabaseButton.visible = false
 	%ConnectDatabaseButton.visible = true
@@ -70,4 +78,4 @@ func _on_database_http_request_request_completed(result: int, response_code: int
 		print(body.get_string_from_ascii())
 		return  # Request failed
 
-	self._on_login_succeeded()
+	self._on_login_succeeded(gaas_connection)

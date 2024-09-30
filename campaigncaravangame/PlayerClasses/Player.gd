@@ -78,7 +78,7 @@ func init(ready_callback: Callable) -> void:
 	var deck: Deck = null
 
 	if self.game_rules.custom_deck_name != "":
-		Deck.from_custom_deck_name(self.game_rules.custom_deck_name, self._async_init.bind(ready_callback).call)
+		Deck.from_custom_deck_name(self.game_rules.custom_deck_name, self._deferred_init.bind(ready_callback).call)
 		return  # Not ready yet, caller must wait for the supplied callback to be called
 
 	# No custom deck, generate a random one.

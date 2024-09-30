@@ -142,14 +142,21 @@ func _on_button_pressed() -> void:
 	self.gamerules_changed.emit(self.to_game_rules())
 
 
+func _on_query_custom_decks_finished(custom_decks: Array[CustomDeckScene]) -> void:
+	self.custom_deck_optionbutton.disabled = false
+	
+	self.set_custom_deck_options(custom_decks)
+	self.update_custom_deck_stats()
+	self.customize_first_click = false
+
+
 var customize_first_click: bool = true
 func _on_customize_deck_button_pressed() -> void:
 	
 	# No need to re-query every time customize is clicked
 	if customize_first_click:
-		self.set_custom_deck_options(SQLDB.connection.query_custom_decks())
-		self.update_custom_deck_stats()
-		self.customize_first_click = false
+		SQLDB.connection.query_custom_decks(self._on_query_custom_decks_finished.call)
+		self.custom_deck_optionbutton.disabled = true  # Disabled until request finishes
 	
 	var seeded_deck_nodes: Array[Node] = [
 		%DeckMinCardsHBoxContainer,
@@ -181,18 +188,8 @@ func _on_customize_deck_button_pressed() -> void:
 			node.show()
 
 
-func update_custom_deck_stats() -> void:
-	
-	var selected_id: int = self.custom_deck_optionbutton.get_selected_id()
-	if selected_id <= 1:
-		%DeckConformsUniqueCardsButton.button_pressed = true
-		%DeckConformsUniqueCardsButton._update_checkbox_icon()
-		return  # No option selected
+func _query_deck_cards_finsihed(custom_deck: Array[DeckCardWithCounter]) -> void:
 
-	var custom_deck_name: String = self.custom_deck_optionbutton.get_item_text(self.custom_deck_optionbutton.get_item_index(selected_id))
-	var custom_deck: Array[DeckCardWithCounter] = SQLDB.connection.query_deck_cards(custom_deck_name)
-	
-	
 	var num_cards_total: int = 0
 	for deck_cards in custom_deck:
 		assert(deck_cards is DeckCardWithCounter)
@@ -210,6 +207,18 @@ func update_custom_deck_stats() -> void:
 
 	%DeckConformsUniqueCardsButton.button_pressed = true
 	%DeckConformsUniqueCardsButton._update_checkbox_icon()
+
+
+func update_custom_deck_stats() -> void:
+	
+	var selected_id: int = self.custom_deck_optionbutton.get_selected_id()
+	if selected_id <= 1:
+		%DeckConformsUniqueCardsButton.button_pressed = true
+		%DeckConformsUniqueCardsButton._update_checkbox_icon()
+		return  # No option selected
+
+	var custom_deck_name: String = self.custom_deck_optionbutton.get_item_text(self.custom_deck_optionbutton.get_item_index(selected_id))
+	SQLDB.connection.query_deck_cards(custom_deck_name, self._query_deck_cards_finsihed.call)
 
 
 func _on_custom_deck_item_selected(_index: int) -> void:

@@ -10,7 +10,7 @@ func _input(event: InputEvent) -> void:
 			%OptionsBackButton.pressed.emit()
 
 
-static func _dummy_player_ready(player: Player) -> void:
+static func _dummy_player_ready(_player: Player) -> void:
 	pass
 
 

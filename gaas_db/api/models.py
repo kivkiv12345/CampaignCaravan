@@ -10,7 +10,9 @@ from django.core.exceptions import ValidationError
 
 class Deck(Model):
     name = CharField(max_length=128, null=False, blank=False, unique=True)
-    # cards = ManyToManyField(Card, through=DeckCard)    
+    
+    def __str__(self) -> str:
+        return f"{self.name} [{self.pk}]"
 
 
 class DeckCard(Model):
@@ -49,6 +51,9 @@ class DeckCard(Model):
     count = IntegerField(validators=(_validate_num_cards,))
     suit = CharField(max_length=15, choices=Suit.choices)
     rank = CharField(max_length=6, choices=Rank.choices)
+    
+    def __str__(self) -> str:
+        return f"{self.get_suit_display()} {self.get_rank_display()} x {self.count}"
     
     class Meta:
         

@@ -392,7 +392,7 @@ horizontal_alignment = 2
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
+tooltip_text = "Customized decks"
 
 [node name="HandSizeLabel" type="Label" parent="HBoxContainer/DeckVBoxContainer/MarginContainer/SeededDeckOptionsHBoxContainer/VBoxContainer/CustomDeckOptionHBoxContainer"]
 layout_mode = 2

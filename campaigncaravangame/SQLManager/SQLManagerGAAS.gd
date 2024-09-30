@@ -14,7 +14,7 @@ var hostname: String = "HTTP://localhost:8000/"
 var request_manager: HTTPRequest = HTTPRequest.new()
 
 
-func _on_login_finished(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+func _on_login_finished(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
 
 	if response_code < 200 or response_code >= 300:
 		print(body.get_string_from_ascii())
@@ -66,26 +66,63 @@ func ensure_database() -> bool:
 	return true
 
 
-func query_custom_decks() -> Array[CustomDeckScene]:
+func _on_query_custom_decks_response(_result: int, response_code: int, _received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+	
+	if response_code < 200 or response_code >= 300:
+		print("Error fetching custom decks. Status Code: %d" % response_code)
+		print(body.get_string_from_utf8())
+		callback.call([])
+		return
+	
+	var response_json = body.get_string_from_utf8()
+	var decks_data = JSON.parse_string(response_json)
+
+	# Array to store custom decks
+	var custom_decks: Array[CustomDeckScene] = []
+
+	for deck_data in decks_data:
+		# Instantiate the CustomDeckScene and set the deck name
+		var custom_deck: CustomDeckScene = preload("res://Scenes/DeckCustomizer/CustomDeckScene.tscn").instantiate()
+		custom_deck.set_deck_name(deck_data["name"])
+		custom_decks.append(custom_deck)
+	
+	# Pass the array of custom decks to the callback
+	callback.call(custom_decks)
+
+
+func query_custom_decks(callback: Callable) -> void:
 	self.ensure_database()
-	return []
+	
+	# Construct the URL to query custom decks
+	var query_url = self.hostname + "/api/decks/"
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Token " + self.token.strip_edges(),
+	]
+
+	# Connect to handle the response once the request completes
+	self.request_manager.request_completed.connect(self._on_query_custom_decks_response.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
+
+	# Make the GET request to query custom decks
+	self.request_manager.request(query_url, headers, HTTPClient.METHOD_GET)
 
 
-func _on_query_deck_cards_response(result: int, response_code: int, received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+func _on_query_deck_cards_response(_result: int, response_code: int, _received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
 	
 	if response_code < 200 or response_code >= 300:
 		print("Error fetching deck cards. Status Code: %d" % response_code)
 		print(body.get_string_from_utf8())
 		callback.call([])
+		return
 		
 	var response_json = body.get_string_from_utf8()
-	var deck_cards_data = JSON.parse_string(response_json).result
+	var deck_cards_data = JSON.parse_string(response_json)
 
 	var deck_cards: Array[DeckCardWithCounter] = []
 	for card_data in deck_cards_data:
 		var deck_card: DeckCardWithCounter = preload("res://Scenes/DeckCustomizer/DeckCardWithCounter.tscn").instantiate()
-		deck_card.card = Card.new(card_data["suit"], card_data["rank"])
-		deck_card.set_card_count(card_data["count"])
+		deck_card.card = Card.new(int(card_data["suit"]), int(card_data["rank"]))
+		deck_card.set_card_count(int(card_data["count"]))
 		deck_cards.append(deck_card)
 	
 	callback.call(deck_cards)
@@ -105,13 +142,15 @@ func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
 	]
 
 	# Connect to handle the response once the request completes
-	self.request_manager.request_completed.connect(self._on_query_deck_cards_response.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
+	if not self.request_manager.request_completed.is_connected(self._on_query_deck_cards_response.bind(callback).call):
+		self.request_manager.request_completed.connect(self._on_query_deck_cards_response.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
 	
 	# Make the GET request to query deck cards
+	self.request_manager.cancel_request()
 	self.request_manager.request(query_url, headers, HTTPClient.METHOD_GET)
 
 
-func _on_custom_deck_deleted(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+func _on_custom_deck_deleted(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
 	
 	if response_code < 200 or response_code >= 300:
 		print(body.get_string_from_ascii())
@@ -126,8 +165,10 @@ func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 
 	self.ensure_database()
 	
+	var encoded_deck_name = deck_name.uri_encode()
+	
 	# First, delete the existing deck if it exists (API call)
-	var delete_url = self.hostname + "/api/decks/delete-by-name/" + deck_name + "/"
+	var delete_url = self.hostname + "/api/decks/delete-by-name/" + encoded_deck_name + "/"
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Token " + self.token.strip_edges(),
@@ -135,17 +176,20 @@ func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 	
 	# Delete request first to ensure we overwrite existing decks with the same name
 	self.request_manager.request_completed.connect(self._on_custom_deck_deleted.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
-	var delete_response = request_manager.request(delete_url, headers, HTTPClient.METHOD_DELETE)
+	var _delete_response = request_manager.request(delete_url, headers, HTTPClient.METHOD_DELETE)
+	# NOTE: We could check delete_response here
 
 
-func _on_deckcards_saved(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
+func _on_deckcards_saved(_result: int, response_code: int, _headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:
 	
-	var deckcard_result: SaveCustomDeckResult = SaveCustomDeckResult.SAVED_NEW
+	var deckcard_result: SaveCustomDeckResult = SaveCustomDeckResult.UPDATED_EXISTING
 	
 	if response_code < 200 or response_code >= 300:
 		print(body.get_string_from_ascii())
 		print("Error occurred with status code: %d" % response_code)
 		deckcard_result = SaveCustomDeckResult.FAILED
+	elif response_code == 201:
+		deckcard_result = SaveCustomDeckResult.SAVED_NEW
 		
 	callback.call(deckcard_result)
 

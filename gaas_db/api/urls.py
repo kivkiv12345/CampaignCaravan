@@ -10,7 +10,6 @@ router = DefaultRouter()
 router.register(r'decks', DeckViewSet)
 router.register(r'deck-cards', DeckCardViewSet)
 
-# print(router.urls)
 
 urlpatterns = [
 

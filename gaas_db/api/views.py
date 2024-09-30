@@ -17,6 +17,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from django.contrib.auth.models import User, AnonymousUser
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 from rest_framework import viewsets
@@ -70,7 +71,7 @@ class DeckViewSet(viewsets.ModelViewSet):
                     count=card['count']
                 )
 
-            return Response({"detail": "Deck saved successfully."}, status=status.HTTP_200_OK)
+            return Response({"detail": "Deck saved successfully."}, status=(status.HTTP_201_CREATED if created else status.HTTP_200_OK))
         
         except Exception as e:
             return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -81,6 +82,8 @@ class DeckCardViewSet(viewsets.ModelViewSet):
     serializer_class = DeckCardSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]  # Only authenticated users can access
+    filter_backends = [DjangoFilterBackend]  # Enable filtering
+    filterset_fields = ['deck__name']  # Allow filtering by deck name, which we will then do in GDScript
 
 
 @api_view(['POST'])
