@@ -15,12 +15,8 @@ var custom_deck_optionbutton: OptionButton = null
 func _ready() -> void:
 	if SQLDB.connection == null:  # Can't customize decks without a backend to store them
 		%CustomizeDeckButton.visible = false
-		
-	self.custom_deck_optionbutton = %BaseCustomDeckOptionButton.duplicate()
-	
-	%BaseCustomDeckOptionButton.visible = false
-	self.custom_deck_optionbutton.visible = true
-	%CustomDeckOptionHBoxContainer.add_child(self.custom_deck_optionbutton)
+
+	self.set_custom_deck_options([])
 
 
 func to_game_rules() -> GameRules:
@@ -244,6 +240,7 @@ func set_custom_deck_options(custom_decks: Array[CustomDeckScene]) -> void:
 		%CustomDeckOptionHBoxContainer.remove_child(%CustomDeckOptionHBoxContainer.get_child(%CustomDeckOptionHBoxContainer.get_child_count()-1))
 		
 	self.custom_deck_optionbutton = %BaseCustomDeckOptionButton.duplicate()
+	self.custom_deck_optionbutton.get_popup().add_theme_font_override("font", preload("res://monofonto_rg.otf"))
 	
 	for custom_deck in custom_decks:
 		self.custom_deck_optionbutton.add_item(custom_deck.get_deck_name())
