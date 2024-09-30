@@ -163,6 +163,7 @@ text = "Back"
 
 [node name="OptionsOuterMarginContainer" type="MarginContainer" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,78 +181,6 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Label" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 1
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacer2" type="Control" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ContinueMargin" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 3
-
-[node name="Continue" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/ContinueMargin"]
-layout_mode = 2
-text = "Continue"
-
-[node name="MarginContainer2" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 3
-
-[node name="RestartButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/MarginContainer2"]
-layout_mode = 2
-text = "Restart"
-
-[node name="MarginContainer3" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 3
-
-[node name="MainMenuButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/MarginContainer3"]
-layout_mode = 2
-text = "Main Menu"
-
-[node name="MarginContainer4" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
-visible = false
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 15
-
-[node name="QuitButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/MarginContainer4"]
-layout_mode = 2
-text = "Quit"
-
 [node name="HBoxContainer2" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -263,9 +192,10 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.3
 
 [node name="DatabaseManagerOuterMarginContainer" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
+size_flags_horizontal = 4
+size_flags_vertical = 4
 size_flags_stretch_ratio = 0.7
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -277,78 +207,85 @@ layout_mode = 2
 size_flags_vertical = 3
 script = ExtResource("4_q0oeq")
 
-[node name="CustomDecksVBoxContainer" type="VBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer"]
+[node name="DatabaseManagerInnerMarginContainer" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="CustomDecksVBoxContainer" type="VBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="MarginContainer" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="ManageDecksHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/MarginContainer"]
+[node name="ManageDecksHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "Prevent filling a deck of only: 10's, 6's and kings?"
 
-[node name="CenterContainer" type="CenterContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/MarginContainer/ManageDecksHBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/MarginContainer/ManageDecksHBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ManageDecksButton" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/MarginContainer/ManageDecksHBoxContainer/CenterContainer"]
+[node name="ManageDecksButton" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/MarginContainer/ManageDecksHBoxContainer/CenterContainer"]
 layout_mode = 2
 text = "Connect to Database"
 
-[node name="DatabaseHostnameHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer"]
+[node name="DatabaseHostnameHBoxContainer" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
 tooltip_text = "Maximum value to sell a caravan (inclusive)"
 
-[node name="DatabaseHostnameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabaseHostnameHBoxContainer"]
+[node name="DatabaseHostnameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseHostnameHBoxContainer"]
 layout_mode = 2
 text = "Hostname"
 
-[node name="DatabaseHostnameLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabaseHostnameHBoxContainer"]
+[node name="DatabaseHostnameLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseHostnameHBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "http://localhost:8000/"
 
-[node name="DatabaseUsernameHBoxContainer3" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer"]
+[node name="DatabaseUsernameHBoxContainer3" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
 tooltip_text = "Maximum value to sell a caravan (inclusive)"
 
-[node name="DatabaseUsernameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabaseUsernameHBoxContainer3"]
+[node name="DatabaseUsernameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseUsernameHBoxContainer3"]
 layout_mode = 2
 text = "Username"
 
-[node name="DatabaseUsernameLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabaseUsernameHBoxContainer3"]
+[node name="DatabaseUsernameLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabaseUsernameHBoxContainer3"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "admin"
 
-[node name="DatabasePasswordHBoxContainer4" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer"]
+[node name="DatabasePasswordHBoxContainer4" type="HBoxContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
 tooltip_text = "Maximum value to sell a caravan (inclusive)"
 
-[node name="DatabasePasswordNameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabasePasswordHBoxContainer4"]
+[node name="DatabasePasswordNameLabel" type="Label" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabasePasswordHBoxContainer4"]
 layout_mode = 2
 text = "Password"
 
-[node name="DatabasePasswordLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/DatabasePasswordHBoxContainer4"]
+[node name="DatabasePasswordLineEdit" type="LineEdit" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/DatabasePasswordHBoxContainer4"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Test1234!"
 secret = true
 
-[node name="CenterContainer2" type="CenterContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="DisconnectDatabaseButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2"]
+[node name="DisconnectDatabaseButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(120, 30)
@@ -356,14 +293,14 @@ layout_mode = 2
 tooltip_text = "Use the settings above to connect to an external database"
 text = "Disconnect"
 
-[node name="ConnectDatabaseButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2"]
+[node name="ConnectDatabaseButton" type="Button" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
 tooltip_text = "Use the settings above to connect to an external database"
 text = "Connect"
 
-[node name="SpinnerProgressBar" type="TextureProgressBar" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2"]
+[node name="SpinnerProgressBar" type="TextureProgressBar" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -372,7 +309,7 @@ fill_mode = 4
 texture_progress = ExtResource("5_5olh1")
 script = ExtResource("6_x6a7p")
 
-[node name="AspectRatioContainer" type="Node2D" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2"]
+[node name="AspectRatioContainer" type="Node2D" parent="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2"]
 visible = false
 position = Vector2(253, 0)
 scale = Vector2(0.64, 0.64)
@@ -402,6 +339,6 @@ text = "Back"
 [connection signal="pressed" from="MainMenuMarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="meta_clicked" from="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/Label" to="." method="_on_howtoplay_meta_clicked"]
 [connection signal="pressed" from="HowToPlayOuterMarginContainer/HowToPlayPanelContainer/HowToPlayInnerMarginContainer/VBoxContainer/HowToPlayMarginContainer/HowToPlayBackButton" to="." method="_on_how_to_play_back_button_pressed"]
-[connection signal="pressed" from="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2/DisconnectDatabaseButton" to="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer" method="_on_disconnect_database_button_pressed"]
-[connection signal="pressed" from="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/CustomDecksVBoxContainer/CenterContainer2/ConnectDatabaseButton" to="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer" method="_on_connect_database_button_pressed"]
+[connection signal="pressed" from="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2/DisconnectDatabaseButton" to="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer" method="_on_disconnect_database_button_pressed"]
+[connection signal="pressed" from="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer/DatabaseManagerInnerMarginContainer/CustomDecksVBoxContainer/CenterContainer2/ConnectDatabaseButton" to="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HBoxContainer2/DatabaseManagerOuterMarginContainer/DatabaseManagerPanelContainer" method="_on_connect_database_button_pressed"]
 [connection signal="pressed" from="OptionsOuterMarginContainer/PanelContainer/VBoxContainer/HowToPlayMarginContainer/OptionsBackButton" to="." method="_on_options_back_button_pressed"]

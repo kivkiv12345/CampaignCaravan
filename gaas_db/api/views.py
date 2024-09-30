@@ -25,6 +25,12 @@ from .models import Deck, DeckCard
 from .serializers import DeckSerializer, DeckCardSerializer
 
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def validate_token(request):
+    return Response({"detail": "Token is valid."}, status=200)
+
 
 # Source: https://chat.openai.com
 class DeckViewSet(viewsets.ModelViewSet):

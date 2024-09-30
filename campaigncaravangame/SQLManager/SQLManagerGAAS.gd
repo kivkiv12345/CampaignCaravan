@@ -8,8 +8,8 @@ class_name SQLManagerGAAS
 
 # TODO Kevin: I guess we should store both of these locally,
 #	using the build in resource store system thing.
-var token: String = ""
-var hostname: String = "HTTP://localhost:8000/"
+@export var token: String = ""
+@export var hostname: String = "HTTP://localhost:8000/"
 
 var request_manager: HTTPRequest = HTTPRequest.new()
 
@@ -24,19 +24,19 @@ func _on_login_finished(_result: int, response_code: int, _headers: PackedString
 	self.token = JSON.parse_string(body.get_string_from_ascii())['token']
 
 
-func login(username: String, password: String, callback: Callable) -> void:
+func login(username: String, password: String, callback: Callable) -> bool:
 	
 	if not self.request_manager.is_inside_tree():
 		# TODO Kevin: Memory leak?, and consequences for changing scene?
 		SQLDB.get_tree().root.add_child(self.request_manager)
-	
-	if not self.request_manager.request_completed.is_connected(callback):
-		self.request_manager.request_completed.connect(callback, ConnectFlags.CONNECT_ONE_SHOT)
-	
+		
 	# TODO Kevin: Be careful about the call order of these callbacks signals
 	if not self.request_manager.request_completed.is_connected(self._on_login_finished):
 		self.request_manager.request_completed.connect(self._on_login_finished, ConnectFlags.CONNECT_ONE_SHOT)
-		
+	
+	if not self.request_manager.request_completed.is_connected(callback):
+		self.request_manager.request_completed.connect(callback, ConnectFlags.CONNECT_ONE_SHOT)
+
 	var login_credentials: Dictionary = {
 		'username': username.strip_edges().strip_escapes(), 
 		'password': password.strip_edges().strip_escapes(),
@@ -48,8 +48,9 @@ func login(username: String, password: String, callback: Callable) -> void:
 		"Content-Type: application/json",
 	]
 	print(db_url)
-	self.request_manager.request(db_url, headers, HTTPClient.METHOD_POST, JSON.stringify(login_credentials))
+	var post_error = self.request_manager.request(db_url, headers, HTTPClient.METHOD_POST, JSON.stringify(login_credentials))
 
+	return post_error == OK
 
 
 ## This if the database exists, and that its version matches the game. Otherwise create it
@@ -94,7 +95,7 @@ func query_custom_decks(callback: Callable) -> void:
 	self.ensure_database()
 	
 	# Construct the URL to query custom decks
-	var query_url = self.hostname + "/api/decks/"
+	var query_url = self.hostname.rstrip('/') + "/api/decks/"
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Token " + self.token.strip_edges(),
@@ -135,7 +136,7 @@ func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
 	var encoded_deck_name = for_deck_name.uri_encode()
 	
 	# Construct the URL to query deck cards by deck name
-	var query_url = self.hostname + "/api/deck-cards/?deck__name=" + encoded_deck_name
+	var query_url = self.hostname.rstrip('/') + "/api/deck-cards/?deck__name=" + encoded_deck_name
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Token " + self.token.strip_edges(),
@@ -168,7 +169,7 @@ func delete_custom_deck(deck_name: String, callback: Callable) -> void:
 	var encoded_deck_name = deck_name.uri_encode()
 	
 	# First, delete the existing deck if it exists (API call)
-	var delete_url = self.hostname + "/api/decks/delete-by-name/" + encoded_deck_name + "/"
+	var delete_url = self.hostname.rstrip('/') + "/api/decks/delete-by-name/" + encoded_deck_name + "/"
 	var headers = [
 		"Content-Type: application/json",
 		"Authorization: Token " + self.token.strip_edges(),
@@ -219,7 +220,7 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 	var deck_json = JSON.stringify(deck_data)
 
 	# Make a POST request to create or update the deck
-	var post_url = self.hostname + "/api/decks/save/"
+	var post_url = self.hostname.rstrip('/') + "/api/decks/save/"
 	
 	var headers = [
 		"Content-Type: application/json",
@@ -234,3 +235,47 @@ func save_custom_deck(deck_name: String, deck_cards_arr: Array[DeckCardWithCount
 		return SaveCustomDeckResult.FAILED
 	
 	return SaveCustomDeckResult.IN_PROGRESS
+
+
+
+
+
+const _save_path: String = "user://api_config.tres"
+
+
+func save_api_config() -> void:
+	
+	# Save it to a .tres file (you can use a custom path if you prefer)
+	ResourceSaver.save(self, _save_path)
+
+
+static func load_api_config() -> SQLManagerGAAS:
+
+	if not FileAccess.file_exists(_save_path):
+		return null
+		
+	var _self: SQLManagerGAAS = load(_save_path) as SQLManagerGAAS
+	assert(_self != null)
+	return _self
+	
+
+func test_token_validity(callback: Callable) -> bool:
+	var test_url = self.hostname.rstrip('/') + "/api/validate-token/"
+	var headers = [
+		"Content-Type: application/json",
+		"Authorization: Token " + self.token.strip_edges(),
+	]
+	
+	if not self.request_manager.is_inside_tree():
+		# TODO Kevin: Memory leak?, and consequences for changing scene?
+		SQLDB.get_tree().root.add_child(self.request_manager)
+	
+	if not self.request_manager.request_completed.is_connected(callback.bind(self).call):
+		self.request_manager.request_completed.connect(callback.bind(self).call, ConnectFlags.CONNECT_ONE_SHOT)
+
+	var error = self.request_manager.request(test_url, headers)
+
+	if error != OK:
+		print("Failed to send request: ", error)
+		return false
+	return true
