@@ -24,10 +24,12 @@ func get_deck_name() -> String:
 	return sanitize_deck_name(%DeckSelectButton.text)
 
 
-func _on_delete_deck_button_pressed() -> void:
+func _on_custom_deck_delete_request_completed(success: bool) -> void:
 	
-	var success = SqlManager.delete_custom_deck(self.get_deck_name())
-	assert(success)
+	if not success:
+		%DeckSelectButton.disabled = false
+		%DeleteDeckButton.disabled = false
+		return
 	
 	self.get_parent().remove_child(self)
 	self.queue_free()
@@ -35,6 +37,13 @@ func _on_delete_deck_button_pressed() -> void:
 	# TODO Kevin: Now that we've moved the SQL implimentation,
 	#	we may also want to move the signal
 	self.custom_deck_deleted.emit(self)
+
+func _on_delete_deck_button_pressed() -> void:
+	
+	SQLDB.connection.delete_custom_deck(self.get_deck_name(), self._on_custom_deck_delete_request_completed.call)
+	
+	%DeckSelectButton.disabled = true
+	%DeleteDeckButton.disabled = true
 
 
 func _on_deck_select_button_pressed() -> void:

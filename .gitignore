@@ -1,2 +1,5 @@
 .vscode/
 *.pdf
+
+conf.py
+*.zip

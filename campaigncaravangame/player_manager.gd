@@ -14,19 +14,40 @@ var game_over_man: bool = false
 var restore_hook: Callable
 var play_counter: int = 0
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-
-	for player in players:
-		assert(player is Player)
-		player.init()
-		if player not in self.players:
-			self.players.append(player)
+func _on_player_ready(now_ready_player: Player, all_players: Dictionary) -> void:
+	
+	all_players[now_ready_player] = true
+	
+	var all_players_ready: bool = true
+	for player in all_players:
+		if all_players[player] == false:
+			all_players_ready = false
+			break
+	
+	if not all_players_ready:
+		return  # Wait for all players to be ready.
+	
 	if self.starting_player == null:
 		self.starting_player = self.players[0]  # Default starting player
 	assert(self.starting_player in self.players)
 	self.starting_player.is_current_player = true
 	self.starting_player.start_turn()
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	
+	var ready_players: Dictionary = {}
+	for player in players:
+		assert(player is Player)
+		ready_players[player] = false
+		if player not in self.players:
+			self.players.append(player)
+
+	# Init players, potentially async
+	#	TODO Kevin: I don't know how I feel about this.
+	for player in players:
+		player.init(self._on_player_ready.bind(ready_players).call)
+
 
 const SoldStatus = Caravan.SoldStatus
 

@@ -8,6 +8,11 @@ class_name DeckCustomizer
 signal deck_customizer_back()
 
 
+func _on_custom_decks_received(custom_decks: Array[CustomDeckScene]) -> void:
+
+	for custom_deck in custom_decks:
+		self.insert_custom_deck_alph(custom_deck)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -25,8 +30,8 @@ func _ready() -> void:
 	# Bit of a hack to make sure save button state is correct.
 	self._on_deck_name_changed(%DeckNameLineEdit.text)
 	
-	for custom_deck in SqlManager.query_custom_decks():
-		self.insert_custom_deck_alph(custom_deck)
+	if SQLDB.connection != null:
+		SQLDB.connection.query_custom_decks(self._on_custom_decks_received.call)
 
 
 func _on_customizer_back_button_pressed() -> void:
@@ -199,20 +204,11 @@ func _build_saved_cache() -> Dictionary:
 		
 	return deck_cache
 
-func _on_save_deck_button_pressed() -> void:
 
-	
-	var deck_name: String = CustomDeckScene.sanitize_deck_name(%DeckNameLineEdit.text)
-	
-	var deck_cards_arr: Array[DeckCardWithCounter] = []
-	for deck_cards in %CardsInDeckVBoxContainer.get_children():
-		assert(deck_cards is DeckCardWithCounter)
-		deck_cards_arr.append(deck_cards)
-		
-	const SaveCustomDeckResult = SqlManager.SaveCustomDeckResult
-	
-	var save_result: SaveCustomDeckResult = SqlManager.save_custom_deck(deck_name, deck_cards_arr)
-	assert(save_result != SaveCustomDeckResult.FAILED)
+const SaveCustomDeckResult = SQLDB.connection.SaveCustomDeckResult
+
+
+func _on_deckcard_save_completed(save_result: SaveCustomDeckResult, deck_name: String) -> void:
 	
 	if save_result == SaveCustomDeckResult.SAVED_NEW:
 		var new_custom_deck: CustomDeckScene = preload("res://Scenes/DeckCustomizer/CustomDeckScene.tscn").instantiate()
@@ -232,6 +228,19 @@ func _on_save_deck_button_pressed() -> void:
 	# Update the cache of saved cards, so we can compare for changes.
 	self.saved_deck_cache = self._build_saved_cache()
 	self.update_save_button_enabled_state()
+
+
+func _on_save_deck_button_pressed() -> void:
+
+	var deck_name: String = CustomDeckScene.sanitize_deck_name(%DeckNameLineEdit.text)
+	
+	var deck_cards_arr: Array[DeckCardWithCounter] = []
+	for deck_cards in %CardsInDeckVBoxContainer.get_children():
+		assert(deck_cards is DeckCardWithCounter)
+		deck_cards_arr.append(deck_cards)
+
+	var save_result: SaveCustomDeckResult = SQLDB.connection.save_custom_deck(deck_name, deck_cards_arr, self._on_deckcard_save_completed.bind(deck_name).call)
+	assert(save_result != SaveCustomDeckResult.FAILED)
 
 
 func _on_deck_card_with_counter_entered_tree(node: Node) -> void:
@@ -255,6 +264,14 @@ func insert_custom_deck_alph(deck_to_insert: CustomDeckScene) -> void:
 	%CustomDecksVBoxContainer.move_child(deck_to_insert, insert_index)
 
 
+func _on_custom_deck_select_request_completed(deck_cards_arr: Array[DeckCardWithCounter]) -> void:
+	
+	for deck_cards in deck_cards_arr:
+		self.insert_deck_card_ordered(deck_cards)
+		
+	# Update the cache of saved cards, so we can compare for changes.
+	self.saved_deck_cache = self._build_saved_cache()
+	self.update_save_button_enabled_state()
 
 func _on_custom_deck_selected(selected_deck: CustomDeckScene) -> void:
 	
@@ -271,13 +288,9 @@ func _on_custom_deck_selected(selected_deck: CustomDeckScene) -> void:
 
 	for deck_cards in %CardsInDeckVBoxContainer.get_children():
 		%CardsInDeckVBoxContainer.remove_child(deck_cards)
-		
-	for deck_cards in SqlManager.query_deck_cards(selected_deck.get_deck_name()):
-		self.insert_deck_card_ordered(deck_cards)
-		
-	# Update the cache of saved cards, so we can compare for changes.
-	self.saved_deck_cache = self._build_saved_cache()
-	self.update_save_button_enabled_state()
+	
+	# Async
+	SQLDB.connection.query_deck_cards(selected_deck.get_deck_name(), self._on_custom_deck_select_request_completed.call)
 
 
 func _on_custom_deck_deleted(deleted_deck: CustomDeckScene) -> void:

@@ -97,16 +97,23 @@ static var base_deck: Array[Card] = [
 
 var cards: Array[Card] = []
 
-static func from_custom_deck_name(custom_deck_name: String) -> Deck:
+static func _from_deck_name_request_completed(deck_cards_arr: Array[DeckCardWithCounter], callback: Callable) -> void:
 	
 	var _self = Deck.new()
-		
-	for deck_cards in SqlManager.query_deck_cards(custom_deck_name):
+	
+	for deck_cards in deck_cards_arr:
 		
 		for __ in range(deck_cards.get_card_count()):
 			_self.cards.append(deck_cards.card)
 			
-	return _self
+	callback.call(_self)
+
+static func from_custom_deck_name(custom_deck_name: String, callback: Callable) -> void:
+	
+	var _self = Deck.new()
+		
+	SQLDB.connection.query_deck_cards(custom_deck_name, _from_deck_name_request_completed.bind(callback).call)
+
 
 static func from_bounds_and_seed(min_size: int, max_size: int, _seed: int = 0) -> Deck:
 
