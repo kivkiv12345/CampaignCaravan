@@ -16,8 +16,6 @@ typedef const struct msg_subscription_s {
     char * message;
 } msg_subscription_t;
 
-
-
 #define MSG_SUBSCRIBE(_msg_name, _msg) \
 	__attribute__((section("msg_subscriptions"))) \
 	__attribute__((aligned(1))) \
@@ -25,6 +23,9 @@ typedef const struct msg_subscription_s {
 	msg_subscription_t subscription##_msg_name = { \
 		.message = _msg, \
 	}
+
+MSG_SUBSCRIBE(1, "cool");
+MSG_SUBSCRIBE(2, "awesome");
 
 
 static pthread_mutex_t msg_print_thread_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -51,18 +52,16 @@ unsigned int no_mutexes = 0;
 
 
 static void sigintHandler(int signal) {
-    // pthread_mutex_lock(&msg_print_thread_mutex);
 
-    // scoped_mutex_lock(msg_print_thread_mutex);
+    scoped_mutex_lock(msg_print_thread_mutex);
 
-    printf("Received SIGINT. Stopping message printing...\n");
+    printf("Received SIGINT. Stopping...\n");
 
     stop_program_flag = 1;
 
     // Signal waiting threads
     pthread_cond_signal(&stop_program_thread_condition);
 
-    // pthread_mutex_unlock(&msg_print_thread_mutex);
 
 }
 
@@ -78,8 +77,6 @@ void usage(void) {
 	printf(" -m --no-mutex\tDisable Mutexes\n");
 }
 
-
-
 static void _cleanup_str(char ** obj) {
     if (*obj == NULL) {
         return;
@@ -91,14 +88,6 @@ static void _cleanup_str(char ** obj) {
     *obj = NULL;
 }
 
-// static void _cleanup_cond(pthread_cond_t ** cond) {
-//     if (*cond == NULL) {
-//         return;
-// 	}
-//     pthread_cond_destroy(*cond);
-//     *cond = NULL;
-// }
-
 static void _cleanup_mutex(pthread_mutex_t ** mutex) {
     if (*mutex == NULL) {
         return;
@@ -107,16 +96,10 @@ static void _cleanup_mutex(pthread_mutex_t ** mutex) {
     *mutex = NULL;
 }
 
-// void message_thread_atexit(int * retval) {
-//     pthread_exit(retval);
-// }
-
 void *message_print_thread(void *_message_args) {
     msg_subscription_t * message_args = (msg_subscription_t*)_message_args;
     const char * print_message = message_args->message;
     assert(print_message);
-
-    //int retval __attribute__((cleanup(message_thread_atexit))) = 0;
 
     while (1) {
         usleep(100000);
@@ -144,9 +127,6 @@ void *message_print_thread(void *_message_args) {
         }
     }
 }
-
-MSG_SUBSCRIBE(1, "cool");
-MSG_SUBSCRIBE(2, "awesome");
 
 int main(int argc, char **argv) {
 
@@ -199,21 +179,12 @@ int main(int argc, char **argv) {
         exit(0);
     }
 
-#if 1
     if (signal(SIGINT, sigintHandler) == SIG_ERR) {
         exit(-2);
     }
-#else  /* Using sigaction is supposedly better */
-    struct sigaction sigterm_action;
-    memset(&sigterm_action, 0, sizeof(sigterm_action));
-    sigterm_action.sa_handler = &sigintHandler;
-    sigterm_action.sa_flags = 0;
-#endif
 
     pthread_mutex_init(&msg_print_thread_mutex, NULL);
-    // pthread_cond_init(&stop_program_thread_condition, NULL);
     pthread_mutex_t * _mutex_cleanup_symbol __attribute__((cleanup(_cleanup_mutex))) = &msg_print_thread_mutex;
-    // pthread_cond_t * _cond_cleanup_symbol __attribute__((cleanup(_cleanup_cond))) = &stop_program_thread_condition;
 
     /**
 	 * GNU Linker symbols. These will be autogenerate by GCC when using
@@ -239,14 +210,6 @@ int main(int argc, char **argv) {
             }
         }
     }
-
-
-    // TODO Kevin: We would need to create a separate mutex here
-    // pthread_cond_wait(&stop_program_thread_condition, &msg_print_thread_mutex);
-    // {
-    //     //scoped_mutex_lock(msg_print_thread_mutex);
-    //     assert(stop_program_flag);
-    // }
     
     // Wait for all threads to finish
     for (int i = 0; i < num_messages; ++i) {
