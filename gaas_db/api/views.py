@@ -52,9 +52,20 @@ class DeckViewSet(viewsets.ModelViewSet):
             return Response({"detail": f"Deck '{name}' deleted successfully."}, status=status.HTTP_200_OK)
 
 
-    # Custom action to handle saving deck and its cards
     @action(detail=False, methods=['POST'], url_path='save')
     def save_deck(self, request):
+        """
+        Custom action to handle saving deck and its cards
+        Example JSON:
+        {
+            "name": "My Cool Deck",
+            "cards": [
+                {"suit": 1, "rank": 2, "count": 5},
+                {"suit": 3, "rank": 4, "count": 10}
+            ]
+        }
+        """
+        
         # Get the deck data from the request
         deck_data = request.data.get('name')
         cards_data = request.data.get('cards')
@@ -65,7 +76,7 @@ class DeckViewSet(viewsets.ModelViewSet):
         # Handle deck creation or update
         try:
             deck, created = Deck.objects.get_or_create(name=deck_data)
-            # Clear any existing deck cards before updating (optional)
+            # Clear any existing deck cards before updating
             deck.deckcard_set.all().delete()
 
             # Add the new deck cards

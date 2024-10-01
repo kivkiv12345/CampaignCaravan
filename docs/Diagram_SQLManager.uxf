@@ -1,0 +1,35 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>80</x><y>272</y><w>248</w><h>152</h></coordinates><panel_attributes>SQLManagerWrapper
+--
+-?connection: SQLManagerAbstract
+--
+#_get_original_connection(): SQLManagerAbstract
+#reset_to_original_connection(): void
+--
+Responsibilities
+-- Singleton with connection to DB</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>272</y><w>320</w><h>152</h></coordinates><panel_attributes>&lt;&lt;Abstract Class&gt;&gt; (Should've been interface)
+SQLManagerAbstract
+--
+#ensure_database(): bool
+#query_custom_decks(callback: Callable): void
+#query_deck_cards(_for_deck_name: String, callback: Callable): void
+#delete_custom_deck(_deck_name: String, callback: Callable): void
+#save_custom_deck(_deck_name, _deck_cards_arr, callback): SaveCustomDeckResult
+--
+Responsibilities
+-- Specify interface for database interaction</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>80</x><y>464</y><w>256</w><h>168</h></coordinates><panel_attributes>SQLManagerSQLite
+--
+-_db: SQLite
+--
+Responsibilities
+-- Interface to local SQLite database</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>248</x><y>416</y><w>128</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;60;140;10</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>344</y><w>56</w><h>24</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>360</x><y>488</y><w>320</w><h>144</h></coordinates><panel_attributes>SQLManagerGAAS
+--
+- token: String
+- hostname: String = "HTTP://localhost:8000/"
+--
+#login(username: String, password: String, callback: Callable): bool
+#save_api_config(): void
+#static load_api_config(): SQLManagerGAAS
+#test_token_validity(callback: Callable): bool
+--
+Responsibilities
+-- Interface with database behind Django web-API</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>440</x><y>416</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;90;10;10</additional_attributes></element></diagram>
