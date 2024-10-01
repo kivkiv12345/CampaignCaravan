@@ -1,5 +1,3 @@
-## Inspiration: https://www.youtube.com/watch?v=j-BRiTrw_F0
-
 extends Resource
 
 
@@ -12,10 +10,12 @@ func ensure_database() -> bool:
 	return false
 
 
-func query_custom_decks(callback: Callable) -> void:
+## Returns true if a query request is sent successfully
+func query_custom_decks(callback: Callable) -> bool:
 	self.ensure_database()
 	assert(false)
 	callback.call([])
+	return false
 
 
 func query_deck_cards(_for_deck_name: String, callback: Callable) -> void:

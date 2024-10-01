@@ -145,16 +145,24 @@ func _on_query_custom_decks_finished(custom_decks: Array[CustomDeckScene]) -> vo
 	self.set_custom_deck_options(custom_decks)
 	self.update_custom_deck_stats()
 	self.customize_first_click = false
+	self.gamerules_changed.emit(self.to_game_rules())
 
 
 var customize_first_click: bool = true
 func _on_customize_deck_button_pressed() -> void:
+
+	# Make sure OptionButton starts enabled
+	self.custom_deck_optionbutton.disabled = false
 	
 	# No need to re-query every time customize is clicked
 	if customize_first_click:
 		assert(SQLDB.connection != null)
-		SQLDB.connection.query_custom_decks(self._on_query_custom_decks_finished.call)
-		self.custom_deck_optionbutton.disabled = true  # Disabled until request finishes
+		# Disable OptionButton until request finishes
+		self.custom_deck_optionbutton.disabled = true
+		if not SQLDB.connection.query_custom_decks(self._on_query_custom_decks_finished.call):
+			# Failed to send request
+			# Enable OptionButton again
+			self.custom_deck_optionbutton.disabled = false
 	
 	var seeded_deck_nodes: Array[Node] = [
 		%DeckMinCardsHBoxContainer,

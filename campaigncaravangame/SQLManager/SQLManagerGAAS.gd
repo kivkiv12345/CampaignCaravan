@@ -1,5 +1,3 @@
-## Inspiration: https://www.youtube.com/watch?v=j-BRiTrw_F0
-
 extends SQLManagerAbstract
 
 
@@ -91,7 +89,7 @@ func _on_query_custom_decks_response(_result: int, response_code: int, _received
 	callback.call(custom_decks)
 
 
-func query_custom_decks(callback: Callable) -> void:
+func query_custom_decks(callback: Callable) -> bool:
 	self.ensure_database()
 	
 	# Construct the URL to query custom decks
@@ -105,7 +103,14 @@ func query_custom_decks(callback: Callable) -> void:
 	self.request_manager.request_completed.connect(self._on_query_custom_decks_response.bind(callback).call, ConnectFlags.CONNECT_ONE_SHOT)
 
 	# Make the GET request to query custom decks
-	self.request_manager.request(query_url, headers, HTTPClient.METHOD_GET)
+	var error = self.request_manager.request(query_url, headers, HTTPClient.METHOD_GET)
+
+	if error != OK:
+		print("Failed to send request: ", error)
+		return false
+	return true
+
+	
 
 
 func _on_query_deck_cards_response(_result: int, response_code: int, _received_headers: PackedStringArray, body: PackedByteArray, callback: Callable) -> void:

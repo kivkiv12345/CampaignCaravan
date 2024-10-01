@@ -126,7 +126,7 @@ func ensure_database() -> bool:
 	return true
 
 
-func query_custom_decks(callback: Callable) -> void:
+func query_custom_decks(callback: Callable) -> bool:
 	self.ensure_database()
 	
 	var decks_query_result: Array = self._db.select_rows("Decks", "", ["*"])
@@ -138,6 +138,8 @@ func query_custom_decks(callback: Callable) -> void:
 		custom_decks.append(custom_deck)
 	
 	callback.call(custom_decks)
+
+	return true
 
 
 func query_deck_cards(for_deck_name: String, callback: Callable) -> void:
