@@ -1,3 +1,5 @@
+// Mostly copied from: https://github.com/kivkiv12345/ckafprod
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -18,14 +20,14 @@ typedef const struct msg_subscription_s {
 
 #define MSG_SUBSCRIBE(_msg_name, _msg) \
 	__attribute__((section("msg_subscriptions"))) \
-	__attribute__((aligned(1))) \
-	__attribute__((used)) \
 	msg_subscription_t subscription##_msg_name = { \
 		.message = _msg, \
 	}
 
 MSG_SUBSCRIBE(1, "cool");
 MSG_SUBSCRIBE(2, "awesome");
+MSG_SUBSCRIBE(3, "Hej Censor");
+MSG_SUBSCRIBE(4, "Hej Eksaminator");
 
 
 static pthread_mutex_t msg_print_thread_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -53,7 +55,7 @@ unsigned int no_mutexes = 0;
 
 static void sigintHandler(int signal) {
 
-    scoped_mutex_lock(msg_print_thread_mutex);
+    //scoped_mutex_lock(msg_print_thread_mutex);
 
     printf("Received SIGINT. Stopping...\n");
 
@@ -129,12 +131,38 @@ void *message_print_thread(void *_message_args) {
 }
 
 #if 0
+#if 0
 static void cleanup_print(char ** msg) {
     printf(*msg);
 }
 #endif
 
+
+static void heap_print(void) {
+    #define ONE_MB 1024*1024
+    unsigned int *arr = malloc(ONE_MB*9 * sizeof(unsigned int));
+    arr[0] = 0;
+    printf("%d\n", arr[0]);
+    free(arr);
+}
+
 int main(int argc, char **argv) {
+
+    heap_print();
+    exit(0);
+
+#if 0
+    unsigned last = 0;
+    for (unsigned *i = malloc(sizeof(unsigned)); i != NULL; i = malloc(sizeof(unsigned))) {
+        *i = last;
+        usleep(1000);
+        *i += 1;
+        printf("%d\n", *i);
+        last = *i;
+        free(i);
+    }
+#endif
+
 
 #if 0
     {
@@ -147,6 +175,9 @@ int main(int argc, char **argv) {
     exit(0);
 #endif
 
+#else
+int main(int argc, char **argv) {
+#endif
 
     int option;
     struct option long_options[] = {
@@ -206,7 +237,7 @@ int main(int argc, char **argv) {
 
     /**
 	 * GNU Linker symbols. These will be autogenerate by GCC when using
-	 * __attribute__((section("sim_subscriptions"))
+	 * __attribute__((section("msg_subscriptions"))
 	 */
 	__attribute__((weak)) extern msg_subscription_t __start_msg_subscriptions;
 	__attribute__((weak)) extern msg_subscription_t __stop_msg_subscriptions;
@@ -215,17 +246,18 @@ int main(int argc, char **argv) {
     pthread_t message_thread_pool[num_messages];
     memset(message_thread_pool, 0, sizeof(pthread_t)*num_messages);
 
-    /* For some reason this 'if' is needed, even though the for-loop condition should be sufficient.
-        It can't be replaced with a guard clause, as we must allow the other priorities to run.*/
+    if (&__start_msg_subscriptions == NULL || &__stop_msg_subscriptions == NULL) {
+        printf("No message subscriptions to print\n");
+        return 0;
+    }
+
     unsigned int i = -1;
-    if (&__start_msg_subscriptions != &__stop_msg_subscriptions && &__start_msg_subscriptions != NULL) {
-        for (msg_subscription_t * msg_subscription = &__start_msg_subscriptions; msg_subscription < &__stop_msg_subscriptions; msg_subscription++) {
-            i++;
-            assert(i<=num_messages-1);
-            if ((pthread_create(&message_thread_pool[i], NULL, message_print_thread, (void*)msg_subscription)) != 0) {
-                fprintf(stderr, "Failed to create house thread, number %d\n", i);
-                exit(9);
-            }
+    for (msg_subscription_t * msg_subscription = &__start_msg_subscriptions; msg_subscription < &__stop_msg_subscriptions; msg_subscription++) {
+        i++;
+        assert(i<=num_messages-1);
+        if ((pthread_create(&message_thread_pool[i], NULL, message_print_thread, (void*)msg_subscription)) != 0) {
+            fprintf(stderr, "Failed to create message thread, number %d\n", i);
+            return -1;
         }
     }
     
