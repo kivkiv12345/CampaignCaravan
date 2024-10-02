@@ -1,0 +1,2 @@
+#!/bin/sh
+(./build || (./configure && ./build)) && valgrind --leak-check=full -s ./builddir/c_example "$@"

@@ -128,7 +128,25 @@ void *message_print_thread(void *_message_args) {
     }
 }
 
+#if 0
+static void cleanup_print(char ** msg) {
+    printf(*msg);
+}
+#endif
+
 int main(int argc, char **argv) {
+
+#if 0
+    {
+        printf("1\n");
+        char * msg1 __attribute__((cleanup(cleanup_print))) = "close connection\n";
+        char * msg2 __attribute__((cleanup(cleanup_print))) = "free packet\n";
+        printf("3\n");
+    }
+
+    exit(0);
+#endif
+
 
     int option;
     struct option long_options[] = {
