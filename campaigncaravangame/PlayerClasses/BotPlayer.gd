@@ -183,11 +183,11 @@ func perform_turn() -> void:
 				
 	# We couldn't play any cards, excluding queens.
 	#	So now would be a good time to play those queens.
-	#	as that might allow us to play some of our other cards.
+	#	as that might allow us to play some of our other cards in later turns.
 	for hand_card in cards:
 
 		if hand_card.card.rank != Card.Rank.QUEEN:
-			continue  # Don't play cards with didn't want to play in the for loop above.
+			continue  # This could should already have been checked in the loop above.
 
 		var legal_slots: Array[CaravanCardSlot] = self.get_legal_caravan_slots(hand_card)
 		
@@ -197,7 +197,7 @@ func perform_turn() -> void:
 		self._seeded_shuffle(legal_slots)
 
 		# Try playing the queen on our own caravans.
-		#	By now why can't play any other cards.
+		#	By now we can't play any other cards.
 		for legal_slot in legal_slots:
 
 			assert(legal_slot is OpenFaceCardSlot)
@@ -206,6 +206,7 @@ func perform_turn() -> void:
 				continue  # This loop is only for our own caravans
 				
 			if legal_slot.caravan.get_value() > legal_slot.caravan.player.game_rules.caravan_max_value:
+				# TODO Kevin: If we require face card match suit, then it could help.
 				continue  # Queens don't help an overburdened caravan.
 
 			#print("IIIIII %d %d" % [legal_slot.number_card.get_index(), legal_slot.caravan.find_child("PlayedCards", false).get_child_count()])
@@ -226,6 +227,7 @@ func perform_turn() -> void:
 			assert(legal_slot is OpenFaceCardSlot)
 			
 			if legal_slot.caravan.get_value() > legal_slot.caravan.player.game_rules.caravan_max_value:
+				# NOTE: If opponent requires face card match suit, then we could accidentally help them.
 				continue  # Queens don't help an overburdened caravan.
 			
 			if legal_slot.caravan.player == self:
@@ -238,7 +240,6 @@ func perform_turn() -> void:
 			if legal_slot.try_play_card(hand_card):
 				# We played a queen, on an enemy caravan.
 				#	Hopefully that harms them, more than it helps them.
-				print("HHH")
 				return
 	
 	# Before we just keep discarding cards forever,
@@ -250,7 +251,6 @@ func perform_turn() -> void:
 			if caravan.try_discard_caravan():
 				# Well, hopefully it was truly broken beyond repair.
 				#	And that we can quickly rebuild it.
-				print("FFF")
 				return
 	
 	# We didn't have any cards to play, so we must discard something.
