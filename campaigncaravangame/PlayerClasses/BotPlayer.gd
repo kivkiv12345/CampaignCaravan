@@ -151,7 +151,6 @@ func perform_turn() -> void:
 					# Do not overburden ourselves with kings
 					if legal_slot.caravan.get_value() + (legal_slot.number_card.get_value()) > self.game_rules.caravan_max_value:
 						continue  # Playing this king would overburden our caravan
-				# Make sure we don't accidentally 'fix' an enemy caravan
 				elif hand_card.card.rank == Card.Rank.JACK:
 					if legal_slot.caravan.get_value() <= self.game_rules.caravan_max_value:
 						continue  # This caravan is not overburdened, so don't play a jack on it.
